@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reproducible Finance with R</title>
+  <meta name="description" content="A reproducible for Chapman &amp; Hall.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Reproducible Finance with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A reproducible for Chapman &amp; Hall." />
+  <meta name="github-repo" content="jkr216/reproducible-finance-ch" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reproducible Finance with R" />
+  
+  <meta name="twitter:description" content="A reproducible for Chapman &amp; Hall." />
+  
+
+<meta name="author" content="Jonathan K. Regenstein, Jr.">
+
+
+<meta name="date" content="2018-01-17">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="asset-prices-to-returns.html">
+<link rel="next" href="growth-of-a-dollar.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.9/htmlwidgets.js"></script>
+<script src="libs/proj4js-2.3.15/proj4.js"></script>
+<link href="libs/highcharts-5.0.6/css/motion.css" rel="stylesheet" />
+<script src="libs/highcharts-5.0.6/highstock.js"></script>
+<script src="libs/highcharts-5.0.6/highcharts-3d.js"></script>
+<script src="libs/highcharts-5.0.6/highcharts-more.js"></script>
+<script src="libs/highcharts-5.0.6/modules/annotations.js"></script>
+<script src="libs/highcharts-5.0.6/modules/broken-axis.js"></script>
+<script src="libs/highcharts-5.0.6/modules/data.js"></script>
+<script src="libs/highcharts-5.0.6/modules/drilldown.js"></script>
+<script src="libs/highcharts-5.0.6/modules/exporting.js"></script>
+<script src="libs/highcharts-5.0.6/modules/funnel.js"></script>
+<script src="libs/highcharts-5.0.6/modules/heatmap.js"></script>
+<script src="libs/highcharts-5.0.6/modules/map.js"></script>
+<script src="libs/highcharts-5.0.6/modules/no-data-to-display.js"></script>
+<script src="libs/highcharts-5.0.6/modules/offline-exporting.js"></script>
+<script src="libs/highcharts-5.0.6/modules/solid-gauge.js"></script>
+<script src="libs/highcharts-5.0.6/modules/treemap.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/annotations.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/draggable-legend.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/draggable-points.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/export-csv.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/grouped-categories.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/motion.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/pattern-fill-v2.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/tooltip-delay.js"></script>
+<script src="libs/highcharts-5.0.6/custom/reset.js"></script>
+<script src="libs/highcharts-5.0.6/custom/symbols-extra.js"></script>
+<script src="libs/highcharts-5.0.6/custom/text-symbols.js"></script>
+<link href="libs/fontawesome-4.5.0/font-awesome.min.css" rel="stylesheet" />
+<link href="libs/htmlwdgtgrid-1/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="libs/highchart-binding-0.5.0/highchart.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> install the packages needed by this book; you fill out c(), e.g. c(‘ggplot2’, ‘dplyr’)</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-read-this-book"><i class="fa fa-check"></i>Why read this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#structure-of-the-book"><i class="fa fa-check"></i>Structure of the book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-author"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information-and-conventions"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html"><i class="fa fa-check"></i>Returns</a></li>
+<li class="chapter" data-level="2" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html"><i class="fa fa-check"></i><b>2</b> Asset Prices to Returns</a><ul>
+<li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#importing-asset-prices"><i class="fa fa-check"></i>Importing Asset Prices</a></li>
+<li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#thoughts-on-converting-daily-prices-to-monthly-log-returns"><i class="fa fa-check"></i>Thoughts on Converting Daily Prices to Monthly Log Returns</a></li>
+<li><a href="asset-prices-to-returns.html#converting-daily-prices-to-monthly-returns-in-the-xts-world">Converting Daily Prices to Monthly Returns in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyverse"><i class="fa fa-check"></i>Converting Daily Prices to Monthly Returns in the Tidyverse</a></li>
+<li><a href="asset-prices-to-returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyquant-world">Converting Daily Prices to Monthly Returns in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#a-word-on-workflow-and-recap"><i class="fa fa-check"></i>A Word on workflow and recap</a></li>
+<li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#visualizing-asset-returns-before-they-get-mashed-into-a-portfolio"><i class="fa fa-check"></i>Visualizing Asset Returns before they get mashed into a portfolio</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html"><i class="fa fa-check"></i><b>3</b> To the Portfolio Station</a><ul>
+<li><a href="to-the-portfolio-station.html#portfolio-returns-in-the-xts-world">Portfolio Returns in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html#portfolio-returns-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Returns in the tidyverse</a></li>
+<li class="chapter" data-level="" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html#portfolio-returns-in-the-tidyquant-world"><i class="fa fa-check"></i>Portfolio Returns in the tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html#visualizing-portfolio-returns"><i class="fa fa-check"></i>Visualizing Portfolio Returns</a></li>
+<li class="chapter" data-level="" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html#our-first-shiny-app-portfolio-returns"><i class="fa fa-check"></i>Our First Shiny App: Portfolio Returns</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html"><i class="fa fa-check"></i><b>4</b> Growth of a dollar</a><ul>
+<li><a href="growth-of-a-dollar.html#portfolio-growth-in-the-xts-world">Portfolio Growth in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#portfolio-growth-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Growth in the Tidyverse</a></li>
+<li><a href="growth-of-a-dollar.html#portfolio-growth-in-the-tidyquant-world">Portfolio Growth in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#visualizing-portfolio-growth"><i class="fa fa-check"></i>Visualizing Portfolio Growth</a></li>
+<li class="chapter" data-level="4.0.1" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#shiny-growth-of-a-dollar"><i class="fa fa-check"></i><b>4.0.1</b> Shiny Growth of a Dollar</a></li>
+<li class="chapter" data-level="" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#concluding"><i class="fa fa-check"></i>Concluding</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="risk.html"><a href="risk.html"><i class="fa fa-check"></i><b>5</b> Risk</a></li>
+<li class="chapter" data-level="6" data-path="portfolio-theory.html"><a href="portfolio-theory.html"><i class="fa fa-check"></i><b>6</b> Portfolio Theory</a></li>
+<li class="chapter" data-level="7" data-path="montecarlo.html"><a href="montecarlo.html"><i class="fa fa-check"></i><b>7</b> montecarlo</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="more-to-say.html"><a href="more-to-say.html"><i class="fa fa-check"></i><b>A</b> More to Say</a></li>
+<li class="chapter" data-level="" data-path="appendix-2.html"><a href="appendix-2.html"><i class="fa fa-check"></i>Appendix 2</a></li>
+<li class="chapter" data-level="B" data-path="generate-a-bibtex-database-automatically-for-some-r-packages.html"><a href="generate-a-bibtex-database-automatically-for-some-r-packages.html"><i class="fa fa-check"></i><b>B</b> generate a BibTeX database automatically for some R packages</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reproducible Finance with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="to-the-portfolio-station" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> To the Portfolio Station</h1>
+<p>We spent a lot of time on the invidual assets to make sure we had a good grasp of our data building blocks.</p>
+<p>Now, we turn our collection of individual returns into a portfolio, which is really a weighted collection of asset returns. Accordingly, the first thing we need to do is assign a weight to each asset. Recall that our vector of symbols is SPY, EFA, IJS, EEM, AGG. Let’s create a weights vector that will allow us to assign a weight to each of our symbols. We are going for a balanced portfolio and will weight relatively little to AGG, the bond fund.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">w &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.20</span>, <span class="fl">0.20</span>, <span class="fl">0.10</span>)</code></pre></div>
+<p>Before we use the weights in our calculations, a quick sanity check in the next code chunk is a good idea. This might not be necessary with 5 assets as we have today, but good practice because if we had 50 assets it could save us a lot of grief to catch a mistake early.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset_weights_sanity_check &lt;-<span class="st"> </span><span class="kw">tibble</span>(w, symbols)
+asset_weights_sanity_check</code></pre></div>
+<pre><code>## # A tibble: 5 x 2
+##       w symbols
+##   &lt;dbl&gt; &lt;chr&gt;  
+## 1 0.250 SPY    
+## 2 0.250 EFA    
+## 3 0.200 IJS    
+## 4 0.200 EEM    
+## 5 0.100 AGG</code></pre>
+<p>Does that tibble match up with the portfolio we want to create? Looks good to me.</p>
+<p>Finally, make sure the weights sum to 100%, or 1. Again, we can eyeball this with 5 assets, but with 50 assets it would be easier to run the sanity check.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(asset_weights_sanity_check<span class="op">$</span>w)</code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>All looks good.</p>
+<p>Now let’s code up some portfolio returns.</p>
+<p>The textbook equation for the return of a multi-asset portfolio is: <span class="math display">\[Return_{portfolio} = W_{1}*Return_{asset1}~+~W_{2}*Return_{asset2}~+~W_{3}*Return_{asset3}~+~W_{4}*Return_{asset4}~+~W_{5}*Return_{asset5}\]</span> where the W’s stand for the weights of each asset.</p>
+<p>Let’s implement that equation with R code. First, we assign weights to variables according to our weights vector <code>w</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">w_<span class="dv">1</span> &lt;-<span class="st"> </span>w[<span class="dv">1</span>]
+w_<span class="dv">2</span> &lt;-<span class="st"> </span>w[<span class="dv">2</span>]
+w_<span class="dv">3</span> &lt;-<span class="st"> </span>w[<span class="dv">3</span>]
+w_<span class="dv">4</span> &lt;-<span class="st"> </span>w[<span class="dv">4</span>]
+w_<span class="dv">5</span> &lt;-<span class="st"> </span>w[<span class="dv">5</span>]</code></pre></div>
+<p>We can assign returns by pulling out columns form the <code>asset_returns_xts</code> object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset1 &lt;-<span class="st"> </span>asset_returns_xts[,<span class="dv">1</span>]
+asset2 &lt;-<span class="st"> </span>asset_returns_xts[,<span class="dv">2</span>]
+asset3 &lt;-<span class="st"> </span>asset_returns_xts[,<span class="dv">3</span>]
+asset4 &lt;-<span class="st"> </span>asset_returns_xts[,<span class="dv">4</span>]
+asset5 &lt;-<span class="st"> </span>asset_returns_xts[,<span class="dv">5</span>]</code></pre></div>
+<p>Now let’s use the weights and returns in the equation and glance at the first few rows.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_returns_byhand &lt;-<span class="st">   </span>
+<span class="st">  </span>(w_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>asset1) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span>(w_<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>asset2) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span>(w_<span class="dv">3</span> <span class="op">*</span><span class="st"> </span>asset3) <span class="op">+</span>
+<span class="st">  </span>(w_<span class="dv">4</span> <span class="op">*</span><span class="st"> </span>asset4) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span>(w_<span class="dv">5</span> <span class="op">*</span><span class="st"> </span>asset5)
+
+<span class="kw">names</span>(portfolio_returns_byhand) &lt;-<span class="st"> &quot;returns&quot;</span>
+
+<span class="kw">head</span>(portfolio_returns_byhand)</code></pre></div>
+<pre><code>##                  returns
+## 2013-02-28 -0.0008696144
+## 2013-03-28  0.0186624413
+## 2013-04-30  0.0206248875
+## 2013-05-31 -0.0053529706
+## 2013-06-28 -0.0229487591
+## 2013-07-31  0.0411705817</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(portfolio_returns_byhand)</code></pre></div>
+<pre><code>##                 returns
+## 2017-07-31 0.0247820474
+## 2017-08-31 0.0006890297
+## 2017-09-29 0.0266248779
+## 2017-10-31 0.0177227857
+## 2017-11-30 0.0156993906
+## 2017-12-29 0.0134430648</code></pre>
+<p>Our by-hand method is complete. We now have portfolio returns starting on February 28, 2013 through December 29, 2017. Let’s confirm we get the same results with the built-in methods.</p>
+<div id="portfolio-returns-in-the-xts-world" class="section level3 unnumbered">
+<h3>Portfolio Returns in the <code>xts</code> world</h3>
+<p>For our first built-in method, we will stay in the <code>xts</code> world and use the <code>Return.portfolio()</code> function from the <code>PerformanceAnalytics</code> package. The function requires two arguments for a portfolio, an <code>xts</code> object of returns and a vector of weights. It’s not necessary but we are also going to set <code>rebalance_on = &quot;months&quot;</code> so we can confirm it matches our by hand calculations above. Remember, in the by-hand equation, we set the portfolio weights as fixed, meaning they never changed on a month-to-month basis. That is equivalent to rebalancing every month. In practice, that would be quite rare. Once we confirm that it matches our by hand, we can toggle over to a more realistic annual rebalancing by changing the argument to <code>rebalance_on = &quot;years&quot;</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_returns_xts_rebalanced_monthly &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">Return.portfolio</span>(asset_returns_xts, <span class="dt">weights =</span> w, <span class="dt">rebalance_on =</span> <span class="st">&quot;months&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="st">&quot;returns&quot;</span>)</code></pre></div>
+<p>Let’s use the built-in <code>Return.portfolio</code> function again but we will set a more realistic annual rebalancing with the argument <code>rebalance_on = &quot;years&quot;</code>. This will change our results so that they no longer our by-hand calculation, which effectiely rebalanced every month.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_returns_xts_rebalanced_yearly &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">Return.portfolio</span>(asset_returns_xts, <span class="dt">weights =</span> w, <span class="dt">rebalance_on =</span> <span class="st">&quot;years&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="st">&quot;returns&quot;</span>)</code></pre></div>
+<p>We can take a peek at our three portfolio objects and see how the annual rebalance made a small but important difference to our monthly returns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(portfolio_returns_byhand)</code></pre></div>
+<pre><code>##                  returns
+## 2013-02-28 -0.0008696144
+## 2013-03-28  0.0186624413
+## 2013-04-30  0.0206248875
+## 2013-05-31 -0.0053529706
+## 2013-06-28 -0.0229487591
+## 2013-07-31  0.0411705817</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(portfolio_returns_xts_rebalanced_monthly)</code></pre></div>
+<pre><code>##                  returns
+## 2013-02-28 -0.0008696144
+## 2013-03-28  0.0186624413
+## 2013-04-30  0.0206248875
+## 2013-05-31 -0.0053529706
+## 2013-06-28 -0.0229487591
+## 2013-07-31  0.0411705817</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(portfolio_returns_xts_rebalanced_yearly)</code></pre></div>
+<pre><code>##                  returns
+## 2013-02-28 -0.0008696144
+## 2013-03-28  0.0189330938
+## 2013-04-30  0.0204344992
+## 2013-05-31 -0.0044738094
+## 2013-06-28 -0.0218914135
+## 2013-07-31  0.0425168040</code></pre>
+<p>Do you notice where the annual rebalancing made a difference? It’s an important decision for our portfolio.</p>
+<p>As before, we could stop here and have accomplished our substantive task (twice already - by-hand and using the built-in function), but we want to explore alternate methods in the world of tidyverse and tidyquant.</p>
+</div>
+<div id="portfolio-returns-in-the-tidyverse" class="section level3 unnumbered">
+<h3>Portfolio Returns in the tidyverse</h3>
+<p>We have our tidy object of asset returns and we need to add a weights column to it using the <code>mutate()</code> function. Each asset should be weighted according to the <code>w</code> vector. We can nested <code>if_else()</code> statements for this to make sure our weights match our assets.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_returns_dplyr_byhand &lt;-<span class="st"> </span>
+<span class="st">  </span>asset_returns_long <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(asset) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">weights =</span> <span class="kw">if_else</span>(asset <span class="op">==</span><span class="st"> </span>symbols[<span class="dv">1</span>], w[<span class="dv">1</span>],
+                            <span class="kw">if_else</span>(asset <span class="op">==</span><span class="st"> </span>symbols[<span class="dv">2</span>], w[<span class="dv">2</span>],
+                                    <span class="kw">if_else</span>(asset <span class="op">==</span><span class="st"> </span>symbols[<span class="dv">3</span>], w[<span class="dv">3</span>],
+                                            <span class="kw">if_else</span>(asset <span class="op">==</span><span class="st"> </span>symbols[<span class="dv">4</span>], w[<span class="dv">4</span>], w[<span class="dv">5</span>])))))
+
+portfolio_returns_dplyr_byhand</code></pre></div>
+<pre><code>## # A tibble: 295 x 4
+## # Groups:   asset [5]
+##    date       asset returns weights
+##    &lt;date&gt;     &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 2013-02-28 SPY    0.0127   0.250
+##  2 2013-03-28 SPY    0.0373   0.250
+##  3 2013-04-30 SPY    0.0190   0.250
+##  4 2013-05-31 SPY    0.0233   0.250
+##  5 2013-06-28 SPY   -0.0134   0.250
+##  6 2013-07-31 SPY    0.0504   0.250
+##  7 2013-08-30 SPY   -0.0305   0.250
+##  8 2013-09-30 SPY    0.0312   0.250
+##  9 2013-10-31 SPY    0.0453   0.250
+## 10 2013-11-29 SPY    0.0292   0.250
+## # ... with 285 more rows</code></pre>
+<p>We have weights and returns lined up, now we need to implement the equation above. This one is a bit tricky but we’ll need to <code>group_by()</code> the <code>date</code> column before using arithmetic. That’s because each of our weighted returns needs to be added together for each date. Once we group by date, we can use <code>summarise(total = sum(weighted_returns))</code> to add up the monthly weighted returns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_returns_dplyr_byhand &lt;-<span class="st"> </span>
+asset_returns_long <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(asset) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">weights =</span> <span class="kw">if_else</span>(asset <span class="op">==</span><span class="st"> </span>symbols[<span class="dv">1</span>], w[<span class="dv">1</span>],
+                            <span class="kw">if_else</span>(asset <span class="op">==</span><span class="st"> </span>symbols[<span class="dv">2</span>], w[<span class="dv">2</span>],
+                                    <span class="kw">if_else</span>(asset <span class="op">==</span><span class="st"> </span>symbols[<span class="dv">3</span>], w[<span class="dv">3</span>],
+                                            <span class="kw">if_else</span>(asset <span class="op">==</span><span class="st"> </span>symbols[<span class="dv">4</span>], w[<span class="dv">4</span>], w[<span class="dv">5</span>])))),
+           <span class="dt">weighted_returns =</span> returns <span class="op">*</span><span class="st"> </span>weights) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(date) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">port_returns =</span> <span class="kw">sum</span>(weighted_returns))
+
+portfolio_returns_dplyr_byhand</code></pre></div>
+<pre><code>## # A tibble: 59 x 2
+##    date       port_returns
+##    &lt;date&gt;            &lt;dbl&gt;
+##  1 2013-02-28    -0.000870
+##  2 2013-03-28     0.0187  
+##  3 2013-04-30     0.0206  
+##  4 2013-05-31    -0.00535 
+##  5 2013-06-28    -0.0229  
+##  6 2013-07-31     0.0412  
+##  7 2013-08-30    -0.0255  
+##  8 2013-09-30     0.0544  
+##  9 2013-10-31     0.0352  
+## 10 2013-11-29     0.0162  
+## # ... with 49 more rows</code></pre>
+<p>That piped workflow required some logical hoops - it isn’t very smooth frankly but useful to see how to add those weights and then group by the date for finding total returns. Think about how we would solve the puzzle of rebalancing weights not every month, but every year?</p>
+</div>
+<div id="portfolio-returns-in-the-tidyquant-world" class="section level3 unnumbered">
+<h3>Portfolio Returns in the tidyquant World</h3>
+<p>First, we will use our long, tidy formatted <code>asset_returns_long</code> and convert to portfolio returns using the <code>tq_portfolio</code> function from <code>tidyquant</code>.</p>
+<p>The <code>tq_portfolio</code> function takes a <code>tibble</code> and then asks for an assets column to group by, a returns column to find return data, and a weights vector It’s a wrapper for <code>Return.portfolio()</code> and thus also accepts the argument <code>rebalance_on = &quot;months&quot;</code>. Since we are rebalancing by months, we should again get a portfolio returns object that matches our two existing objects <code>portfolio_returns_byhand</code> and <code>portfolio_returns_xts_rebalanced_monthly.</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_returns_tq_rebalanced_monthly &lt;-<span class="st"> </span>
+<span class="st">  </span>asset_returns_long <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tq_portfolio</span>(<span class="dt">assets_col  =</span> asset, 
+               <span class="dt">returns_col =</span> returns,
+               <span class="dt">weights     =</span> w,
+               <span class="dt">col_rename  =</span> <span class="st">&quot;returns&quot;</span>,
+               <span class="dt">rebalance_on =</span> <span class="st">&quot;months&quot;</span>)</code></pre></div>
+<p>If we want to rebalance annually, it’st the same code as above, except we set <code>rebalance_on = &quot;years&quot;</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_returns_tq_rebalanced_yearly &lt;-<span class="st"> </span>
+<span class="st">  </span>asset_returns_long <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tq_portfolio</span>(<span class="dt">assets_col  =</span> asset, 
+               <span class="dt">returns_col =</span> returns,
+               <span class="dt">weights     =</span> w,
+               <span class="dt">col_rename  =</span> <span class="st">&quot;returns&quot;</span>,
+               <span class="dt">rebalance_on =</span> <span class="st">&quot;years&quot;</span>)</code></pre></div>
+<p>We now have two more portfolio returns objects and they are both tidy tibbles. Let’s take a quick look and compare how a tidy <code>tibbles</code> of portfolio returns compare to the <code>xts</code> object of portfolio returns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(portfolio_returns_byhand)</code></pre></div>
+<pre><code>##                  returns
+## 2013-02-28 -0.0008696144
+## 2013-03-28  0.0186624413
+## 2013-04-30  0.0206248875
+## 2013-05-31 -0.0053529706
+## 2013-06-28 -0.0229487591
+## 2013-07-31  0.0411705817</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(portfolio_returns_dplyr_byhand)</code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##   date       port_returns
+##   &lt;date&gt;            &lt;dbl&gt;
+## 1 2013-02-28    -0.000870
+## 2 2013-03-28     0.0187  
+## 3 2013-04-30     0.0206  
+## 4 2013-05-31    -0.00535 
+## 5 2013-06-28    -0.0229  
+## 6 2013-07-31     0.0412</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(portfolio_returns_tq_rebalanced_monthly)</code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##   date         returns
+##   &lt;date&gt;         &lt;dbl&gt;
+## 1 2013-02-28 -0.000870
+## 2 2013-03-28  0.0187  
+## 3 2013-04-30  0.0206  
+## 4 2013-05-31 -0.00535 
+## 5 2013-06-28 -0.0229  
+## 6 2013-07-31  0.0412</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(portfolio_returns_xts_rebalanced_monthly)</code></pre></div>
+<pre><code>##                  returns
+## 2013-02-28 -0.0008696144
+## 2013-03-28  0.0186624413
+## 2013-04-30  0.0206248875
+## 2013-05-31 -0.0053529706
+## 2013-06-28 -0.0229487591
+## 2013-07-31  0.0411705817</code></pre>
+<p>Huzzah, we have four objects of portfolio returns, calculated in four different ways, and with the same results.</p>
+<p>As we move on to visualization, we will make use of those different objects for our different visualization techniques.</p>
+</div>
+<div id="visualizing-portfolio-returns" class="section level3 unnumbered">
+<h3>Visualizing Portfolio Returns</h3>
+<p>As before, let’s start wiht <code>highcharter</code> to visualize the <code>xts</code> formatted portfolio returns.</p>
+<p>As we noted when looking at individual asset returns, <code>highcharter</code> is fantastic for visualizing a time series or many time series. First, we set <code>highchart(type = &quot;stock&quot;)</code> to get a nice time series line. Then we add our <code>returns</code> column from the portfolio returns <code>xts</code> object. We don’t have to add the date index or point to it in any way because <code>highcharter</code> recognizes the <code>xts</code> object and ports over the date index under the hood. The code below should look familiar from our work on asset returns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">highchart</span>(<span class="dt">type =</span> <span class="st">&quot;stock&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hc_title</span>(<span class="dt">text =</span> <span class="st">&quot;Porftolio Monthly Returns&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series</span>(portfolio_returns_xts_rebalanced_monthly<span class="op">$</span>returns, 
+                  <span class="dt">name =</span> <span class="st">&quot;Rebalanced Yearly&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_theme</span>(<span class="kw">hc_theme_flat</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_navigator</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hc_scrollbar</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div id="htmlwidget-ce83907d14211212c53d" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ce83907d14211212c53d">{"x":{"hc_opts":{"title":{"text":"Porftolio Monthly Returns"},"yAxis":{"title":{"text":null}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"},"bubble":{"minSize":5,"maxSize":25}},"annotationsOptions":{"enabledButtons":false},"tooltip":{"delayForDisplay":10},"series":[{"data":[[1362009600000,-0.000869614378196881],[1364428800000,0.0186624413468215],[1367280000000,0.0206248874532813],[1369958400000,-0.00535297061046858],[1372377600000,-0.0229487591392178],[1375228800000,0.0411705817018984],[1377820800000,-0.0254690883492648],[1380499200000,0.054430553878114],[1383177600000,0.0351853662463721],[1385683200000,0.0162265341500432],[1388448000000,0.0129863555177667],[1391126400000,-0.0460149250431025],[1393545600000,0.0420751373633641],[1396224000000,0.011033872659417],[1398816000000,0.00360026696268045],[1401408000000,0.0179238774049706],[1404086400000,0.019633006712914],[1406764800000,-0.0179191492941279],[1409270400000,0.0255818481604817],[1412035200000,-0.0424129309063251],[1414713600000,0.0228085236030318],[1417132800000,0.0054330512363685],[1419984000000,-0.0137034881039788],[1422576000000,-0.0162357345547636],[1424995200000,0.0481443780420092],[1427760000000,-0.00816670787041529],[1430352000000,0.0206500341652613],[1432857600000,-0.00363680812554712],[1435622400000,-0.0191979921713722],[1438300800000,-0.00714718507106771],[1440979200000,-0.0636439383008565],[1443571200000,-0.0306612726195907],[1446163200000,0.0616156133257775],[1448841600000,-0.00159573995815498],[1451520000000,-0.0286698496613595],[1454025600000,-0.0481123682693151],[1456704000000,-0.00532314871936068],[1459382400000,0.0754398045540259],[1461888000000,0.0117565124232739],[1464652800000,-0.00262965798012149],[1467244800000,0.00723617704669932],[1469750400000,0.0396066302648266],[1472601600000,0.00542716666528475],[1475193600000,0.0100834237038114],[1477872000000,-0.0200831337458516],[1480464000000,0.0179683232928198],[1483056000000,0.0177391738886821],[1485820800000,0.023199740163433],[1488240000000,0.0193750289429686],[1490918400000,0.0141395986913782],[1493337600000,0.0137550622319158],[1496188800000,0.0139303800979891],[1498780800000,0.00998451762505681],[1501459200000,0.0247820474395284],[1504137600000,0.000689029671538277],[1506643200000,0.0266248779482288],[1509408000000,0.0177227856770368],[1512000000000,0.0156993905653717],[1514505600000,0.0134430648357906]],"name":"Rebalanced Yearly","color":"cornflowerblue"}],"navigator":{"enabled":false},"scrollbar":{"enabled":false}},"theme":{"colors":["#f1c40f","#2ecc71","#9b59b6","#e74c3c","#34495e","#3498db","#1abc9c","#f39c12","#d35400"],"chart":{"backgroundColor":"#ECF0F1"},"xAxis":{"gridLineDashStyle":"Dash","gridLineWidth":1,"gridLineColor":"#BDC3C7","lineColor":"#BDC3C7","minorGridLineColor":"#BDC3C7","tickColor":"#BDC3C7","tickWidth":1},"yAxis":{"gridLineDashStyle":"Dash","gridLineColor":"#BDC3C7","lineColor":"#BDC3C7","minorGridLineColor":"#BDC3C7","tickColor":"#BDC3C7","tickWidth":1},"legendBackgroundColor":"rgba(0, 0, 0, 0.5)","background2":"#505053","dataLabelsColor":"#B0B0B3","textColor":"#34495e","contrastTextColor":"#F0F0F3","maskColor":"rgba(255,255,255,0.3)"},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"stock","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+<p>As before, we can use <code>highcharter</code> for histogram making, with the same code flow.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hc_portfolio &lt;-<span class="st"> </span><span class="kw">hist</span>(portfolio_returns_xts_rebalanced_monthly<span class="op">$</span>returns, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>)
+
+<span class="kw">hchart</span>(hc_portfolio) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hc_title</span>(<span class="dt">text =</span> <span class="st">&quot;Portfolio Returns Distribution&quot;</span>)</code></pre></div>
+<div id="htmlwidget-5e6b05fddfcee3b97425" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5e6b05fddfcee3b97425">{"x":{"hc_opts":{"title":{"text":"Portfolio Returns Distribution"},"yAxis":{"title":{"text":null}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"},"bubble":{"minSize":5,"maxSize":25}},"annotationsOptions":{"enabledButtons":false},"tooltip":{"delayForDisplay":10,"formatter":"function() { return  this.point.name + '<br/>' + this.y; }"},"chart":{"zoomType":"x"},"series":[{"data":[{"x":-0.063,"y":1,"name":"(-0.064, -0.062]"},{"x":-0.061,"y":0,"name":"(-0.062, -0.06]"},{"x":-0.059,"y":0,"name":"(-0.06, -0.058]"},{"x":-0.057,"y":0,"name":"(-0.058, -0.056]"},{"x":-0.055,"y":0,"name":"(-0.056, -0.054]"},{"x":-0.053,"y":0,"name":"(-0.054, -0.052]"},{"x":-0.051,"y":0,"name":"(-0.052, -0.05]"},{"x":-0.049,"y":1,"name":"(-0.05, -0.048]"},{"x":-0.047,"y":1,"name":"(-0.048, -0.046]"},{"x":-0.045,"y":0,"name":"(-0.046, -0.044]"},{"x":-0.043,"y":1,"name":"(-0.044, -0.042]"},{"x":-0.041,"y":0,"name":"(-0.042, -0.04]"},{"x":-0.039,"y":0,"name":"(-0.04, -0.038]"},{"x":-0.037,"y":0,"name":"(-0.038, -0.036]"},{"x":-0.035,"y":0,"name":"(-0.036, -0.034]"},{"x":-0.033,"y":0,"name":"(-0.034, -0.032]"},{"x":-0.031,"y":1,"name":"(-0.032, -0.03]"},{"x":-0.029,"y":1,"name":"(-0.03, -0.028]"},{"x":-0.027,"y":0,"name":"(-0.028, -0.026]"},{"x":-0.025,"y":1,"name":"(-0.026, -0.024]"},{"x":-0.023,"y":1,"name":"(-0.024, -0.022]"},{"x":-0.021,"y":1,"name":"(-0.022, -0.02]"},{"x":-0.019,"y":1,"name":"(-0.02, -0.018]"},{"x":-0.017,"y":2,"name":"(-0.018, -0.016]"},{"x":-0.015,"y":0,"name":"(-0.016, -0.014]"},{"x":-0.013,"y":1,"name":"(-0.014, -0.012]"},{"x":-0.011,"y":0,"name":"(-0.012, -0.01]"},{"x":-0.009,"y":1,"name":"(-0.01, -0.008]"},{"x":-0.007,"y":1,"name":"(-0.008, -0.006]"},{"x":-0.005,"y":2,"name":"(-0.006, -0.004]"},{"x":-0.003,"y":2,"name":"(-0.004, -0.002]"},{"x":-0.001,"y":2,"name":"(-0.002, 0]"},{"x":0.001,"y":1,"name":"(0, 0.002]"},{"x":0.003,"y":1,"name":"(0.002, 0.004]"},{"x":0.005,"y":2,"name":"(0.004, 0.00600000000000001]"},{"x":0.00700000000000001,"y":1,"name":"(0.00600000000000001, 0.00800000000000001]"},{"x":0.009,"y":1,"name":"(0.008, 0.01]"},{"x":0.011,"y":3,"name":"(0.01, 0.012]"},{"x":0.013,"y":4,"name":"(0.012, 0.014]"},{"x":0.015,"y":2,"name":"(0.014, 0.016]"},{"x":0.017,"y":5,"name":"(0.016, 0.018]"},{"x":0.019,"y":3,"name":"(0.018, 0.02]"},{"x":0.021,"y":2,"name":"(0.02, 0.022]"},{"x":0.023,"y":2,"name":"(0.022, 0.024]"},{"x":0.025,"y":2,"name":"(0.024, 0.026]"},{"x":0.027,"y":1,"name":"(0.026, 0.028]"},{"x":0.029,"y":0,"name":"(0.028, 0.03]"},{"x":0.031,"y":0,"name":"(0.03, 0.032]"},{"x":0.033,"y":0,"name":"(0.032, 0.034]"},{"x":0.035,"y":1,"name":"(0.034, 0.036]"},{"x":0.037,"y":0,"name":"(0.036, 0.038]"},{"x":0.039,"y":1,"name":"(0.038, 0.04]"},{"x":0.041,"y":1,"name":"(0.04, 0.042]"},{"x":0.043,"y":1,"name":"(0.042, 0.044]"},{"x":0.045,"y":0,"name":"(0.044, 0.046]"},{"x":0.047,"y":0,"name":"(0.046, 0.048]"},{"x":0.049,"y":1,"name":"(0.048, 0.05]"},{"x":0.051,"y":0,"name":"(0.05, 0.052]"},{"x":0.053,"y":0,"name":"(0.052, 0.054]"},{"x":0.055,"y":1,"name":"(0.054, 0.056]"},{"x":0.057,"y":0,"name":"(0.056, 0.058]"},{"x":0.059,"y":0,"name":"(0.058, 0.06]"},{"x":0.061,"y":1,"name":"(0.06, 0.062]"},{"x":0.063,"y":0,"name":"(0.062, 0.064]"},{"x":0.065,"y":0,"name":"(0.064, 0.066]"},{"x":0.067,"y":0,"name":"(0.066, 0.068]"},{"x":0.069,"y":0,"name":"(0.068, 0.07]"},{"x":0.071,"y":0,"name":"(0.07, 0.072]"},{"x":0.073,"y":0,"name":"(0.072, 0.074]"},{"x":0.075,"y":1,"name":"(0.074, 0.076]"}],"type":"column","pointRange":0.002,"groupPadding":0,"pointPadding":0,"borderWidth":0}]},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":["hc_opts.tooltip.formatter"],"jsHooks":[]}</script>
+<p>As we noted in the previous section on asset returns, there’s nothing wrong with that highcharter histogram. It displays well the distribution of portfolio returns. It does not, however, offer as much flexibility as <code>ggplot</code> for adding other distributions or density lines to the same chart.</p>
+<p>For that, we will head to the tidyverse and use <code>ggplot</code> on our tidy <code>tibble</code> <code>portfolio_returns_tq_rebalanced_monthly</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">005</span>, <span class="dt">fill =</span> <span class="st">&quot;cornflowerblue&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Portfolio Returns Distribution&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_update</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>))</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p><code>ggplot()</code> makes it seemless to layer on other distributions. Let’s compare the portfolio distribution to those of our individual assets. Use the alpha argument to make the asset histograms a bid faded, since there are more of them and the portfolio return is what we really want to see.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset_returns_long <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns, <span class="dt">fill =</span> asset)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">alpha =</span> <span class="fl">0.15</span>, <span class="dt">binwidth =</span> .<span class="dv">01</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">data =</span> portfolio_returns_tq_rebalanced_monthly, <span class="dt">fill =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Portfolio and Asset Monthly Returns Since 2005&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p>Let’s turn to a new chart format and build a scatterplot of portfolio returns. I would like to see the returns over time so will put the date on the x-axis with <code>ggplot(aes(x = date))</code>. We put monthly returns on the y-axis with <code>geom_point(aes(y = returns), color = &quot;cornflowerblue&quot;)</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> date)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> returns), <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>Maybe we don’t want to use a histogram or scatterplot, but instead want to use a density line to visualize the portfolio returns distributions. We can use the <code>stat_density(geom = &quot;line&quot;, alpha = 1)</code> function to do this, as we did before. The <code>alpha</code> argument is selecting a line thickness. Let’s also add a label to the x and y axis with the <code>xlab</code> and <code>ylab</code> functions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">colour =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Portfolio Monthly Returns Since 2005&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;monthly returns&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;distribution&quot;</span>) </code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p>Now let’s put the portfolio returns histogram and density on one plot. We do that by layering our geoms. First we call <code>geom_histogram(binwidth = .005, colour = &quot;cornflowerblue&quot;, fill = &quot;cornflowerblue&quot;)</code> then we add another layer with <code>stat_density(geom = &quot;line&quot;, alpha = 1, color = &quot;pink&quot;)</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">005</span>, <span class="dt">colour =</span> <span class="st">&quot;cornflowerblue&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">color =</span> <span class="st">&quot;pink&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;monthly returns&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;distribution&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_update</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Portfolio Monthly Returns Since 2005&quot;</span>) </code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>We have done a lot of work to visualize this portfolio. Now let’s build a Shiny application and enable end users to make their own decisions.</p>
+</div>
+<div id="our-first-shiny-app-portfolio-returns" class="section level3 unnumbered">
+<h3>Our First Shiny App: Portfolio Returns</h3>
+<p>A Shiny application is a flexible, useful and powerful way to share our work. In this section, we will build a Shiny app to display portfolio returns using the various visualization frameworks above.</p>
+<p>We want to empower an end user to do the following:</p>
+<ol style="list-style-type: decimal">
+<li>choose tickers and portfolio weights</li>
+<li>choose a start date</li>
+<li>choose a rebalancing frequency</li>
+<li>calculate portfolio returns</li>
+<li>visualize the portfolio returns on a scatterplot, histogram and density chart</li>
+</ol>
+<p>The final app and full source code can be seen here:</p>
+<p>www.reproduciblefinance.com/shiny/returns-distribution/</p>
+<p>And here is a snapshot</p>
+<div class="figure"><span id="fig:unnamed-chunk-40"></span>
+<img src="snapshots/returns-dist-shiny.png" alt="Returns Distribution Shiny App" width="100%" />
+<p class="caption">
+FIGURE 3.1: Returns Distribution Shiny App
+</p>
+</div>
+<p>The application encompasses much of our work thus far as it requires importing daily price data, converting to monthly log returns, assigning portfolio weights, calculating portfolio returns, and visualizing with <code>ggplot</code>. This makes our work more flexible since the user can construct any 5-asset portfolio for which there’s data in our data source. And, the number 5 is for illustrative purposes. Our app could easily support 50 assets (though consider the user experience there - will anyone manually enter 50 ticker symbols? They would probably want to upload a csv file - a different challenge for us).</p>
+<p>Let’s get to the code.</p>
+<p>We will use Rmarkdown to build our Shiny applications by inserting into the yaml <code>runtime: shiny</code>. This will alert the server (or our laptop) that this is an interactive document. The yaml also gives us a space for the title.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">---</span>
+title<span class="op">:</span><span class="st"> &quot;Returns Shiny&quot;</span>
+runtime<span class="op">:</span><span class="st"> </span>shiny
+output<span class="op">:</span>
+<span class="st">  </span>flexdashboard<span class="op">::</span>flex_dashboard<span class="op">:</span>
+<span class="st">    </span>orientation<span class="op">:</span><span class="st"> </span>rows
+<span class="op">---</span></code></pre></div>
+<p>As with other R scripts, we’ll need to load the necessary packages.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(highcharter)
+<span class="kw">library</span>(tidyquant)
+<span class="kw">library</span>(timetk)</code></pre></div>
+<p>With the logistics out of the way, our first task is to build an input sidebar and enable users to choose five stocks and weights.</p>
+<p>We will use <code>textInput(&quot;stock1&quot;,...))</code> to create a space where the user can type a stock symbol and we will use <code>numericInput(&quot;w1&quot;,...)</code> to create a space where the user can enter a numeric weight. We want those entry spaces to be on the same line or row so we will nest them inside of a call to <code>fluidRow()</code></p>
+<p>Since we have 5 stocks and weights, we repeat this 5 times. Notice that the stock symbol field uses <code>textInput()</code> because the user needs to enter text and the weight field uses <code>numericInput()</code> because the user needs to enter a number. I highly recommend taking a quick look at the app but there’s also a screenshot below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fluidRow</span>(
+  <span class="kw">column</span>(<span class="dv">6</span>,
+  <span class="kw">textInput</span>(<span class="st">&quot;stock1&quot;</span>, <span class="st">&quot;Stock 1&quot;</span>, <span class="st">&quot;SPY&quot;</span>)),
+  <span class="kw">column</span>(<span class="dv">5</span>,
+  <span class="kw">numericInput</span>(<span class="st">&quot;w1&quot;</span>, <span class="st">&quot;Portf. %&quot;</span>, <span class="dv">25</span>, <span class="dt">min =</span> <span class="dv">1</span>, <span class="dt">max =</span> <span class="dv">100</span>))
+)  
+
+<span class="kw">fluidRow</span>(
+  <span class="kw">column</span>(<span class="dv">6</span>,
+  <span class="kw">textInput</span>(<span class="st">&quot;stock2&quot;</span>, <span class="st">&quot;Stock 2&quot;</span>, <span class="st">&quot;EFA&quot;</span>)),
+  <span class="kw">column</span>(<span class="dv">5</span>,
+  <span class="kw">numericInput</span>(<span class="st">&quot;w2&quot;</span>, <span class="st">&quot;Portf. %&quot;</span>, <span class="dv">25</span>, <span class="dt">min =</span> <span class="dv">1</span>, <span class="dt">max =</span> <span class="dv">100</span>))
+)
+
+<span class="kw">fluidRow</span>(
+  <span class="kw">column</span>(<span class="dv">6</span>,
+  <span class="kw">textInput</span>(<span class="st">&quot;stock3&quot;</span>, <span class="st">&quot;Stock 3&quot;</span>, <span class="st">&quot;IJS&quot;</span>)),
+  <span class="kw">column</span>(<span class="dv">5</span>,
+  <span class="kw">numericInput</span>(<span class="st">&quot;w3&quot;</span>, <span class="st">&quot;Portf. %&quot;</span>, <span class="dv">20</span>, <span class="dt">min =</span> <span class="dv">1</span>, <span class="dt">max =</span> <span class="dv">100</span>))
+)
+
+<span class="kw">fluidRow</span>(
+  <span class="kw">column</span>(<span class="dv">6</span>,
+  <span class="kw">textInput</span>(<span class="st">&quot;stock4&quot;</span>, <span class="st">&quot;Stock 4&quot;</span>, <span class="st">&quot;EEM&quot;</span>)),
+  <span class="kw">column</span>(<span class="dv">5</span>,
+  <span class="kw">numericInput</span>(<span class="st">&quot;w4&quot;</span>, <span class="st">&quot;Portf. %&quot;</span>, <span class="dv">20</span>, <span class="dt">min =</span> <span class="dv">1</span>, <span class="dt">max =</span> <span class="dv">100</span>))
+)
+
+<span class="kw">fluidRow</span>(
+  <span class="kw">column</span>(<span class="dv">6</span>,
+  <span class="kw">textInput</span>(<span class="st">&quot;stock5&quot;</span>, <span class="st">&quot;Stock 5&quot;</span>, <span class="st">&quot;AGG&quot;</span>)),
+  <span class="kw">column</span>(<span class="dv">5</span>,
+  <span class="kw">numericInput</span>(<span class="st">&quot;w5&quot;</span>, <span class="st">&quot;Portf. %&quot;</span>, <span class="dv">10</span>, <span class="dt">min =</span> <span class="dv">1</span>, <span class="dt">max =</span> <span class="dv">100</span>))
+)</code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-44"></span>
+<img src="snapshots/input-sidebar.png" alt="Asset and Weights Input Fields" width="100%" />
+<p class="caption">
+FIGURE 3.2: Asset and Weights Input Fields
+</p>
+</div>
+<p>It’s worth a second look at this code to make sure it’s clear becuase we will be reusing it verbatim and making no apologies. Let’s dissect one of those fluid rows line-by-line.</p>
+<p><code>fluidRow()</code> creates the row. <code>column(6...)</code> creates a column for our stock ticker input with a length of 6. <code>textInput(&quot;stock1&quot;, &quot;Stock 1&quot;, &quot;SPY&quot;))</code> creates our first text input field. We called it <code>stock1</code> which means it will be referenced in downstream code as <code>input$stock1</code>. We labeled it with “Stock 1”, which is what the end user will see when viewing the app. Finally we set “SPY” as the default initial value.</p>
+<p>We also want a row where the user can choose a start date with <code>dateInput(&quot;date&quot;, &quot;Starting Date&quot;, &quot;2010-01-01&quot;, format = &quot;yyyy-mm-dd&quot;))</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fluidRow</span>(
+  <span class="kw">column</span>(<span class="dv">7</span>,
+  <span class="kw">dateInput</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;Starting Date&quot;</span>, <span class="st">&quot;2010-01-01&quot;</span>, <span class="dt">format =</span> <span class="st">&quot;yyyy-mm-dd&quot;</span>))
+)</code></pre></div>
+<p>The <code>dateInput()</code> is also quite important as we will use it in our future Shiny apps.</p>
+<p>Finally, let’s give the user the ability to rebalance the portfolio at different intervals. We will use <code>selectInput(&quot;rebalance&quot;, &quot;rebal freq&quot;, c(&quot;Yearly&quot; = &quot;years&quot;, &quot;Monthly&quot; = &quot;months&quot;, &quot;Weekly&quot; = &quot;weeks&quot;))</code> to create a drop down for the user.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fluidRow</span>(
+  <span class="kw">column</span>(<span class="dv">6</span>,
+  <span class="kw">selectInput</span>(<span class="st">&quot;rebalance&quot;</span>, <span class="st">&quot;rebal freq&quot;</span>,
+              <span class="kw">c</span>(<span class="st">&quot;Yearly&quot;</span> =<span class="st"> &quot;years&quot;</span>,
+                <span class="st">&quot;Monthly&quot;</span> =<span class="st"> &quot;months&quot;</span>,
+                <span class="st">&quot;Weekly&quot;</span> =<span class="st"> &quot;weeks&quot;</span>))
+  )
+)</code></pre></div>
+<p>Finally, we include a <code>submit</code> button for our end user. This button is what takes all those inputs and passes them on to our reactive functions so the Shiny engine can start doing its work. The app won’t fire until the user clicks submit.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">actionButton</span>(<span class="st">&quot;go&quot;</span>, <span class="st">&quot;Submit&quot;</span>)</code></pre></div>
+<p>Here is what the entire input sidebar looks like:</p>
+<div class="figure"><span id="fig:unnamed-chunk-48"></span>
+<img src="snapshots/input-sidebar-entire.png" alt="Input Sidebar" width="100%" />
+<p class="caption">
+FIGURE 3.3: Input Sidebar
+</p>
+</div>
+<p>The ‘submit’ button is hugely important button because it enables the use of <code>eventReactive()</code> to control our computation. That first <code>eventReaactive()</code> is where we take the user-chosen stocks and grab their daily prices.</p>
+<p>The code should look very familiar from our previous work, except it depends on inputs from the user for ticker symbols, weights and starting date.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_returns_byhand &lt;-<span class="st"> </span><span class="kw">eventReactive</span>(input<span class="op">$</span>go, {
+  
+  symbols &lt;-<span class="st"> </span><span class="kw">c</span>(input<span class="op">$</span>stock1, input<span class="op">$</span>stock2, input<span class="op">$</span>stock3, input<span class="op">$</span>stock4, input<span class="op">$</span>stock5)
+  
+  prices &lt;-<span class="st"> </span><span class="kw">getSymbols</span>(symbols, <span class="dt">src =</span> <span class="st">&#39;yahoo&#39;</span>, <span class="dt">from =</span> input<span class="op">$</span>date, 
+             <span class="dt">auto.assign =</span> <span class="ot">TRUE</span>, <span class="dt">warnings =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">Ad</span>(<span class="kw">get</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">reduce</span>(merge) <span class="op">%&gt;%</span>
+<span class="st">    `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(symbols)
+
+  w &lt;-<span class="st"> </span><span class="kw">c</span>(input<span class="op">$</span>w1<span class="op">/</span><span class="dv">100</span>, input<span class="op">$</span>w2<span class="op">/</span><span class="dv">100</span>, input<span class="op">$</span>w3<span class="op">/</span><span class="dv">100</span>, input<span class="op">$</span>w4<span class="op">/</span><span class="dv">100</span>, input<span class="op">$</span>w5<span class="op">/</span><span class="dv">100</span>)
+  
+  asset_returns_long &lt;-<span class="st"> </span>
+<span class="st">      </span>prices <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">      </span><span class="kw">to.monthly</span>(<span class="dt">indexAt =</span> <span class="st">&quot;last&quot;</span>, <span class="dt">OHLC =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">      </span><span class="kw">tk_tbl</span>(<span class="dt">preserve_index =</span> <span class="ot">TRUE</span>, <span class="dt">rename_index =</span> <span class="st">&quot;date&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">      </span><span class="kw">gather</span>(asset, returns, <span class="op">-</span>date) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">      </span><span class="kw">group_by</span>(asset) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">      </span><span class="kw">mutate</span>(<span class="dt">returns =</span> (<span class="kw">log</span>(returns) <span class="op">-</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">lag</span>(returns))))
+
+  portfolio_returns_byhand &lt;-<span class="st"> </span>
+<span class="st">    </span>asset_returns_long <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">tq_portfolio</span>(<span class="dt">assets_col =</span> asset, 
+               <span class="dt">returns_col =</span> returns, 
+               <span class="dt">weights =</span> w,
+               <span class="dt">col_rename =</span> <span class="st">&quot;returns&quot;</span>)
+  
+})</code></pre></div>
+<p>We now have an object called <code>portfolio_returns_byhand()</code> and we can pass that object to our downstream code chunks. In fact, our substantive work has been completed. What’s left is to display the distributions of portfolio returns, which we did in our previous work by passing a dataframe object to <code>ggplot</code>.</p>
+<p>Shiny works in a similar way but it also uses a custom function for building reactive charts called <code>renderPlot()</code>. By including <code>renderPlot()</code> in the code chunks, we are alerting the app that a reactive plot is being built, one that will change when the an upstream reactive or input changes. In this case, the plot will change when the user clicks ‘submit’ and fires off the <code>eventReactive()</code>.</p>
+<p>After calling <code>renderPlot()</code>, we use <code>ggplot()</code> to create a scatter plot, a histogram and a density chart of monthly returns. These will be nested in different tabs so the user can toggle between them and choose which is most helpful. That might a bit hard to envision so here’s a snapshot:</p>
+<div class="figure"><span id="fig:unnamed-chunk-50"></span>
+<img src="snapshots/plots-tabs.png" alt="Tabs from Shiny App" width="100%" />
+<p class="caption">
+FIGURE 3.4: Tabs from Shiny App
+</p>
+</div>
+<p>The flow for these 3 <code>ggplot</code> code chunks, which appear in the different tabs, is going to be the same: call the reactive function <code>renderPlot()</code>, pass in<code>portfolio_returns_byhand()</code>, call <code>ggplot()</code> with an <code>aes(x = ...)</code> argument and then choose the appropriate <code>geom_</code>. The specifics of the <code>geom_</code> and other aesthetics are taken straight from our previous visualizations.</p>
+<p>Here is the scatterplot code chunk.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">renderPlot</span>({
+<span class="kw">portfolio_returns_byhand</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> date)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> returns), <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;percent monthly returns&quot;</span>)
+})</code></pre></div>
+<p>Here is the histogram code chunk.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">renderPlot</span>({
+  <span class="kw">portfolio_returns_byhand</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_histogram</span>(<span class="dt">alpha =</span> <span class="fl">0.25</span>, <span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">fill =</span> <span class="st">&quot;cornflowerblue&quot;</span>)
+})</code></pre></div>
+<p>And finally here is the density chart code chunk.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">renderPlot</span>({
+  <span class="kw">portfolio_returns_byhand</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) 
+})</code></pre></div>
+<p>Again, the final app and full source code can be seen here:</p>
+<p>www.reproduciblefinance.com/shiny/returns-distribution/</p>
+<p>This Shiny app is a good way to take all that grinding we did on portfolio returns and allow an end user to apply it to a custom portfolio.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="asset-prices-to-returns.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="growth-of-a-dollar.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-crc/edit/master/returns.Rmd",
+"text": "Edit"
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

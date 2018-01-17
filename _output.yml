@@ -2,7 +2,7 @@ bookdown::gitbook:
   css: css/style.css
   config:
     toc:
-      collapse: none
+      collapse: section
       before: |
         <li><a href="./">A Book Example</a></li>
       after: |
@@ -21,9 +21,10 @@ bookdown::pdf_book:
   dev: "cairo_pdf"
   latex_engine: xelatex
   citation_package: natbib
+  fig_caption: yes
   template: null
   pandoc_args: --top-level-division=chapter
-  toc_depth: 3
+  toc_depth: 1
   toc_unnumbered: no
   toc_appendix: yes
   quote_footer: ["\\VA{", "}{}"]

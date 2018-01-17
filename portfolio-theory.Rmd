@@ -1,0 +1,20 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Portfolio Theory
+
+Jonathan Regenstein is the Director of Financial Services practice at RStudio. 
+
+
+![Capm Beta Shiny](snapshots/capm-beta-shiny.png)
+
+
+
+```{r, echo=FALSE, fig.cap = "Capm Beta Shiny", out.width = "100%"}
+knitr::include_graphics("snapshots/capm-beta-shiny.png.png")
+```
+
+
+

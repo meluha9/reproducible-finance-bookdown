@@ -1,6 +1,6 @@
 --- 
-title: "A Book Example Using bookdown"
-author: "Frida Gomam"
+title: "Reproducible Finance with R"
+author: "Jonathan K. Regenstein, Jr."
 date: "`r Sys.Date()`"
 documentclass: krantz
 bibliography: [book.bib, packages.bib]
@@ -10,13 +10,13 @@ colorlinks: yes
 lot: yes
 lof: yes
 site: bookdown::bookdown_site
-description: "A book example for a Chapman & Hall book."
-github-repo: yihui/bookdown-crc
+description: "A reproducible for Chapman & Hall."
+github-repo: jkr216/reproducible-finance-ch
 graphics: yes
 #cover-image: images/cover.jpg
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE, echo = FALSE}
 options(
   htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4
 )
@@ -37,7 +37,12 @@ It is very important...
 
 ## Structure of the book {-}
 
-Chapters \@ref(introduction) introduces a new topic, and ...
+Chapter \@ref(prices-to-returns) introduces prices to returns ...
+
+## About the Author {-}
+
+Jonathan Regenstein is the Director of Financial Services practice at RStudio. 
+
 
 ## Software information and conventions {-}
 

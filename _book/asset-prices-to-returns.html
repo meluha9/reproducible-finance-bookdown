@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reproducible Finance with R</title>
+  <meta name="description" content="A reproducible for Chapman &amp; Hall.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Reproducible Finance with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A reproducible for Chapman &amp; Hall." />
+  <meta name="github-repo" content="jkr216/reproducible-finance-ch" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reproducible Finance with R" />
+  
+  <meta name="twitter:description" content="A reproducible for Chapman &amp; Hall." />
+  
+
+<meta name="author" content="Jonathan K. Regenstein, Jr.">
+
+
+<meta name="date" content="2018-01-17">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="returns.html">
+<link rel="next" href="to-the-portfolio-station.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.9/htmlwidgets.js"></script>
+<script src="libs/proj4js-2.3.15/proj4.js"></script>
+<link href="libs/highcharts-5.0.6/css/motion.css" rel="stylesheet" />
+<script src="libs/highcharts-5.0.6/highstock.js"></script>
+<script src="libs/highcharts-5.0.6/highcharts-3d.js"></script>
+<script src="libs/highcharts-5.0.6/highcharts-more.js"></script>
+<script src="libs/highcharts-5.0.6/modules/annotations.js"></script>
+<script src="libs/highcharts-5.0.6/modules/broken-axis.js"></script>
+<script src="libs/highcharts-5.0.6/modules/data.js"></script>
+<script src="libs/highcharts-5.0.6/modules/drilldown.js"></script>
+<script src="libs/highcharts-5.0.6/modules/exporting.js"></script>
+<script src="libs/highcharts-5.0.6/modules/funnel.js"></script>
+<script src="libs/highcharts-5.0.6/modules/heatmap.js"></script>
+<script src="libs/highcharts-5.0.6/modules/map.js"></script>
+<script src="libs/highcharts-5.0.6/modules/no-data-to-display.js"></script>
+<script src="libs/highcharts-5.0.6/modules/offline-exporting.js"></script>
+<script src="libs/highcharts-5.0.6/modules/solid-gauge.js"></script>
+<script src="libs/highcharts-5.0.6/modules/treemap.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/annotations.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/draggable-legend.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/draggable-points.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/export-csv.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/grouped-categories.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/motion.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/pattern-fill-v2.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/tooltip-delay.js"></script>
+<script src="libs/highcharts-5.0.6/custom/reset.js"></script>
+<script src="libs/highcharts-5.0.6/custom/symbols-extra.js"></script>
+<script src="libs/highcharts-5.0.6/custom/text-symbols.js"></script>
+<link href="libs/fontawesome-4.5.0/font-awesome.min.css" rel="stylesheet" />
+<link href="libs/htmlwdgtgrid-1/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="libs/highchart-binding-0.5.0/highchart.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> install the packages needed by this book; you fill out c(), e.g. c(‘ggplot2’, ‘dplyr’)</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-read-this-book"><i class="fa fa-check"></i>Why read this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#structure-of-the-book"><i class="fa fa-check"></i>Structure of the book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-author"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information-and-conventions"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html"><i class="fa fa-check"></i>Returns</a></li>
+<li class="chapter" data-level="2" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html"><i class="fa fa-check"></i><b>2</b> Asset Prices to Returns</a><ul>
+<li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#importing-asset-prices"><i class="fa fa-check"></i>Importing Asset Prices</a></li>
+<li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#thoughts-on-converting-daily-prices-to-monthly-log-returns"><i class="fa fa-check"></i>Thoughts on Converting Daily Prices to Monthly Log Returns</a></li>
+<li><a href="asset-prices-to-returns.html#converting-daily-prices-to-monthly-returns-in-the-xts-world">Converting Daily Prices to Monthly Returns in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyverse"><i class="fa fa-check"></i>Converting Daily Prices to Monthly Returns in the Tidyverse</a></li>
+<li><a href="asset-prices-to-returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyquant-world">Converting Daily Prices to Monthly Returns in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#a-word-on-workflow-and-recap"><i class="fa fa-check"></i>A Word on workflow and recap</a></li>
+<li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#visualizing-asset-returns-before-they-get-mashed-into-a-portfolio"><i class="fa fa-check"></i>Visualizing Asset Returns before they get mashed into a portfolio</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html"><i class="fa fa-check"></i><b>3</b> To the Portfolio Station</a><ul>
+<li><a href="to-the-portfolio-station.html#portfolio-returns-in-the-xts-world">Portfolio Returns in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html#portfolio-returns-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Returns in the tidyverse</a></li>
+<li class="chapter" data-level="" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html#portfolio-returns-in-the-tidyquant-world"><i class="fa fa-check"></i>Portfolio Returns in the tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html#visualizing-portfolio-returns"><i class="fa fa-check"></i>Visualizing Portfolio Returns</a></li>
+<li class="chapter" data-level="" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html#our-first-shiny-app-portfolio-returns"><i class="fa fa-check"></i>Our First Shiny App: Portfolio Returns</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html"><i class="fa fa-check"></i><b>4</b> Growth of a dollar</a><ul>
+<li><a href="growth-of-a-dollar.html#portfolio-growth-in-the-xts-world">Portfolio Growth in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#portfolio-growth-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Growth in the Tidyverse</a></li>
+<li><a href="growth-of-a-dollar.html#portfolio-growth-in-the-tidyquant-world">Portfolio Growth in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#visualizing-portfolio-growth"><i class="fa fa-check"></i>Visualizing Portfolio Growth</a></li>
+<li class="chapter" data-level="4.0.1" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#shiny-growth-of-a-dollar"><i class="fa fa-check"></i><b>4.0.1</b> Shiny Growth of a Dollar</a></li>
+<li class="chapter" data-level="" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#concluding"><i class="fa fa-check"></i>Concluding</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="risk.html"><a href="risk.html"><i class="fa fa-check"></i><b>5</b> Risk</a></li>
+<li class="chapter" data-level="6" data-path="portfolio-theory.html"><a href="portfolio-theory.html"><i class="fa fa-check"></i><b>6</b> Portfolio Theory</a></li>
+<li class="chapter" data-level="7" data-path="montecarlo.html"><a href="montecarlo.html"><i class="fa fa-check"></i><b>7</b> montecarlo</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="more-to-say.html"><a href="more-to-say.html"><i class="fa fa-check"></i><b>A</b> More to Say</a></li>
+<li class="chapter" data-level="" data-path="appendix-2.html"><a href="appendix-2.html"><i class="fa fa-check"></i>Appendix 2</a></li>
+<li class="chapter" data-level="B" data-path="generate-a-bibtex-database-automatically-for-some-r-packages.html"><a href="generate-a-bibtex-database-automatically-for-some-r-packages.html"><i class="fa fa-check"></i><b>B</b> generate a BibTeX database automatically for some R packages</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reproducible Finance with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="asset-prices-to-returns" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Asset Prices to Returns</h1>
+<div id="importing-asset-prices" class="section level3 unnumbered">
+<h3>Importing Asset Prices</h3>
+<p>Let’s get to step 1 wherein we import adjusted price data for the 5 ETFs to be used in our porftolio and save them to an <code>xts</code> object called <code>prices</code>.</p>
+<p>First, we need to choose ticker symbols and store them in a vector called symbols. We do that with <code>symbols &lt;- c(&quot;SPY&quot;,&quot;EFA&quot;, &quot;IJS&quot;, &quot;EEM&quot;,&quot;AGG&quot;)</code>. Those are the tickers for the 5 assets in our portfolio. If you want to change to different assets for testing, change those tickers.</p>
+<p>We will then pass <code>symbols</code> to Yahoo! Finance via the <code>getSymbols()</code> function from the <code>quantmod</code> package. This will return an object with the opening price, closing price, adjusted price, daily high, daily low and daily volume. We don’t want to work with all of those, though. The adjusted price is what we want.</p>
+<p>Note that we are enforcing a starting date of “2013-01-01” and an end date of “2017-12-31”. That means we will be working with 5 years of data. If you wish to run this script or pull data that is up-to-date as of today, you can remove the argument <code>to = &quot;2017-12-31&quot;</code> - but then your raw data will be different from what is being used in this book. That’s fine, but the numbers will not match after that.</p>
+<p>To isolate the adjusted price, we use the <code>map()</code> function from the <code>purrr</code> package and apply <code>Ad(get(.))</code> to the imported prices. This will <code>get()</code> the adjusted price from each of our individual price series. If we wanted the closing price, we would run <code>Cl(get(.))</code>. That <code>.</code> refers to our initial object. Note that if you wish to choose different stock tickers, you change the tickers in the <code>symbols</code> vector.</p>
+<p>We could stop here and have the right substance - daily prices for 5 tickers - but the format wouldn’t be great as we would have a list of 5 adjusted prices. Since those prices are <code>xts</code> objects, we would have a list of 5 <code>xts</code> objects. This is because the <code>map()</code> function returns a list by default.</p>
+<p>The <code>reduce(merge)</code> function will allow us to merge the 5 lists into one <code>xts</code> object. The <code>merge()</code> function looks for the date index shared by our objects and uses that index.</p>
+<p>Finally, we want intuitive column names and use <code>colnames&lt;-</code> to rename the columns according to the <code>symbols</code> object. The <code>rename()</code> function from <code>dplyr</code> will not work here because the object structure is still <code>xts</code>. Note that since we pull the names from the <code>symbols</code> object, we can change this portfolio by changing the tickers in <code>symbols</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">symbols &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;SPY&quot;</span>,<span class="st">&quot;EFA&quot;</span>, <span class="st">&quot;IJS&quot;</span>, <span class="st">&quot;EEM&quot;</span>,<span class="st">&quot;AGG&quot;</span>)
+
+
+prices &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">getSymbols</span>(symbols, <span class="dt">src =</span> <span class="st">&#39;yahoo&#39;</span>, 
+             <span class="dt">from =</span> <span class="st">&quot;2013-01-01&quot;</span>, 
+             <span class="dt">to =</span> <span class="st">&quot;2017-12-31&quot;</span>,
+             <span class="dt">auto.assign =</span> <span class="ot">TRUE</span>, 
+             <span class="dt">warnings =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">map</span>(<span class="op">~</span><span class="kw">Ad</span>(<span class="kw">get</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">reduce</span>(merge) <span class="op">%&gt;%</span>
+<span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(symbols)</code></pre></div>
+<p>Note that we are sourcing data from Yahoo! finance with <code>src = 'yahoo'</code> because that source is publicly available as of the time of this writing. In industry, we almost certainly wouldn’t be pulling from the internet but instead would be accesssing an internal database. In that situation, anyone wishing to reproduce or reuse or build upon our work must be able to import or update our raw data. It’s a simple but oft overlooked first step that needs to be made clear. Where did the raw data come from and what code path was used to access it? Make sure it can be run in a clean R environment, meaning one in which the Global Environment has been cleared.</p>
+<p>As to the starting date, I chose January 1, 2013 and the end date as December 31, 2017. Why? This book is being published in 2018 so we will be working with 5 years or 60 months of data and I like round numbers.</p>
+<p>Maybe my colleagues think that’s cherry picking because that’s 5 years of solid bull market behavior, maybe my clients think I need to go back to before the financial crisis bubble and do some stress testing. They are entitled to to their opinions, and I to mine. The important thing is to make it easy for someone to test his/her own permutations. If a colleague looks at our work and wants to test a start date that goes back to the internet bubble, we need to enable that. And, indeed, a date change can be accomplished in the code above by changing <code>from = &quot;2013-01-01&quot;</code> to <code>from = &quot;some other date&quot;</code>.</p>
+<p>Back to the code, we now have an <code>xts</code> object of the adjusted prices for our 5 assets. Have a quick peek.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(prices)</code></pre></div>
+<pre><code>##                 SPY      EFA      IJS      EEM      AGG
+## 2013-01-02 132.1244 49.92517 77.38805 40.67417 98.66173
+## 2013-01-03 131.8259 49.44096 77.28565 40.38634 98.41278
+## 2013-01-04 132.4049 49.69171 77.89076 40.46730 98.51948
+## 2013-01-07 132.0431 49.47555 77.43460 40.16148 98.46609
+## 2013-01-08 131.6631 49.19885 77.13670 39.80169 98.55505
+## 2013-01-09 131.9978 49.44961 77.36013 39.97258 98.48389</code></pre>
+<p>If you are running this code in the RStudio IDE, there will now be an object called <code>prices</code> in your Global Environment.</p>
+</div>
+<div id="thoughts-on-converting-daily-prices-to-monthly-log-returns" class="section level3 unnumbered">
+<h3>Thoughts on Converting Daily Prices to Monthly Log Returns</h3>
+<p>Next we want to turn those daily prices into monthly returns. This seems like a rather innocuous step in our work, but it involves two important decisions to be highlighted in the name of reproducibility. First, we are changing time periods from daily to monthly and thus we are transforming our data. We need to explain how that’s happening. Are we going to use the first day of each month? The last day? Does it matter?</p>
+<p>More importantly, we will be transforming our data from its raw form, adjusted prices, to a calculated form, log returns.</p>
+<p>This is such a standard step that the temptation is to include a few lines of code and move on to the analysis, which is the stuff our team gets paid to do. But, converting to log returns is our first major data processing decision: why did we choose log returns instead of simple returns? It’s a standard practice to use log returns but it’s also a good chance to set the precedent amongst our team and within our workflow that we justify and explain decisions about our data, even decisions that are standard operating procedure in the financial world. If we have made the decision to work with log returns across our work, we should point to an document or a paragraph that explains the decision and the brief substantive justification.</p>
+<p>In this case, I know that simulating returns is in our future in the Monte Carlo chapter, and we will be assuming a normal distribution of returns. Thus, I choose to convert to log returns. Plenty of people will disagree with making this transformation, then assuming a normal distribution, then simulating based on that assumption, and that’s fine.</p>
+</div>
+<div id="converting-daily-prices-to-monthly-returns-in-the-xts-world" class="section level3 unnumbered">
+<h3>Converting Daily Prices to Monthly Returns in the <code>xts</code> World</h3>
+<p>I mentioned in the introduction that we would be working in three universes - <code>xts</code>, <code>tidyverse</code> and <code>tidyquant</code> - the <code>prices</code> object is an <code>xts</code>, so we will start there..</p>
+<p>The first observation in our <code>prices</code> object is January 2, 2013 (the first trading day of that year) and we have daily prices. We want to convert to those daily prices to monthly log returns based on the last reading of each month.</p>
+<p>We will use <code>to.monthly(prices, indexAt = &quot;last&quot;, OHLC = FALSE)</code> from the <code>quantmod</code> package. The argument <code>index = &quot;last&quot;</code> tells the function whether we want to index to the first day of the month or the last day. If we wanted to use the first day, we would change it to <code>index = &quot;first&quot;</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prices_monthly &lt;-<span class="st"> </span><span class="kw">to.monthly</span>(prices, <span class="dt">indexAt =</span> <span class="st">&quot;last&quot;</span>, <span class="dt">OHLC =</span> <span class="ot">FALSE</span>)
+
+<span class="kw">head</span>(prices_monthly)</code></pre></div>
+<pre><code>##                 SPY      EFA      IJS      EEM      AGG
+## 2013-01-31 135.4172 50.99734 79.35231 39.77470 98.16378
+## 2013-02-28 137.1450 50.34021 80.64629 38.86623 98.74377
+## 2013-03-28 142.3525 50.99734 83.95920 38.47046 98.84107
+## 2013-04-30 145.0875 53.55672 84.06191 38.93819 99.79841
+## 2013-05-31 148.5129 51.93981 87.66562 37.05829 97.80135
+## 2013-06-28 146.5311 50.54890 87.54271 35.08465 96.27032</code></pre>
+<p>We have moved from an <code>xts</code> object of daily prices to an <code>xts</code> object of monthly prices. Note that we now have one reading per month, for the last day of each month.</p>
+<p>Now we call <code>Return.calculate(prices_monthly, method = &quot;log&quot;)</code> to convert to returns and save as an object called <code>assed_returns_xts</code>. Note this will give us log returns by the <code>method = &quot;log&quot;</code> argument. We could have used <code>method = &quot;discrete&quot;</code> to get simple returns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset_returns_xts &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span class="kw">Return.calculate</span>(prices_monthly, <span class="dt">method =</span> <span class="st">&quot;log&quot;</span>))
+
+<span class="kw">head</span>(asset_returns_xts)</code></pre></div>
+<pre><code>##                    SPY         EFA          IJS         EEM           AGG
+## 2013-02-28  0.01267837 -0.01296933  0.016175294 -0.02310518  0.0058910455
+## 2013-03-28  0.03726809  0.01296933  0.040258091 -0.01023510  0.0009848732
+## 2013-04-30  0.01903021  0.04896781  0.001222644  0.01208477  0.0096390144
+## 2013-05-31  0.02333503 -0.03065564  0.041976206 -0.04948338 -0.0202138300
+## 2013-06-28 -0.01343411 -0.02714438 -0.001403016 -0.05472848 -0.0157783747
+## 2013-07-31  0.05038580  0.05186015  0.063541583  0.01315996  0.0026878683</code></pre>
+<p>Take a quick look at the monthly returns above, to make sure things appear to be in order. Notice in particular the date of the first value. We imported prices starting “2013-01-02” yet our first monthly return is for “2013-02-28”. This is because we used the argument <code>indexAt = &quot;last&quot;</code> when we cast to a monthly periodicity (try changing to <code>indexAt = &quot;first&quot;</code> and see the result). That is not necessarily good or bad, but it might matter if that first month’s returns makes a difference in our analysis. More broadly, it’s a good time to note how our decisions in data transformation can affect the data that ultimately survive to our analytical stage. We just lost the first two months of daily prices.</p>
+<p>From a subtantive perspective, we have accomplished our task: we have imported daily prices, trimmed to adjusted prices, moved to monthly prices and transformed to monthly log returns, all in the <code>xts</code> world.</p>
+<p>Let’s do the same thing but with a different coding paradigm in the tidy world.</p>
+</div>
+<div id="converting-daily-prices-to-monthly-returns-in-the-tidyverse" class="section level3 unnumbered">
+<h3>Converting Daily Prices to Monthly Returns in the Tidyverse</h3>
+<p>We now take the same raw data, which is the <code>prices</code> object we created upon data import and convert it to monthly returns using 3 alternative methods. We will make use of the <code>dplyr</code>, <code>tidyquant</code>, <code>timetk</code> and <code>tibbletime</code> packages.</p>
+<p>There are lots of differences between the <code>xts</code> world and the tidy world but a very important one is the date. As noted above, <code>xts</code> objects have a date index. As we’ll see, data frames have a date column. We will see this difference in action soon but it’s good to keep in mind from the outset. Let’s get to it.</p>
+<p>Our conversion of the <code>prices</code> object from <code>xts</code> to a data frame will start with the very useful <code>tk_tbl()</code> function from the <code>timetk</code> package.</p>
+<p>In the piped workflow below, our first step is to use <code>tk_tbl(preserve_index = TRUE, rename_index = &quot;date&quot;)</code> function to convert from <code>xts</code> to <code>tibble</code>. The two arguments will convert the <code>xts</code> date index to a date column, and rename it “date”. If we stopped here, we would have a new object in <code>tibble</code> format.</p>
+<p>Next we turn to <code>dplyr</code> to <code>gather()</code> our new dataframe into long format and then <code>group_by</code> asset. We have not done any calculations yet, we have just shifted from wide format, to long, tidy format. Notice that when we gathered our data, we renamed one of the columns to <code>returns</code> even though the data are still prices. The next step will explain why we did that.</p>
+<p>Next, we want to calculate log returns and add those returns to the data frame. We will use <code>mutate</code> and our own calculation to get log returns: <code>mutate(returns = (log(returns) - log(lag(returns))))</code>. Notice that I am putting our new log returns into the <code>returns</code> column by calling <code>returns = ...</code>. This is going to remove the price data and replace it with log returns data. This is the explanation for why, when we called <code>gather</code> in the previous step, we renamed the column to <code>returns</code>. That allows us to simply replace that column with log return data instead of having to create a new column and then delete the price data column.</p>
+<p>Our last two steps are to <code>spread</code> the data back to wide format, which makes it easier to compare to the <code>xts</code> object and easier to read, but is not a best practice in the tidyverse. We are going to look at this new object and compare to the <code>xts</code> object above, so we will stick with wide format for now.</p>
+<p>Finally, we want to reorder the columns so that the date column is first.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset_returns_dplyr_byhand &lt;-<span class="st"> </span>
+<span class="st">  </span>prices <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">to.monthly</span>(<span class="dt">indexAt =</span> <span class="st">&quot;last&quot;</span>, <span class="dt">OHLC =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">tk_tbl</span>(<span class="dt">preserve_index =</span> <span class="ot">TRUE</span>, <span class="dt">rename_index =</span> <span class="st">&quot;date&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(asset, returns, <span class="op">-</span>date) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(asset) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">returns =</span> (<span class="kw">log</span>(returns) <span class="op">-</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">lag</span>(returns)))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">spread</span>(asset, returns) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(date, symbols)</code></pre></div>
+<p>Have a quick peek at the new object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(asset_returns_dplyr_byhand)</code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   date            SPY      EFA       IJS      EEM        AGG
+##   &lt;date&gt;        &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+## 1 2013-01-31  NA       NA       NA        NA       NA       
+## 2 2013-02-28   0.0127 - 0.0130   0.0162  - 0.0231   0.00589 
+## 3 2013-03-28   0.0373   0.0130   0.0403  - 0.0102   0.000985
+## 4 2013-04-30   0.0190   0.0490   0.00122   0.0121   0.00964 
+## 5 2013-05-31   0.0233 - 0.0307   0.0420  - 0.0495 - 0.0202  
+## 6 2013-06-28 - 0.0134 - 0.0271 - 0.00140 - 0.0547 - 0.0158</code></pre>
+<p>Notice that our object now includes a reading for January 2013, whereas <code>xts</code> excluded it. Let’s make them consistent by removing that first row with the <code>slice()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset_returns_dplyr_byhand &lt;-<span class="st"> </span>asset_returns_dplyr_byhand <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">slice</span>(<span class="op">-</span><span class="dv">1</span>)
+
+<span class="kw">head</span>(asset_returns_dplyr_byhand)</code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   date           SPY     EFA      IJS     EEM       AGG
+##   &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+## 1 2013-02-28  0.0127 -0.0130  0.0162  -0.0231  0.00589 
+## 2 2013-03-28  0.0373  0.0130  0.0403  -0.0102  0.000985
+## 3 2013-04-30  0.0190  0.0490  0.00122  0.0121  0.00964 
+## 4 2013-05-31  0.0233 -0.0307  0.0420  -0.0495 -0.0202  
+## 5 2013-06-28 -0.0134 -0.0271 -0.00140 -0.0547 -0.0158  
+## 6 2013-07-31  0.0504  0.0519  0.0635   0.0132  0.00269</code></pre>
+<p>Now our two objects are consistent and we have a data frame that we could use for further work.</p>
+</div>
+<div id="converting-daily-prices-to-monthly-returns-in-the-tidyquant-world" class="section level3 unnumbered">
+<h3>Converting Daily Prices to Monthly Returns in the <code>tidyquant</code> World</h3>
+<p>Let’s explore a third pardigm where we’ll use the <code>tq_transmute</code> function from <code>tidyquant</code>. Instead of using <code>to.monthly</code> and <code>mutate</code>, and then supplying our own calculation, we use <code>tq_transmute(mutate_fun = periodReturn, period = &quot;monthly&quot;, type = &quot;log&quot;)</code> and go straight from daily prices to monthly log returns. Note that we select the period as ‘monthly’ in that function call, which means we can pass in the raw daily price <code>xts</code> object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset_returns_tq_builtin &lt;-<span class="st"> </span>
+<span class="st">  </span>prices <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tk_tbl</span>(<span class="dt">preserve_index =</span> <span class="ot">TRUE</span>, <span class="dt">rename_index =</span> <span class="st">&quot;date&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(asset, prices, <span class="op">-</span>date) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(asset) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tq_transmute</span>(<span class="dt">mutate_fun =</span> periodReturn, <span class="dt">period =</span> <span class="st">&quot;monthly&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;log&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">spread</span>(asset, monthly.returns) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(date, symbols) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">slice</span>(<span class="op">-</span><span class="dv">1</span>)
+
+<span class="kw">head</span>(asset_returns_tq_builtin)</code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   date           SPY     EFA      IJS     EEM       AGG
+##   &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+## 1 2013-02-28  0.0127 -0.0130  0.0162  -0.0231  0.00589 
+## 2 2013-03-28  0.0373  0.0130  0.0403  -0.0102  0.000985
+## 3 2013-04-30  0.0190  0.0490  0.00122  0.0121  0.00964 
+## 4 2013-05-31  0.0233 -0.0307  0.0420  -0.0495 -0.0202  
+## 5 2013-06-28 -0.0134 -0.0271 -0.00140 -0.0547 -0.0158  
+## 6 2013-07-31  0.0504  0.0519  0.0635   0.0132  0.00269</code></pre>
+<p>Note that we had to again remove the first row with <code>slice(-1)</code>.</p>
+<p>Our second method in the tidyquant world will produce the same output as the previous two - a <code>tibble</code> of monthly log returns - but we will also introduce the <code>tibbletime</code> package Unlike the previous code chunk above where we went from daily prices straight to monthly returns, here we go from daily prices to monthly prices to monthly returns. That is, we will first create an <code>xts</code> of monthly prices, then a <code>tibble</code>, then a <code>tibbletime</code> object of monthly prices, then pipe to create monthly returns.</p>
+<p>We don’t have a substantive reason for doing that here, but it could prove useful if there’s a time when we need to get monthly prices in isolation during a tidyverse-based piped workflow.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset_returns_tbltime &lt;-<span class="st"> </span>
+<span class="st">  </span>prices <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">to.monthly</span>(<span class="dt">indexAt =</span> <span class="st">&quot;lastof&quot;</span>, <span class="dt">OHLC =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tk_tbl</span>(<span class="dt">preserve_index =</span> <span class="ot">TRUE</span>, <span class="dt">rename_index =</span> <span class="st">&quot;date&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tbl_time</span>(<span class="dt">index =</span> <span class="st">&quot;date&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(asset, returns, <span class="op">-</span>date) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(asset) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">tq_transmute</span>(<span class="dt">mutate_fun =</span> periodReturn, <span class="dt">type =</span> <span class="st">&quot;log&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">spread</span>(asset, monthly.returns) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(date, symbols) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">slice</span>(<span class="op">-</span><span class="dv">1</span>)</code></pre></div>
+<p>Let’s take a peek at our 4 monthly log return objects.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(asset_returns_xts)</code></pre></div>
+<pre><code>##                    SPY         EFA          IJS         EEM           AGG
+## 2013-02-28  0.01267837 -0.01296933  0.016175294 -0.02310518  0.0058910455
+## 2013-03-28  0.03726809  0.01296933  0.040258091 -0.01023510  0.0009848732
+## 2013-04-30  0.01903021  0.04896781  0.001222644  0.01208477  0.0096390144
+## 2013-05-31  0.02333503 -0.03065564  0.041976206 -0.04948338 -0.0202138300
+## 2013-06-28 -0.01343411 -0.02714438 -0.001403016 -0.05472848 -0.0157783747
+## 2013-07-31  0.05038580  0.05186015  0.063541583  0.01315996  0.0026878683</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(asset_returns_dplyr_byhand)</code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   date           SPY     EFA      IJS     EEM       AGG
+##   &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+## 1 2013-02-28  0.0127 -0.0130  0.0162  -0.0231  0.00589 
+## 2 2013-03-28  0.0373  0.0130  0.0403  -0.0102  0.000985
+## 3 2013-04-30  0.0190  0.0490  0.00122  0.0121  0.00964 
+## 4 2013-05-31  0.0233 -0.0307  0.0420  -0.0495 -0.0202  
+## 5 2013-06-28 -0.0134 -0.0271 -0.00140 -0.0547 -0.0158  
+## 6 2013-07-31  0.0504  0.0519  0.0635   0.0132  0.00269</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(asset_returns_tq_builtin)</code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   date           SPY     EFA      IJS     EEM       AGG
+##   &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+## 1 2013-02-28  0.0127 -0.0130  0.0162  -0.0231  0.00589 
+## 2 2013-03-28  0.0373  0.0130  0.0403  -0.0102  0.000985
+## 3 2013-04-30  0.0190  0.0490  0.00122  0.0121  0.00964 
+## 4 2013-05-31  0.0233 -0.0307  0.0420  -0.0495 -0.0202  
+## 5 2013-06-28 -0.0134 -0.0271 -0.00140 -0.0547 -0.0158  
+## 6 2013-07-31  0.0504  0.0519  0.0635   0.0132  0.00269</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(asset_returns_tbltime)</code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   date           SPY     EFA      IJS     EEM       AGG
+##   &lt;date&gt;       &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+## 1 2013-02-28  0.0127 -0.0130  0.0162  -0.0231  0.00589 
+## 2 2013-03-31  0.0373  0.0130  0.0403  -0.0102  0.000985
+## 3 2013-04-30  0.0190  0.0490  0.00122  0.0121  0.00964 
+## 4 2013-05-31  0.0233 -0.0307  0.0420  -0.0495 -0.0202  
+## 5 2013-06-30 -0.0134 -0.0271 -0.00140 -0.0547 -0.0158  
+## 6 2013-07-31  0.0504  0.0519  0.0635   0.0132  0.00269</code></pre>
+<p>Do we notice anything of interest?</p>
+<p>First, have a look at the left most column/date in each object, where the date is stored. The <code>asset_returns_xts</code> has a date index, not a column. That index doesn’t have a name. It is accessed via <code>index(asset_returns_xts)</code>. The data frame objects have a column called “date”, accessed via the <code>$date</code> convention, e.g. <code>asset_returns_dplyr_byhand$date</code>.</p>
+<p>Second, each of these objects is in “wide” format, which in this case means there is a column for each of our assets: SPY has a column, EFA has a column, IJS has a column, EEM has a colum, AGG has a column.</p>
+<p>This is the format that <code>xts</code> likes and it’s the format that is easier to read as a human. However, the tidyverse wants this data to be in long or tidy format so that each variable has its own column.</p>
+<p>For our asset_returns objects, that would mean a column called “date”, a column called “asset” and a column called “returns”. To see that in action, here is how it looks.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset_returns_long &lt;-<span class="st"> </span>
+<span class="st">  </span>asset_returns_dplyr_byhand <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">gather</span>(asset, returns, <span class="op">-</span>date)
+
+<span class="kw">head</span>(asset_returns_long)</code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##   date       asset returns
+##   &lt;date&gt;     &lt;chr&gt;   &lt;dbl&gt;
+## 1 2013-02-28 SPY    0.0127
+## 2 2013-03-28 SPY    0.0373
+## 3 2013-04-30 SPY    0.0190
+## 4 2013-05-31 SPY    0.0233
+## 5 2013-06-28 SPY   -0.0134
+## 6 2013-07-31 SPY    0.0504</code></pre>
+<p><code>asset_returns_long</code> has 3 columns, one for each variable: date, asset, return As I said, this format is harder to read as a human - we can see only the first several reading for one asset. From a tidyverse perspective, this is considered ‘tidy’ data or long data and it’s the preferred format. When we get to visualizing and manipulating this data, it will be clearer as to why the tidyverse likes this format.</p>
+<p>For now, spend a few minutes looking at the <code>xts</code> object <code>asset_returns_xts</code> and our various data frames, then look at the long, tidy object <code>asset_returns_long</code> object. Make sure that logic of how we got from daily prices to log returns for each object makes sense.</p>
+</div>
+<div id="a-word-on-workflow-and-recap" class="section level3 unnumbered">
+<h3>A Word on workflow and recap</h3>
+<p>Let’s recap what we’ve done thus far. We have imported raw price data for 5 assets, in a reprudicible and flexible way. We have used 4 different methods for converting those daily prices to monthly, log returns. From those 4 methods, we now have 5 objects: <code>asset_returns_xts</code> (an xts object), <code>asset_returns_dplyr_byhand</code>, <code>asset_returns_tq_builtin</code>, <code>asset_returns_tbltime</code> and <code>asset_returns_long</code> (a data frame in long instead of wide format).</p>
+<p>We can think of our work thus far in terms of a wholistic data science workflow, that begins with data import and transformation. Data import and transformation is not the most exciting of work but it needs to be so crystal clear that our colleagues find it stunningly easy to follow the origin of our data. If we wish for our work to lay the ground work for several potential projects or test strategies that will increase in complexity, this first step needs to be clear and accessible.</p>
+<p>There’s a high likelihood that we will encounter work from other team members who have their own methods for data import and transformation. The more methods we can master or at least practice, the better prepared we will be to reuse or expand on our colleagues’ work.</p>
+<p>Data import and transofrmation is straightforward, but it also forces us to engage with our data in its rawest form, instead of skipping ahead to the model and the R squared. A data scientist can never spend too much time getting to know his/her data. Perhaps new insights will jump out, or an error will be found, or a new hypothesis. Furthermore, when it comes time to defend or update our findings or conclusions, deep knowledge of the raw data is crucial.</p>
+</div>
+<div id="visualizing-asset-returns-before-they-get-mashed-into-a-portfolio" class="section level3 unnumbered">
+<h3>Visualizing Asset Returns before they get mashed into a portfolio</h3>
+<p>We could jump straight into the process of converting these assets into a portfolio, but it’s good practice to look at the individual charts before doing so. Once a portfolio is built, we’re unlikely to back track to visualizing returns on an individual basis. Yet, those individual returns are the building blocks and raw material of our portfolio. Visualizing their returns adds another chance to get to know our raw data.</p>
+<p>For the purposes of visualizing returns, we will work with two of our monthly log returns objects, <code>asset_returns_xts</code> and <code>asset_returns_long</code> (the tidy, long formatted data frame)</p>
+<p>First, we ill use the <code>highcharter</code> package to visualize the <code>xts</code> formatted returns.</p>
+<p><code>highcharter</code> is an R package but <code>Highcharts</code> is a javascript library - the R package is a hook into the javascript library. <code>Highcharts</code> is fantast for visualizing time series and it comes with great built-in widgets for viewing different time frames. I highly recommend it for visualizing financial time series but you do need to buy a license to use it in a commercial setting.</p>
+<p>Not only are the visualizations nice, but it “just works” with <code>xts</code> objects in the sense that it reads the index as dates withouth needing to be told. We pass in an <code>xts</code> object and let the package do the rest. With that, let’s get to it.</p>
+<p>First, we set <code>highchart(type = &quot;stock&quot;)</code> to get a nice line format which was purpose built for stocks.</p>
+<p>Then we add each of our series to the highcharter code flow with <code>hc_add_series(asset_returns_xts[, symbols[1]], name = symbols[1])</code>. Notice that we can use our original <code>symbols</code> object to reference the columns. This will allow the code to run should we change to different ticker symbols at the outset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">highchart</span>(<span class="dt">type =</span> <span class="st">&quot;stock&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hc_title</span>(<span class="dt">text =</span> <span class="st">&quot;Monthly Log Returns&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series</span>(asset_returns_xts[, symbols[<span class="dv">1</span>]], 
+                  <span class="dt">name =</span> symbols[<span class="dv">1</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series</span>(asset_returns_xts[, symbols[<span class="dv">2</span>]], 
+                  <span class="dt">name =</span> symbols[<span class="dv">2</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series</span>(asset_returns_xts[, symbols[<span class="dv">3</span>]], 
+                  <span class="dt">name =</span> symbols[<span class="dv">3</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series</span>(asset_returns_xts[, symbols[<span class="dv">4</span>]], 
+                  <span class="dt">name =</span> symbols[<span class="dv">4</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series</span>(asset_returns_xts[, symbols[<span class="dv">5</span>]], 
+                  <span class="dt">name =</span> symbols[<span class="dv">5</span>]) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_theme</span>(<span class="kw">hc_theme_flat</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_navigator</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hc_scrollbar</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div id="htmlwidget-6355395ed10d984d0097" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6355395ed10d984d0097">{"x":{"hc_opts":{"title":{"text":"Monthly Log Returns"},"yAxis":{"title":{"text":null}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"},"bubble":{"minSize":5,"maxSize":25}},"annotationsOptions":{"enabledButtons":false},"tooltip":{"delayForDisplay":10},"series":[{"data":[[1362009600000,0.0126783659931133],[1364428800000,0.0372680904724714],[1367280000000,0.0190302091644767],[1369958400000,0.02333502908004],[1372377600000,-0.0134341106127849],[1375228800000,0.0503857960984693],[1377820800000,-0.0304514978670412],[1380499200000,0.0311561466236308],[1383177600000,0.0452666609435708],[1385683200000,0.0292069080255981],[1388448000000,0.025596069924438],[1391126400000,-0.0358844560774747],[1393545600000,0.0445103510614038],[1396224000000,0.00826123892502739],[1398816000000,0.00692749528183079],[1401408000000,0.0229411881627062],[1404086400000,0.020434582430469],[1406764800000,-0.0135285849991522],[1409270400000,0.0387046446322765],[1412035200000,-0.0138923820178878],[1414713600000,0.0232777902153956],[1417132800000,0.027101536937244],[1419984000000,-0.00253999953535189],[1422576000000,-0.0300767242873636],[1424995200000,0.0546817404963766],[1427760000000,-0.0158303316822828],[1430352000000,0.00978596220351768],[1432857600000,0.0127742263853188],[1435622400000,-0.0203254321409254],[1438300800000,0.0219059911356947],[1440979200000,-0.0633070404835792],[1443571200000,-0.0253971323318103],[1446163200000,0.0818438484288118],[1448841600000,0.00364830692500817],[1451520000000,-0.0174335229017659],[1454025600000,-0.0510686776178515],[1456704000000,-0.000826311952819125],[1459382400000,0.0651002659916928],[1461888000000,0.00393355033521736],[1464652800000,0.0168684108479047],[1467244800000,0.00346985523323617],[1469750400000,0.0358218808675836],[1472601600000,0.00119685435312267],[1475193600000,5.80156927894038e-05],[1477872000000,-0.017489099941467],[1480464000000,0.0361759682928975],[1483056000000,0.0200691576142829],[1485820800000,0.0177364784484055],[1488240000000,0.0385392795546533],[1490918400000,0.00124920862003908],[1493337600000,0.00987710780753925],[1496188800000,0.0140143543667763],[1498780800000,0.00635473414184862],[1501459200000,0.0203457115593029],[1504137600000,0.00291350147981984],[1506643200000,0.0199491093657729],[1509408000000,0.0232907140628988],[1512000000000,0.0301080831011662],[1514505600000,0.0120549152246188]],"name":"SPY"},{"data":[[1362009600000,-0.0129693338027459],[1364428800000,0.0129693338027459],[1367280000000,0.0489678075264539],[1369958400000,-0.030655636534199],[1372377600000,-0.0271443822875179],[1375228800000,0.0518601489898725],[1377820800000,-0.0197463301224912],[1380499200000,0.0753386140580581],[1383177600000,0.0320816515917688],[1385683200000,0.00544967911032668],[1388448000000,0.0215281505864757],[1391126400000,-0.0534133564728299],[1393545600000,0.0595050128911412],[1396224000000,-0.00460259433093757],[1398816000000,0.0165294434153038],[1401408000000,0.0158284840112657],[1404086400000,0.0091654762909279],[1406764800000,-0.0263799194749526],[1409270400000,0.0018004617152938],[1412035200000,-0.0395985172960831],[1414713600000,-0.00265477889426169],[1417132800000,0.000625256959348341],[1419984000000,-0.0407466772855427],[1422576000000,0.00622641719456674],[1424995200000,0.0614505334286148],[1427760000000,-0.0143886629699006],[1430352000000,0.0358164993885897],[1432857600000,0.00195271447938161],[1435622400000,-0.031676244847417],[1438300800000,0.0201143983670686],[1440979200000,-0.0771524557723442],[1443571200000,-0.0451948710232188],[1446163200000,0.0640260044732162],[1448841600000,-0.00755589055784611],[1451520000000,-0.0235950109528176],[1454025600000,-0.0567578194655454],[1456704000000,-0.0339139836084432],[1459382400000,0.0637456786215491],[1461888000000,0.021975197187817],[1464652800000,-0.000856089181573871],[1467244800000,-0.024491588892487],[1469750400000,0.0390003332267987],[1472601600000,0.0053267935334409],[1475193600000,0.013279146452243],[1477872000000,-0.0224037241936594],[1480464000000,-0.0179744516054132],[1483056000000,0.0267029437134525],[1485820800000,0.0323818455984117],[1488240000000,0.0118364428718687],[1490918400000,0.031805674822321],[1493337600000,0.023952205763865],[1496188800000,0.0348101976378778],[1498780800000,0.00295592222815078],[1501459200000,0.0261879549365212],[1504137600000,-0.000448342511581323],[1506643200000,0.0233428392112245],[1509408000000,0.0166536668188426],[1512000000000,0.00687000462873666],[1514505600000,0.0133983186411166]],"name":"EFA"},{"data":[[1362009600000,0.0161752937926307],[1364428800000,0.0402580908666037],[1367280000000,0.00122264413303785],[1369958400000,0.0419762059957547],[1372377600000,-0.00140301573064328],[1375228800000,0.0635415828685097],[1377820800000,-0.0347433896316609],[1380499200000,0.063873494705347],[1383177600000,0.0342339935373683],[1385683200000,0.0416611910363089],[1388448000000,0.0128922113444574],[1391126400000,-0.0357754108176955],[1393545600000,0.0452573957828211],[1396224000000,0.0133153092705367],[1398816000000,-0.0231842186870397],[1401408000000,0.00620529258608471],[1404086400000,0.0377187797667133],[1406764800000,-0.0520094862974885],[1409270400000,0.043657841418562],[1412035200000,-0.0612605878155374],[1414713600000,0.0688750547730876],[1417132800000,0.00477359511023234],[1419984000000,0.0252957543127117],[1422576000000,-0.0546277911428072],[1424995200000,0.0569145034329148],[1427760000000,0.0101563203381128],[1430352000000,-0.0184175924109873],[1432857600000,0.00750987485547938],[1435622400000,0.00417143115276186],[1438300800000,-0.0273754545223666],[1440979200000,-0.0472684389643208],[1443571200000,-0.0384647153533182],[1446163200000,0.0635897227837665],[1448841600000,0.0244152070801107],[1451520000000,-0.0521568737275144],[1454025600000,-0.0603070153696939],[1456704000000,0.0206053234717283],[1459382400000,0.0899102869616941],[1461888000000,0.0210442307239935],[1464652800000,0.00439716722465899],[1467244800000,0.00829231658044183],[1469750400000,0.0493483223587052],[1472601600000,0.0112610559196309],[1475193600000,0.00861468562188161],[1477872000000,-0.0381348969865121],[1480464000000,0.125246450845328],[1483056000000,0.0314917286651015],[1485820800000,-0.0121438685938946],[1488240000000,0.013428733726367],[1490918400000,-0.00653299479023239],[1493337600000,0.0051077191787634],[1496188800000,-0.0228625829926195],[1498780800000,0.0291518604341512],[1501459200000,0.00748146975083497],[1504137600000,-0.0275646901439961],[1506643200000,0.082321792996801],[1509408000000,0.00591594824154651],[1512000000000,0.0369132862837507],[1514505600000,-0.00373116931142103]],"name":"IJS"},{"data":[[1362009600000,-0.0231051786584109],[1364428800000,-0.0102351010668462],[1367280000000,0.0120847650529199],[1369958400000,-0.0494833847275626],[1372377600000,-0.0547284764929765],[1375228800000,0.0131599601516901],[1377820800000,-0.0257056626936554],[1380499200000,0.069588631855825],[1383177600000,0.0408615014298981],[1385683200000,-0.00259424575716105],[1388448000000,-0.00407414302354248],[1391126400000,-0.0903226977055644],[1393545600000,0.0332204900230209],[1396224000000,0.0380216158435229],[1398816000000,0.00777286391734711],[1401408000000,0.0290911228020891],[1404086400000,0.0237339947403163],[1406764800000,0.0135555140528441],[1409270400000,0.0279045836673153],[1412035200000,-0.0808568169174748],[1414713600000,0.0140966505708038],[1417132800000,-0.0155412600178071],[1419984000000,-0.0404422640071607],[1422576000000,-0.0068956643993725],[1424995200000,0.0431360602674808],[1427760000000,-0.0150862095193594],[1430352000000,0.0662813056192921],[1432857600000,-0.041910875732214],[1435622400000,-0.0297466296026996],[1438300800000,-0.0651781509698983],[1440979200000,-0.0936950711284439],[1443571200000,-0.0306423225996979],[1446163200000,0.0618083375657537],[1448841600000,-0.025560424172999],[1451520000000,-0.0389471604846419],[1454025600000,-0.0516366208224106],[1456704000000,-0.00821159003510452],[1459382400000,0.121879096527727],[1461888000000,0.0040791966448479],[1464652800000,-0.0376285398346163],[1467244800000,0.0445823321074412],[1469750400000,0.0524422419745725],[1472601600000,0.0087984296186705],[1475193600000,0.0248729394823353],[1477872000000,-0.00831219153515805],[1480464000000,-0.0451617968856306],[1483056000000,-0.00252998349997124],[1485820800000,0.0644314718150478],[1488240000000,0.01725784005707],[1490918400000,0.0361888529361427],[1493337600000,0.0168664024521998],[1496188800000,0.0280600127994952],[1498780800000,0.00922375557016064],[1501459200000,0.0565945350003898],[1504137600000,0.0232437643859278],[1506643200000,-0.000446242134324759],[1509408000000,0.0322784733486801],[1512000000000,-0.00389691028940131],[1514505600000,0.0369253587849387]],"name":"EEM"},{"data":[[1362009600000,0.00589104547367292],[1364428800000,0.000984873180655654],[1367280000000,0.00963901443357162],[1369958400000,-0.0202138300056722],[1372377600000,-0.0157783746941815],[1375228800000,0.0026878682577296],[1377820800000,-0.00829820886818489],[1380499200000,0.0111443839545746],[1383177600000,0.00829189119084006],[1385683200000,-0.00251001689767616],[1388448000000,-0.00558313274144684],[1391126400000,0.0152914979912557],[1393545600000,0.00375719214059611],[1396224000000,-0.0014817351191736],[1398816000000,0.00818303242335183],[1401408000000,0.0117217628384285],[1404086400000,-0.000575628688411101],[1406764800000,-0.00251228726672803],[1409270400000,0.0114308655641358],[1412035200000,-0.00616725131229856],[1414713600000,0.0105842970397001],[1417132800000,0.00654885743735534],[1419984000000,0.00147483040134677],[1422576000000,0.0203153332687149],[1424995200000,-0.00898803179317831],[1427760000000,0.00374018628879735],[1430352000000,-0.00323323874426507],[1432857600000,-0.00438343166375343],[1435622400000,-0.0108253323429901],[1438300800000,0.0085843865169446],[1440979200000,-0.00336362218322694],[1443571200000,0.00808135809769794],[1446163200000,0.000685380303665717],[1448841600000,-0.00389800631367976],[1451520000000,-0.00191909355282416],[1454025600000,0.0123298323995495],[1456704000000,0.00883178483630065],[1459382400000,0.00870441702831037],[1461888000000,0.00254640068747047],[1464652800000,0.000135361252871391],[1467244800000,0.0191668072393529],[1469750400000,0.00542963874575353],[1472601600000,-0.00215642414016504],[1475193600000,0.000516081467099916],[1477872000000,-0.00820510007735997],[1480464000000,-0.0259898667099074],[1483056000000,0.00253799523722353],[1485820800000,0.00212638507498042],[1488240000000,0.00643783579650758],[1490918400000,-0.000552937983939294],[1493337600000,0.00902909512871908],[1496188800000,0.00684756135450471],[1498780800000,-0.000182696683055816],[1501459200000,0.0033342986532725],[1504137600000,0.00936925081092355],[1506643200000,-0.00573219368515776],[1509408000000,0.000978061385562334],[1512000000000,-0.00148406565973769],[1514505600000,0.00440918474653174]],"name":"AGG"}],"navigator":{"enabled":false},"scrollbar":{"enabled":false}},"theme":{"colors":["#f1c40f","#2ecc71","#9b59b6","#e74c3c","#34495e","#3498db","#1abc9c","#f39c12","#d35400"],"chart":{"backgroundColor":"#ECF0F1"},"xAxis":{"gridLineDashStyle":"Dash","gridLineWidth":1,"gridLineColor":"#BDC3C7","lineColor":"#BDC3C7","minorGridLineColor":"#BDC3C7","tickColor":"#BDC3C7","tickWidth":1},"yAxis":{"gridLineDashStyle":"Dash","gridLineColor":"#BDC3C7","lineColor":"#BDC3C7","minorGridLineColor":"#BDC3C7","tickColor":"#BDC3C7","tickWidth":1},"legendBackgroundColor":"rgba(0, 0, 0, 0.5)","background2":"#505053","dataLabelsColor":"#B0B0B3","textColor":"#34495e","contrastTextColor":"#F0F0F3","maskColor":"rgba(255,255,255,0.3)"},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"stock","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+<p>Take a look at the chart. It has a line for the monthly log returns of each our ETFs (and in my opinion it’s starting to get crowded). Do any months jump out at us? EEM looks to have suffered at the beginning of 2014</p>
+<p>Highcharter also has the capacity for histogram making. One method is to first call the base function <code>hist</code> on the data along with the arguments for breaks and <code>plot = FALSE</code>. Then we can call <code>hchart</code> on that object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hc_hist &lt;-<span class="st"> </span><span class="kw">hist</span>(asset_returns_xts[, symbols[<span class="dv">1</span>]], <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>)
+
+<span class="kw">hchart</span>(hc_hist) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hc_title</span>(<span class="dt">text =</span> <span class="kw">paste</span>(symbols[<span class="dv">1</span>], <span class="st">&quot;Log Returns Distribution&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>))</code></pre></div>
+<div id="htmlwidget-0568e8451c19a8da41e6" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0568e8451c19a8da41e6">{"x":{"hc_opts":{"title":{"text":"SPY Log Returns Distribution"},"yAxis":{"title":{"text":null}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"},"bubble":{"minSize":5,"maxSize":25}},"annotationsOptions":{"enabledButtons":false},"tooltip":{"delayForDisplay":10,"formatter":"function() { return  this.point.name + '<br/>' + this.y; }"},"chart":{"zoomType":"x"},"series":[{"data":[{"x":-0.0625,"y":1,"name":"(-0.065, -0.06]"},{"x":-0.0575,"y":0,"name":"(-0.06, -0.055]"},{"x":-0.0525,"y":1,"name":"(-0.055, -0.05]"},{"x":-0.0475,"y":0,"name":"(-0.05, -0.045]"},{"x":-0.0425,"y":0,"name":"(-0.045, -0.04]"},{"x":-0.0375,"y":1,"name":"(-0.04, -0.035]"},{"x":-0.0325,"y":2,"name":"(-0.035, -0.03]"},{"x":-0.0275,"y":1,"name":"(-0.03, -0.025]"},{"x":-0.0225,"y":1,"name":"(-0.025, -0.02]"},{"x":-0.0175,"y":3,"name":"(-0.02, -0.015]"},{"x":-0.0125,"y":3,"name":"(-0.015, -0.00999999999999999]"},{"x":-0.00749999999999999,"y":0,"name":"(-0.01, -0.00499999999999999]"},{"x":-0.0025,"y":2,"name":"(-0.005, 6.93889390390723e-18]"},{"x":0.0025,"y":7,"name":"(0, 0.005]"},{"x":0.00750000000000001,"y":5,"name":"(0.005, 0.01]"},{"x":0.0125,"y":4,"name":"(0.01, 0.015]"},{"x":0.0175,"y":4,"name":"(0.015, 0.02]"},{"x":0.0225,"y":8,"name":"(0.02, 0.025]"},{"x":0.0275,"y":3,"name":"(0.025, 0.03]"},{"x":0.0325,"y":2,"name":"(0.03, 0.035]"},{"x":0.0375,"y":5,"name":"(0.035, 0.04]"},{"x":0.0425,"y":1,"name":"(0.04, 0.045]"},{"x":0.0475,"y":1,"name":"(0.045, 0.05]"},{"x":0.0525,"y":2,"name":"(0.05, 0.055]"},{"x":0.0575,"y":0,"name":"(0.055, 0.06]"},{"x":0.0625,"y":0,"name":"(0.06, 0.065]"},{"x":0.0675,"y":1,"name":"(0.065, 0.07]"},{"x":0.0725,"y":0,"name":"(0.07, 0.075]"},{"x":0.0775,"y":0,"name":"(0.075, 0.08]"},{"x":0.0825,"y":1,"name":"(0.08, 0.085]"}],"type":"column","pointRange":0.005,"groupPadding":0,"pointPadding":0,"borderWidth":0}]},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":["hc_opts.tooltip.formatter"],"jsHooks":[]}</script>
+<p>That’s a nice histogram but <code>highcharter</code> doesn’t have a smooth way to create 5 histograms as we need to do.</p>
+<p>Luckily, we can use <code>ggplot()</code> to operate on our tidy data frame <code>assets_returns_long</code>.</p>
+<p>We call <code>ggplot(aes(x = returns, fill = asset)) + geom_histogram(alpha = 0.25, binwidth = .005)</code> and because the data frame is grouped by the ‘asset’ column, <code>ggplot()</code> knows to chart a separate histogram for each asset. <code>ggplot()</code> will automatically include a legend since we included <code>fill = asset</code> in the <code>aes()</code> call.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">theme_update</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>))
+
+asset_returns_long <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns, <span class="dt">fill =</span> asset)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">alpha =</span> <span class="fl">0.25</span>, <span class="dt">binwidth =</span> .<span class="dv">005</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-15-1.png" width="672" /> That looks nice, but it would be convenient to separate by asset. Let’s use <code>facet_wrap(~asset)</code> to break into 5 separate chars and add a title with <code>ggtitle</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset_returns_long <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns, <span class="dt">fill =</span> asset)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">alpha =</span> <span class="fl">0.25</span>, <span class="dt">binwidth =</span> .<span class="dv">01</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>asset) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Monthly Returns Since 2013&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Maybe we prefer to use a density line to visualize the various distributions. We can use the <code>stat_density(geom = &quot;line&quot;, alpha = 1)</code> function to do this. The <code>alpha</code> argument is selecting a line thickness. Let’s also add a label to the x and y axis with the <code>xlab</code> and <code>ylab</code> functions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset_returns_long <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns, <span class="dt">colour =</span> asset, <span class="dt">fill =</span> asset)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">alpha =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Monthly Returns Since 2005&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;monthly returns&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;distribution&quot;</span>) </code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>That chart is quite digestible, but we can also <code>facet_wrap(~asset)</code> to break the densities out into individual charts.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset_returns_long <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns, <span class="dt">colour =</span> asset, <span class="dt">fill =</span> asset)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">alpha =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>asset) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Monthly Returns Since 2005&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;monthly returns&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;distribution&quot;</span>) </code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Okay, we have made histograms and density plots. Perhaps we would like to combine both of those into one chart. <code>ggplot()</code> works in aesthetic layers, which means we can chart a historgram in one layer, and then add a layer with a density chart.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asset_returns_long <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns, <span class="dt">colour =</span> asset, <span class="dt">fill =</span> asset)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">alpha =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">alpha =</span> <span class="fl">0.25</span>, <span class="dt">binwidth =</span> .<span class="dv">01</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>asset) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Monthly Returns Since 2005&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;monthly returns&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;distribution&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>We now have one chart, with histograms and line densities broken out for each of our assets. This would scale nicely if we had more assets and wanted to peek at more distributions of returns.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="returns.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="to-the-portfolio-station.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-crc/edit/master/returns.Rmd",
+"text": "Edit"
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
