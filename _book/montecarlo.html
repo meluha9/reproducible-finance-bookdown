@@ -47,6 +47,38 @@
 
 
 
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/proj4js/proj4.js"></script>
+<link href="libs/highcharts/css/motion.css" rel="stylesheet" />
+<script src="libs/highcharts/highstock.js"></script>
+<script src="libs/highcharts/highcharts-3d.js"></script>
+<script src="libs/highcharts/highcharts-more.js"></script>
+<script src="libs/highcharts/modules/annotations.js"></script>
+<script src="libs/highcharts/modules/broken-axis.js"></script>
+<script src="libs/highcharts/modules/data.js"></script>
+<script src="libs/highcharts/modules/drilldown.js"></script>
+<script src="libs/highcharts/modules/exporting.js"></script>
+<script src="libs/highcharts/modules/funnel.js"></script>
+<script src="libs/highcharts/modules/heatmap.js"></script>
+<script src="libs/highcharts/modules/map.js"></script>
+<script src="libs/highcharts/modules/no-data-to-display.js"></script>
+<script src="libs/highcharts/modules/offline-exporting.js"></script>
+<script src="libs/highcharts/modules/solid-gauge.js"></script>
+<script src="libs/highcharts/modules/treemap.js"></script>
+<script src="libs/highcharts/plugins/annotations.js"></script>
+<script src="libs/highcharts/plugins/draggable-legend.js"></script>
+<script src="libs/highcharts/plugins/draggable-points.js"></script>
+<script src="libs/highcharts/plugins/export-csv.js"></script>
+<script src="libs/highcharts/plugins/grouped-categories.js"></script>
+<script src="libs/highcharts/plugins/motion.js"></script>
+<script src="libs/highcharts/plugins/pattern-fill-v2.js"></script>
+<script src="libs/highcharts/plugins/tooltip-delay.js"></script>
+<script src="libs/highcharts/custom/reset.js"></script>
+<script src="libs/highcharts/custom/symbols-extra.js"></script>
+<script src="libs/highcharts/custom/text-symbols.js"></script>
+<link href="libs/fontawesome/font-awesome.min.css" rel="stylesheet" />
+<link href="libs/htmlwdgtgrid/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="libs/highchart-binding/highchart.js"></script>
 
 
 <style type="text/css">
@@ -117,18 +149,50 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#thoughts-on-converting-daily-prices-to-monthly-log-returns"><i class="fa fa-check"></i>Thoughts on Converting Daily Prices to Monthly Log Returns</a></li>
 <li><a href="asset-prices-to-returns.html#converting-daily-prices-to-monthly-returns-in-the-xts-world">Converting Daily Prices to Monthly Returns in the <code>xts</code> World</a></li>
 <li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyverse"><i class="fa fa-check"></i>Converting Daily Prices to Monthly Returns in the Tidyverse</a></li>
-<li><a href="asset-prices-to-returns.html#converting-daily-prices-to-monthly-returns-in-the-tidquant-world">Converting Daily Prices to Monthly Returns in the <code>tidquant</code> World</a></li>
+<li><a href="asset-prices-to-returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyquant-world">Converting Daily Prices to Monthly Returns in the <code>tidyquant</code> World</a></li>
 <li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#a-word-on-workflow-and-recap"><i class="fa fa-check"></i>A Word on workflow and recap</a></li>
+<li class="chapter" data-level="" data-path="asset-prices-to-returns.html"><a href="asset-prices-to-returns.html#visualizing-asset-returns-before-they-get-mashed-into-a-portfolio"><i class="fa fa-check"></i>Visualizing Asset Returns before they get mashed into a portfolio</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="from-individual-assets-to-portfolio-returns.html"><a href="from-individual-assets-to-portfolio-returns.html"><i class="fa fa-check"></i><b>2</b> From Individual Assets to Portfolio Returns</a><ul>
-<li class="chapter" data-level="" data-path="from-individual-assets-to-portfolio-returns.html"><a href="from-individual-assets-to-portfolio-returns.html#visualize-this-stuff"><i class="fa fa-check"></i>Visualize this stuff</a></li>
+<li class="chapter" data-level="2" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html"><i class="fa fa-check"></i><b>2</b> To the Portfolio Station</a><ul>
+<li><a href="to-the-portfolio-station.html#portfolio-returns-in-the-xts-world">Portfolio Returns in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html#portfolio-returns-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Returns in the tidyverse</a></li>
+<li class="chapter" data-level="" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html#portfolio-returns-in-the-tidyquant-world"><i class="fa fa-check"></i>Portfolio Returns in the tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html#visualizing-portfolio-returns"><i class="fa fa-check"></i>Visualizing Portfolio Returns</a></li>
+<li class="chapter" data-level="" data-path="to-the-portfolio-station.html"><a href="to-the-portfolio-station.html#our-first-shiny-app-portfolio-returns"><i class="fa fa-check"></i>Our First Shiny App: Portfolio Returns</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html"><i class="fa fa-check"></i><b>3</b> Growth of a Dollar</a><ul>
-<li class="chapter" data-level="" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#visualize-this-stuff-1"><i class="fa fa-check"></i>Visualize this stuff</a></li>
+<li class="chapter" data-level="3" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html"><i class="fa fa-check"></i><b>3</b> Growth of a dollar</a><ul>
+<li><a href="growth-of-a-dollar.html#portfolio-growth-in-the-xts-world">Portfolio Growth in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#portfolio-growth-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Growth in the Tidyverse</a></li>
+<li><a href="growth-of-a-dollar.html#portfolio-growth-in-the-tidyquant-world">Portfolio Growth in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#visualizing-portfolio-growth"><i class="fa fa-check"></i>Visualizing Portfolio Growth</a></li>
+<li class="chapter" data-level="3.0.1" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#shiny-growth-of-a-dollar"><i class="fa fa-check"></i><b>3.0.1</b> Shiny Growth of a Dollar</a></li>
+<li class="chapter" data-level="" data-path="growth-of-a-dollar.html"><a href="growth-of-a-dollar.html#concluding"><i class="fa fa-check"></i>Concluding</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="risk.html"><a href="risk.html"><i class="fa fa-check"></i><b>4</b> Risk</a></li>
-<li class="chapter" data-level="5" data-path="portfolio-theory.html"><a href="portfolio-theory.html"><i class="fa fa-check"></i><b>5</b> Portfolio Theory</a></li>
-<li class="chapter" data-level="6" data-path="montecarlo.html"><a href="montecarlo.html"><i class="fa fa-check"></i><b>6</b> montecarlo</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html"><i class="fa fa-check"></i>Risk</a><ul>
+<li class="chapter" data-level="3.0.2" data-path="risk.html"><a href="risk.html#portfolio-standard-deviation"><i class="fa fa-check"></i><b>3.0.2</b> Portfolio Standard Deviation</a></li>
+<li><a href="risk.html#standard-deviation-in-the-xts-world">Standard Deviation in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#standard-devation-in-the-tidyverse"><i class="fa fa-check"></i>Standard Devation in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#standard-deviation-in-the-tidyquant-world"><i class="fa fa-check"></i>Standard Deviation in the Tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-standard-deviation"><i class="fa fa-check"></i>Visualizing Standard Deviation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html"><i class="fa fa-check"></i><b>4</b> Rolling Standard Deviation</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#rolling-standard-deviation-in-the-xts-world"><i class="fa fa-check"></i><b>4.0.1</b> Rolling Standard Deviation in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="4.0.2" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#rolling-standard-deviation-in-tidyverse"><i class="fa fa-check"></i><b>4.0.2</b> Rolling Standard Deviation in tidyverse</a></li>
+<li class="chapter" data-level="" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#rolling-standard-deviation-with-tidyquant"><i class="fa fa-check"></i>Rolling Standard Deviation with tidyquant</a></li>
+<li><a href="rolling-standard-deviation.html#visualizing-rolling-standard-deviation-in-the-xts-world">Visualizing Rolling Standard Deviation in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#visualizing-rolling-standard-deviation-in-the-tidyverse"><i class="fa fa-check"></i>Visualizing Rolling Standard Deviation in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#shiny-app"><i class="fa fa-check"></i>Shiny App</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="component-contribution-to-volatility.html"><a href="component-contribution-to-volatility.html"><i class="fa fa-check"></i><b>5</b> Component Contribution to Volatility</a><ul>
+<li class="chapter" data-level="" data-path="component-contribution-to-volatility.html"><a href="component-contribution-to-volatility.html#visualizing-component-contribution"><i class="fa fa-check"></i>Visualizing Component Contribution</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="rolling-component-contribution-to-volatility.html"><a href="rolling-component-contribution-to-volatility.html"><i class="fa fa-check"></i><b>6</b> Rolling Component Contribution to Volatility</a><ul>
+<li class="chapter" data-level="" data-path="rolling-component-contribution-to-volatility.html"><a href="rolling-component-contribution-to-volatility.html#visualizing-component-contribution-to-volatility"><i class="fa fa-check"></i>Visualizing Component Contribution to Volatility</a></li>
+<li class="chapter" data-level="" data-path="rolling-component-contribution-to-volatility.html"><a href="rolling-component-contribution-to-volatility.html#shiny-component-contribution"><i class="fa fa-check"></i>Shiny Component Contribution</a></li>
+<li class="chapter" data-level="" data-path="rolling-component-contribution-to-volatility.html"><a href="rolling-component-contribution-to-volatility.html#conclusion-on-standard-deviation"><i class="fa fa-check"></i>Conclusion on Standard Deviation</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="portfolio-theory.html"><a href="portfolio-theory.html"><i class="fa fa-check"></i><b>7</b> Portfolio Theory</a></li>
+<li class="chapter" data-level="8" data-path="montecarlo.html"><a href="montecarlo.html"><i class="fa fa-check"></i><b>8</b> montecarlo</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="more-to-say.html"><a href="more-to-say.html"><i class="fa fa-check"></i><b>A</b> More to Say</a></li>
 <li class="chapter" data-level="" data-path="appendix-2.html"><a href="appendix-2.html"><i class="fa fa-check"></i>Appendix 2</a></li>
@@ -155,7 +219,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="montecarlo" class="section level1">
-<h1><span class="header-section-number">Chapter 6</span> montecarlo</h1>
+<h1><span class="header-section-number">Chapter 8</span> montecarlo</h1>
 
 
 </div>
@@ -208,6 +272,17 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

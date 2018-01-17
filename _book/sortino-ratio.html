@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reproducible Finance with R</title>
+  <meta name="description" content="A reproducible for Chapman &amp; Hall.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Reproducible Finance with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A reproducible for Chapman &amp; Hall." />
+  <meta name="github-repo" content="jkr216/reproducible-finance-ch" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reproducible Finance with R" />
+  
+  <meta name="twitter:description" content="A reproducible for Chapman &amp; Hall." />
+  
+
+<meta name="author" content="Jonathan K. Regenstein, Jr.">
+
+
+<meta name="date" content="2018-01-17">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="sharpe-ratio.html">
+<link rel="next" href="montecarlo.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.9/htmlwidgets.js"></script>
+<script src="libs/proj4js-2.3.15/proj4.js"></script>
+<link href="libs/highcharts-5.0.6/css/motion.css" rel="stylesheet" />
+<script src="libs/highcharts-5.0.6/highstock.js"></script>
+<script src="libs/highcharts-5.0.6/highcharts-3d.js"></script>
+<script src="libs/highcharts-5.0.6/highcharts-more.js"></script>
+<script src="libs/highcharts-5.0.6/modules/annotations.js"></script>
+<script src="libs/highcharts-5.0.6/modules/broken-axis.js"></script>
+<script src="libs/highcharts-5.0.6/modules/data.js"></script>
+<script src="libs/highcharts-5.0.6/modules/drilldown.js"></script>
+<script src="libs/highcharts-5.0.6/modules/exporting.js"></script>
+<script src="libs/highcharts-5.0.6/modules/funnel.js"></script>
+<script src="libs/highcharts-5.0.6/modules/heatmap.js"></script>
+<script src="libs/highcharts-5.0.6/modules/map.js"></script>
+<script src="libs/highcharts-5.0.6/modules/no-data-to-display.js"></script>
+<script src="libs/highcharts-5.0.6/modules/offline-exporting.js"></script>
+<script src="libs/highcharts-5.0.6/modules/solid-gauge.js"></script>
+<script src="libs/highcharts-5.0.6/modules/treemap.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/annotations.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/draggable-legend.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/draggable-points.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/export-csv.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/grouped-categories.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/motion.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/pattern-fill-v2.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/tooltip-delay.js"></script>
+<script src="libs/highcharts-5.0.6/custom/reset.js"></script>
+<script src="libs/highcharts-5.0.6/custom/symbols-extra.js"></script>
+<script src="libs/highcharts-5.0.6/custom/text-symbols.js"></script>
+<link href="libs/fontawesome-4.5.0/font-awesome.min.css" rel="stylesheet" />
+<link href="libs/htmlwdgtgrid-1/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="libs/highchart-binding-0.5.0/highchart.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> install the packages needed by this book; you fill out c(), e.g. c(‘ggplot2’, ‘dplyr’)</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-read-this-book"><i class="fa fa-check"></i>Why read this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#structure-of-the-book"><i class="fa fa-check"></i>Structure of the book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-author"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information-and-conventions"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html"><i class="fa fa-check"></i>Returns</a><ul>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#importing-asset-prices"><i class="fa fa-check"></i>Importing Asset Prices</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#thoughts-on-converting-daily-prices-to-monthly-log-returns"><i class="fa fa-check"></i>Thoughts on Converting Daily Prices to Monthly Log Returns</a></li>
+<li><a href="returns.html#converting-daily-prices-to-monthly-returns-in-the-xts-world">Converting Daily Prices to Monthly Returns in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyverse"><i class="fa fa-check"></i>Converting Daily Prices to Monthly Returns in the Tidyverse</a></li>
+<li><a href="returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyquant-world">Converting Daily Prices to Monthly Returns in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#a-word-on-workflow-and-recap"><i class="fa fa-check"></i>A Word on workflow and recap</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#visualizing-asset-returns-before-they-get-mashed-into-a-portfolio"><i class="fa fa-check"></i>Visualizing Asset Returns before they get mashed into a portfolio</a></li>
+<li><a href="returns.html#portfolio-returns-in-the-xts-world">Portfolio Returns in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#portfolio-returns-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Returns in the tidyverse</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#portfolio-returns-in-the-tidyquant-world"><i class="fa fa-check"></i>Portfolio Returns in the tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#visualizing-portfolio-returns"><i class="fa fa-check"></i>Visualizing Portfolio Returns</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#our-first-shiny-app-portfolio-returns"><i class="fa fa-check"></i>Our First Shiny App: Portfolio Returns</a></li>
+<li><a href="returns.html#portfolio-growth-in-the-xts-world">Portfolio Growth in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#portfolio-growth-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Growth in the Tidyverse</a></li>
+<li><a href="returns.html#portfolio-growth-in-the-tidyquant-world">Portfolio Growth in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#visualizing-portfolio-growth"><i class="fa fa-check"></i>Visualizing Portfolio Growth</a></li>
+<li class="chapter" data-level="1.0.1" data-path="returns.html"><a href="returns.html#shiny-growth-of-a-dollar"><i class="fa fa-check"></i><b>1.0.1</b> Shiny Growth of a Dollar</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#concluding"><i class="fa fa-check"></i>Concluding</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html"><i class="fa fa-check"></i>Risk</a><ul>
+<li><a href="risk.html#standard-deviation-in-the-xts-world">Standard Deviation in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#standard-devation-in-the-tidyverse"><i class="fa fa-check"></i>Standard Devation in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#standard-deviation-in-the-tidyquant-world"><i class="fa fa-check"></i>Standard Deviation in the Tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-standard-deviation"><i class="fa fa-check"></i>Visualizing Standard Deviation</a></li>
+<li class="chapter" data-level="1.0.2" data-path="risk.html"><a href="risk.html#rolling-standard-deviation-in-the-xts-world"><i class="fa fa-check"></i><b>1.0.2</b> Rolling Standard Deviation in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="1.0.3" data-path="risk.html"><a href="risk.html#rolling-standard-deviation-in-tidyverse"><i class="fa fa-check"></i><b>1.0.3</b> Rolling Standard Deviation in tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#rolling-standard-deviation-with-tidyquant"><i class="fa fa-check"></i>Rolling Standard Deviation with tidyquant</a></li>
+<li><a href="risk.html#visualizing-rolling-standard-deviation-in-the-xts-world">Visualizing Rolling Standard Deviation in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-rolling-standard-deviation-in-the-tidyverse"><i class="fa fa-check"></i>Visualizing Rolling Standard Deviation in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#shiny-app"><i class="fa fa-check"></i>Shiny App</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-component-contribution"><i class="fa fa-check"></i>Visualizing Component Contribution</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-component-contribution-to-volatility"><i class="fa fa-check"></i>Visualizing Component Contribution to Volatility</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#shiny-component-contribution"><i class="fa fa-check"></i>Shiny Component Contribution</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#conclusion-on-standard-deviation"><i class="fa fa-check"></i>Conclusion on Standard Deviation</a></li>
+<li class="chapter" data-level="1.0.4" data-path="risk.html"><a href="risk.html#skewness-in-the-xts-world"><i class="fa fa-check"></i><b>1.0.4</b> Skewness in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#skewness-in-the-tidyverse"><i class="fa fa-check"></i>Skewness in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-skewness"><i class="fa fa-check"></i>Visualizing Skewness</a></li>
+<li><a href="risk.html#rolling-skewness-in-the-xts-world">Rolling Skewness in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#rolling-skewness-in-the-tidyverse"><i class="fa fa-check"></i>Rolling Skewness in the tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#rolling-skewness-in-the-tidyquant-world"><i class="fa fa-check"></i>Rolling Skewness in the Tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-rolling-skewness"><i class="fa fa-check"></i>Visualizing Rolling Skewness</a></li>
+<li><a href="risk.html#kurtosis-in-the-xts-world">Kurtosis in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#kurtosis-in-the-tidyverse"><i class="fa fa-check"></i>Kurtosis in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-kurtosis"><i class="fa fa-check"></i>Visualizing Kurtosis</a></li>
+<li><a href="risk.html#rolling-kurtosis-in-the-xts-world">Rolling Kurtosis in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#rolling-kurtosis-in-the-tidyquant-world"><i class="fa fa-check"></i>Rolling Kurtosis in the Tidyquant world</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-rolling-kurtosis"><i class="fa fa-check"></i>Visualizing Rolling Kurtosis</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#shiny-skew-and-kurtosis"><i class="fa fa-check"></i>Shiny Skew and Kurtosis</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#conclusion"><i class="fa fa-check"></i>Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="portfolio-theory.html"><a href="portfolio-theory.html"><i class="fa fa-check"></i>Portfolio Theory</a></li>
+<li class="chapter" data-level="2" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html"><i class="fa fa-check"></i><b>2</b> Sharpe Ratio</a><ul>
+<li><a href="sharpe-ratio.html#sharpe-ratio-in-the-xts-world">Sharpe Ratio in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html#sharpe-ration-in-the-tidyverse"><i class="fa fa-check"></i>Sharpe Ration in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html#shape-ratio-with-tidyquant"><i class="fa fa-check"></i>Shape Ratio with Tidyquant</a></li>
+<li class="chapter" data-level="" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html#visualizing-sharpe-ratios"><i class="fa fa-check"></i>Visualizing Sharpe Ratios</a></li>
+<li><a href="sharpe-ratio.html#rolling-sharpe-ratio-in-the-xts-world">Rolling Sharpe Ratio in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html#rolling-sharpe-ratio-with-tidyverse-tibbletime"><i class="fa fa-check"></i>Rolling Sharpe Ratio with Tidyverse + Tibbletime</a></li>
+<li class="chapter" data-level="" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html#visualizing-the-rolling-sharpe-ratio"><i class="fa fa-check"></i>Visualizing the Rolling Sharpe Ratio</a></li>
+<li class="chapter" data-level="" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html#shiny-for-sharpe-ratio"><i class="fa fa-check"></i>Shiny for Sharpe Ratio</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sortino-ratio.html"><a href="sortino-ratio.html"><i class="fa fa-check"></i><b>3</b> Sortino Ratio</a><ul>
+<li><a href="sortino-ratio.html#calculating-sortino-ratio-in-the-xts-world">Calculating Sortino Ratio in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="sortino-ratio.html"><a href="sortino-ratio.html#calculating-sortino-ratio-in-the-tidyverse"><i class="fa fa-check"></i>Calculating Sortino Ratio in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="sortino-ratio.html"><a href="sortino-ratio.html#calculating-sortino-ratio-in-the-tidyquant-world"><i class="fa fa-check"></i>Calculating Sortino Ratio in the Tidyquant world</a></li>
+<li class="chapter" data-level="" data-path="sortino-ratio.html"><a href="sortino-ratio.html#visualizing-the-sortino-ratio"><i class="fa fa-check"></i>Visualizing the Sortino Ratio</a></li>
+<li class="chapter" data-level="3.0.1" data-path="sortino-ratio.html"><a href="sortino-ratio.html#rolling-sortino-ratio-with-in-the-xts-world"><i class="fa fa-check"></i><b>3.0.1</b> Rolling Sortino Ratio with in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="3.0.2" data-path="sortino-ratio.html"><a href="sortino-ratio.html#rolling-sortino-ratio-with-in-tidyverse-tibbletime"><i class="fa fa-check"></i><b>3.0.2</b> Rolling Sortino Ratio with in tidyverse + tibbletime</a></li>
+<li class="chapter" data-level="" data-path="sortino-ratio.html"><a href="sortino-ratio.html#visualizing-the-sortino-ratio-1"><i class="fa fa-check"></i>Visualizing the Sortino Ratio</a></li>
+<li class="chapter" data-level="" data-path="sortino-ratio.html"><a href="sortino-ratio.html#shiny-sortino-ratio"><i class="fa fa-check"></i>Shiny Sortino Ratio</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="montecarlo.html"><a href="montecarlo.html"><i class="fa fa-check"></i><b>4</b> montecarlo</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="more-to-say.html"><a href="more-to-say.html"><i class="fa fa-check"></i><b>A</b> More to Say</a></li>
+<li class="chapter" data-level="" data-path="appendix-2.html"><a href="appendix-2.html"><i class="fa fa-check"></i>Appendix 2</a></li>
+<li class="chapter" data-level="B" data-path="generate-a-bibtex-database-automatically-for-some-r-packages.html"><a href="generate-a-bibtex-database-automatically-for-some-r-packages.html"><i class="fa fa-check"></i><b>B</b> generate a BibTeX database automatically for some R packages</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reproducible Finance with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="sortino-ratio" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Sortino Ratio</h1>
+<p>The Sortino Ratio is similar to the Sharpe Ratio except that the riskiness of a portfolio is measured by the deviation of returns <em>below</em> a target return, instead of by the standard deviation of all returns. This stands in contradistinction to the Sharpe Ratio, which measures return/risk by the ratio of the returns above the risk free rate divided by the standard deviation of <em>all</em> returns. By way of history, Harry Markowitz, Nobel laureate and father of MPT whom we mentioned in this section’s introduction, noted that downside deviation might be a better measure of risk than the standard deviation of all returns, but its calculation was computationally too expensive<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> (it was 1959, if he only he’d had R on his laptop).</p>
+<p>The Latex code for the Sortino Ratio equation is as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">$</span><span class="er">$</span>Sortino<span class="op">~</span>Ratio_{portfolio}=\frac{(\overline{Return_{portfolio}<span class="op">-</span>MAR})}{\sqrt{\sum_{t=<span class="dv">1</span>}<span class="op">^</span>n <span class="kw">min</span>(R_t<span class="op">-</span>MAR,<span class="op">~</span><span class="dv">0</span>)<span class="op">^</span><span class="dv">2</span>}<span class="op">/</span>n}<span class="op">$</span><span class="er">$</span></code></pre></div>
+<p>And here is the output <span class="math display">\[Sortino~Ratio_{portfolio}=\frac{(\overline{Return_{portfolio}-MAR})}{\sqrt{\sum_{t=1}^n min(R_t-MAR,~0)^2}/n}\]</span></p>
+<p>The denominator in that equation (called the Downside Deviation, semi-deviation or downside risk) can be thought of as the deviation of the returns that fall below some target rate of return for the portfolio. That target rate is called the Minimum Acceptable Rate, or MAR. The numerator is the mean portfolio return minus the MAR. It can be thought of as excess returns in the same was as the numerator of the Sharpe Ratio, except for Sortino it’s in excess of whateve minimum rate our team (or our clients) choose.</p>
+<p>Let’s assign the MAR of .8% to the variable <code>MAR</code>. Note that we are holding this portfolio to a higher standard now than we did in the last chapter.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">MAR &lt;-<span class="st"> </span>.<span class="dv">008</span></code></pre></div>
+<p>Just as we reused a lot of our skewness code flow in our kurtosis calculation, we will reuse some Sharpe code flow for the Sortino calculations.</p>
+<div id="calculating-sortino-ratio-in-the-xts-world" class="section level3 unnumbered">
+<h3>Calculating Sortino Ratio in the <code>xts</code> world</h3>
+<p>In the <code>xts</code> world, very similar to the Sharpe Ratio, <code>PerformanceAnalytics</code> makes it quick to calculate Sortino. It’s the same code as we used for Sharpe, except we call the function <code>SortinoRatio()</code> instead of <code>SharpeRatio()</code>, and the argument is <code>MAR = MAR</code> instead of <code>Rf = rfr</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sortino_xts &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">SortinoRatio</span>(portfolio_returns_xts_rebalanced_monthly, <span class="dt">MAR =</span> MAR) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="st">&quot;ratio&quot;</span>)</code></pre></div>
+</div>
+<div id="calculating-sortino-ratio-in-the-tidyverse" class="section level3 unnumbered">
+<h3>Calculating Sortino Ratio in the Tidyverse</h3>
+<p>We’ll again head to <code>dplyr</code> and run a by-hand calculation with <code>summarise(ratio = mean(returns - MAR)/sqrt(sum(pmin(returns - MAR, 0)^2)/nrow(.)))</code>. This should look familiar from the previous chapter, but with a different equation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sortino_byhand &lt;-<span class="st"> </span>
+<span class="st">  </span>portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">ratio =</span> <span class="kw">mean</span>(returns <span class="op">-</span><span class="st"> </span>MAR)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">sum</span>(<span class="kw">pmin</span>(returns <span class="op">-</span><span class="st"> </span>MAR, <span class="dv">0</span>)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">nrow</span>(.)))</code></pre></div>
+</div>
+<div id="calculating-sortino-ratio-in-the-tidyquant-world" class="section level3 unnumbered">
+<h3>Calculating Sortino Ratio in the Tidyquant world</h3>
+<p>Now on to <code>tidyquant</code>, which allows us to apply the <code>SortinoRatio</code> function from <code>PerformanceAnalytics</code> to a <code>tibble</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sortino_tidy &lt;-<span class="st"> </span>
+<span class="st">  </span>portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tq_performance</span>(<span class="dt">Ra =</span> returns, 
+                 <span class="dt">performance_fun =</span> SortinoRatio, 
+                 <span class="dt">MAR =</span> MAR,
+                 <span class="dt">method =</span> <span class="st">&quot;full&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="st">&quot;ratio&quot;</span>)</code></pre></div>
+<p>Let’s compare our 3 Sortino objects.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sortino_xts[<span class="dv">1</span>]</code></pre></div>
+<pre><code>## [1] -0.03875197</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sortino_byhand<span class="op">$</span>ratio</code></pre></div>
+<pre><code>## [1] -0.03875197</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sortino_tidy<span class="op">$</span>ratio</code></pre></div>
+<pre><code>## [1] -0.03875197</code></pre>
+<p>We have consistent results from <code>xts</code>, <code>tidyquant</code> and our by-hand piped calculation. Again, the Sortino Ratio is most informative when compared to other Sortino Ratios. Is our portfolio’s Sortino good, great, awful? Let’s compare it to the Sortino Ratio of the S&amp;P500 in the same time period.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">market_returns_sortino &lt;-<span class="st"> </span>
+<span class="st">  </span>market_returns_tidy <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">ratio =</span> <span class="kw">mean</span>(returns <span class="op">-</span><span class="st"> </span>MAR)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">sum</span>(<span class="kw">pmin</span>(returns <span class="op">-</span><span class="st"> </span>MAR, <span class="dv">0</span>)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">nrow</span>(.)))
+
+market_returns_sortino<span class="op">$</span>ratio</code></pre></div>
+<pre><code>## [1] 0.2203687</code></pre>
+<p>Ok, once again, the S&amp;P500 has beat our portfolio! That makes sense given that the S&amp;P500 also had a higher Sharpe Ratio.</p>
+</div>
+<div id="visualizing-the-sortino-ratio" class="section level3 unnumbered">
+<h3>Visualizing the Sortino Ratio</h3>
+<p>Let’s get a better grasp on what the Sortino Ratio is communicating by building some visualizations.</p>
+<p>First, we will get a sense for what proportion of our portfolio returns exceeded the MAR.</p>
+<p>Very similar to our work on the Shapre Ratio, we will add a column for returns that fall below MAR with <code>mutate(returns_below_MAR = ifelse(returns &lt; MAR, returns, NA))</code> and add a column for returns above MAR with <code>mutate(returns_above_MAR = ifelse(returns &gt; MAR, returns, NA))</code>. We do this with an eye towards <code>ggplot</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sortino_byhand &lt;-<span class="st"> </span>
+<span class="st">  </span>portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ratio =</span> <span class="kw">mean</span>(returns <span class="op">-</span><span class="st"> </span>MAR)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">sum</span>(<span class="kw">pmin</span>(returns <span class="op">-</span><span class="st"> </span>MAR, <span class="dv">0</span>)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">nrow</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">returns_below_MAR =</span> <span class="kw">ifelse</span>(returns <span class="op">&lt;</span><span class="st"> </span>MAR, returns, <span class="ot">NA</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">returns_above_MAR =</span> <span class="kw">ifelse</span>(returns <span class="op">&gt;</span><span class="st"> </span>MAR, returns, <span class="ot">NA</span>))</code></pre></div>
+<p>Let’s use that new object and it’s new columns to create a scatterplot of returns using <code>ggplot</code>. to again grasp how many of our returns are above the MAR and how many are below the MAR.</p>
+<p>We will create green points for returns above MAR with <code>geom_point(aes(y = returns_above_MAR), colour = &quot;green&quot;)</code> and red points for returns below MAR with <code>geom_point(aes(y = returns_below_MAR), colour = &quot;red&quot;)</code>.</p>
+<p>As we did with the Sharpe Ratio, let’s add a blue vertical line at November of 2016. We will also include a horizontal purple dotted line at the MAR.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sortino_byhand <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> date)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> returns_below_MAR), <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> returns_above_MAR), <span class="dt">colour =</span> <span class="st">&quot;green&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">as.numeric</span>(<span class="kw">as.Date</span>(<span class="st">&quot;2016-11-30&quot;</span>)), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> MAR, <span class="dt">color =</span> <span class="st">&quot;purple&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom=</span><span class="st">&quot;text&quot;</span>, <span class="dt">x=</span><span class="kw">as.Date</span>(<span class="st">&quot;2016-11-30&quot;</span>), 
+           <span class="dt">y =</span> <span class="op">-</span>.<span class="dv">05</span>, <span class="dt">label =</span> <span class="st">&quot;Election&quot;</span>, <span class="dt">fontface =</span> <span class="st">&quot;plain&quot;</span>, 
+           <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>, <span class="dt">vjust =</span>  <span class="fl">1.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;percent monthly returns&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p>It appears that about half of our returns fall below the MAR. Do we consider that to be a successful portfolio? This is not a rigorous test - what strikes us from the number of red dots and where they fall? Do we notice a trend? A period with consistently below or above MAR returns?</p>
+<p>Since the election in 2016, there has been only two monthly returns below the MAR and that will lead to a large Sortino since November.</p>
+<p>Next we will build a histogram of the distribution of returns with <code>geom_histogram(alpha = 0.25, binwidth = .01, fill = &quot;cornflowerblue&quot;)</code>. We will again add a line for the MAR.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sortino_byhand <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">alpha =</span> <span class="fl">0.25</span>, <span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">fill =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> MAR, <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> MAR,
+    <span class="dt">y =</span> <span class="dv">22</span>, <span class="dt">label =</span> <span class="st">&quot;MAR&quot;</span>, <span class="dt">fontface =</span> <span class="st">&quot;plain&quot;</span>, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">alpha =</span> .<span class="dv">5</span>, <span class="dt">vjust =</span>  <span class="dv">1</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>The Sortino Ratio is often accompanied by a density plot and we’ll build one now. First, we will start simple with <code>stat_density(geom = &quot;line&quot;, size = 1, color = &quot;cornflowerblue&quot;)</code> to create a <code>ggplot</code> object called <code>sortino_density_plot</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sortino_density_plot &lt;-<span class="st"> </span>
+<span class="st">  </span>sortino_byhand <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) 
+
+sortino_density_plot</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p>A slight negative skew is a bit more evident here. It would be nice to shade the area that falls below the MAR. To do that, let’s create an object called <code>shaded_area</code> using <code>ggplot_build(p)$data[[1]] %&gt;% filter(x &lt; MAR)</code>. That snippet will take our original <code>ggplot</code> object and create a new object filtered for x values less than MAR. Then we use <code>geom_area</code> to add the shaded area to <code>sortino_density_plot</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shaded_area_data &lt;-<span class="st"> </span><span class="kw">ggplot_build</span>(sortino_density_plot)<span class="op">$</span>data[[<span class="dv">1</span>]] <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">filter</span>(x <span class="op">&lt;</span><span class="st"> </span>MAR)
+
+sortino_density_plot_shaded &lt;-<span class="st"> </span>sortino_density_plot <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">data =</span> shaded_area_data, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y), <span class="dt">fill=</span><span class="st">&quot;pink&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) 
+
+sortino_density_plot_shaded</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p>Let’s add a vertical line label at the exact MAR and an arrow to tell people where downside volatility resides. Note how we can keep adding layers to the <code>sortino_density_plot_shaded</code> object from above, which is one of great features of <code>ggplot</code>. It allows experimentation with aesthetics without changing the core plot with each iteration.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sortino_density_plot_shaded <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="fl">1.5</span>, <span class="dt">xend =</span> <span class="op">-</span>.<span class="dv">05</span>, <span class="dt">yend =</span> <span class="fl">1.5</span>),
+  <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.4</span>, <span class="st">&quot;cm&quot;</span>)), <span class="dt">size =</span> .<span class="dv">05</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">data =</span> shaded_area_data, <span class="kw">aes</span>(<span class="dt">x =</span> MAR, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">xend =</span> MAR, <span class="dt">yend =</span> y), 
+               <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> MAR, <span class="dt">y =</span> <span class="dv">5</span>, <span class="dt">label =</span> <span class="st">&quot;MAR = 0.8%&quot;</span>, 
+           <span class="dt">fontface =</span> <span class="st">&quot;plain&quot;</span>, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">alpha =</span> .<span class="dv">8</span>, <span class="dt">vjust =</span>  <span class="op">-</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> <span class="op">-</span>.<span class="dv">02</span>, <span class="dt">y =</span> .<span class="dv">1</span>, <span class="dt">label =</span> <span class="st">&quot;Downside&quot;</span>, 
+           <span class="dt">fontface =</span> <span class="st">&quot;plain&quot;</span>, <span class="dt">alpha =</span> .<span class="dv">8</span>, <span class="dt">vjust =</span>  <span class="op">-</span><span class="dv">1</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p>As with our scatterplot, we have not been shy about aesthetic layering but one goal here is to explore <code>ggplot</code> tools, which gives us license to be overinclusive.</p>
+<p>We have done some good work for visualizing the portfolio’s returns and how they are distributed relative to the MAR, and how the MAR separates part of the the returns to downside risk. That gives us some intution about the Sortino Ratio.</p>
+</div>
+<div id="rolling-sortino-ratio-with-in-the-xts-world" class="section level3">
+<h3><span class="header-section-number">3.0.1</span> Rolling Sortino Ratio with in the <code>xts</code> World</h3>
+<p>As with Sharpe Ratio, let’s get to some rolling Sortinos. There is a slight wrinkle though - remember that we exclude above MAR returns from the denominator. If our rolling window is too small, we might end up with a denominator that includes 1 or 2 or 0 downside deviations. That would accurately reflect that the portfolio has done well in that small window but it might report a misleadingly huge number for the rolling window. The rolling 6 month demonstrates this.</p>
+<p>We calculate the rolling 6-month Sortino with <code>rollapply(portfolio_returns_xts, window, function(x) SortinoRatio(x))</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">window &lt;-<span class="st"> </span><span class="dv">6</span>
+
+rolling_sortino_xts &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">rollapply</span>(portfolio_returns_xts_rebalanced_monthly, window, 
+            <span class="cf">function</span>(x) <span class="kw">SortinoRatio</span>(x, <span class="dt">MAR =</span> MAR)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">na.omit</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  `</span><span class="dt">colnames&lt;-</span><span class="st">`</span>(<span class="st">&quot;sortino&quot;</span>)</code></pre></div>
+</div>
+<div id="rolling-sortino-ratio-with-in-tidyverse-tibbletime" class="section level3">
+<h3><span class="header-section-number">3.0.2</span> Rolling Sortino Ratio with in tidyverse + tibbletime</h3>
+<p>Similar to what we did with the standard deviation and Sharpe Ratio, we can combine the tidyverse and tibbletime to run the rolling Sortino Ratio calculation on our data frame.</p>
+<p>Again we are going to write our own function to <code>rollify()</code>, but it’s the same function we used above to find the Sortino Ratio, <code>ratio = mean(returns - MAR)/sqrt(sum(pmin(returns - MAR, 0)^2)/length(returns))</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sortino_roll_<span class="dv">6</span> &lt;-<span class="st"> </span><span class="kw">rollify</span>(<span class="cf">function</span>(returns) {
+    ratio =<span class="st"> </span><span class="kw">mean</span>(returns <span class="op">-</span><span class="st"> </span>MAR)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">sum</span>(<span class="kw">pmin</span>(returns <span class="op">-</span><span class="st"> </span>MAR, <span class="dv">0</span>)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="kw">length</span>(returns))
+    }, 
+<span class="dt">window =</span> <span class="dv">6</span>)
+  
+  
+rolling_sortino_tidy_tibbletime &lt;-<span class="st"> </span>
+<span class="st">  </span>portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as_tbl_time</span>(<span class="dt">index =</span> date) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ratio =</span> <span class="kw">sortino_roll_6</span>(returns)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">na.omit</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>returns)</code></pre></div>
+<p>Let’s compare our objects.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(rolling_sortino_tidy_tibbletime)</code></pre></div>
+<pre><code>## # A time tibble: 6 x 2
+## # Index: date
+##   date         ratio
+##   &lt;date&gt;       &lt;dbl&gt;
+## 1 2013-07-31  0.0385
+## 2 2013-08-31 -0.183 
+## 3 2013-09-30  0.124 
+## 4 2013-10-31  0.249 
+## 5 2013-11-30  0.453 
+## 6 2013-12-31  1.06</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(rolling_sortino_xts)</code></pre></div>
+<pre><code>##                sortino
+## 2013-07-31  0.03849593
+## 2013-08-30 -0.18317574
+## 2013-09-30  0.12423658
+## 2013-10-31  0.24937795
+## 2013-11-29  0.45311688
+## 2013-12-31  1.05547686</code></pre>
+<p>The results are consistent and we can start charting.</p>
+</div>
+<div id="visualizing-the-sortino-ratio-1" class="section level3 unnumbered">
+<h3>Visualizing the Sortino Ratio</h3>
+<p>Let’s start with <code>highcharter</code> and pass in our <code>rolling_sortino_xts</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">highchart</span>(<span class="dt">type =</span> <span class="st">&quot;stock&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_title</span>(<span class="dt">text =</span> <span class="st">&quot;Rolling Sortino&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series</span>(rolling_sortino_xts, <span class="dt">name =</span> <span class="st">&quot;Sortino&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_navigator</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hc_scrollbar</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div id="htmlwidget-80d936637178b625f418" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-80d936637178b625f418">{"x":{"hc_opts":{"title":{"text":"Rolling Sortino"},"yAxis":{"title":{"text":null}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"},"bubble":{"minSize":5,"maxSize":25}},"annotationsOptions":{"enabledButtons":false},"tooltip":{"delayForDisplay":10},"series":[{"data":[[1375228800000,0.0384959307210299],[1377820800000,-0.183175735410879],[1380499200000,0.124236582095541],[1383177600000,0.249377950007285],[1385683200000,0.453116878250347],[1388448000000,1.05547686162218],[1391126400000,-0.00420948220643706],[1393545600000,0.505551547215158],[1396224000000,0.177556629047616],[1398816000000,-0.0609636850384556],[1401408000000,-0.0481774019677084],[1404086400000,0.0018925903022444],[1406764800000,0.440192234550648],[1409270400000,0.184072899004109],[1412035200000,-0.298653700128702],[1414713600000,-0.161214734476464],[1417132800000,-0.250916098191893],[1419984000000,-0.45837418251842],[1422576000000,-0.452264758048498],[1424995200000,-0.298883849813178],[1427760000000,-0.108957792395939],[1430352000000,-0.133153757918957],[1432857600000,-0.224188773625736],[1435622400000,-0.260003313082469],[1438300800000,-0.191696541122031],[1440979200000,-0.653999351926339],[1443571200000,-0.704012573736777],[1446163200000,-0.513819863614794],[1448841600000,-0.50576304886485],[1451520000000,-0.529429035997053],[1454025600000,-0.613263293604605],[1456704000000,-0.519939935809614],[1459382400000,0.0316733551098986],[1461888000000,-0.263267474482459],[1464652800000,-0.268794176402965],[1467244800000,-0.0670521496362666],[1469750400000,1.86850223763438],[1472601600000,3.30809318066451],[1475193600000,0.874356212416162],[1477872000000,-0.113201423846025],[1480464000000,0.177107061747261],[1483056000000,0.329218737739654],[1485820800000,0.0917042518142491],[1488240000000,0.294850246719137],[1490918400000,0.353815407782795],[1493337600000,null],[1496188800000,null],[1498780800000,null],[1501459200000,null],[1504137600000,1.63504554862165],[1506643200000,2.33222987348891],[1509408000000,2.55378956265877],[1512000000000,2.65257200420556],[1514505600000,2.84569903424888]],"name":"Sortino","color":"cornflowerblue"}],"navigator":{"enabled":false},"scrollbar":{"enabled":false}},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"stock","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+<p>The rolling 6-month has so many bizarre spikes. It nicely emphasizes how we need to be careful with the Sortino Ratio, short time periods and rolling applications.</p>
+<p>Let’s see how the rolling 24-month compares.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_sortino_roll_24_xts &lt;-<span class="st"> </span><span class="kw">rollapply</span>(portfolio_returns_xts_rebalanced_monthly, <span class="dv">24</span>, 
+                           <span class="cf">function</span>(x) <span class="kw">SortinoRatio</span>(x, <span class="dt">MAR =</span> MAR))
+
+<span class="kw">highchart</span>(<span class="dt">type =</span> <span class="st">&quot;stock&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_title</span>(<span class="dt">text =</span> <span class="st">&quot;Rolling Sortino&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series</span>(portfolio_sortino_roll_24_xts, <span class="dt">name =</span> <span class="st">&quot;Sortino 24&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;lightgreen&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_navigator</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hc_scrollbar</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div id="htmlwidget-67d8c22c9b7740553b4b" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-67d8c22c9b7740553b4b">{"x":{"hc_opts":{"title":{"text":"Rolling Sortino"},"yAxis":{"title":{"text":null}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"},"bubble":{"minSize":5,"maxSize":25}},"annotationsOptions":{"enabledButtons":false},"tooltip":{"delayForDisplay":10},"series":[{"data":[[1362009600000,null],[1364428800000,null],[1367280000000,null],[1369958400000,null],[1372377600000,null],[1375228800000,null],[1377820800000,null],[1380499200000,null],[1383177600000,null],[1385683200000,null],[1388448000000,null],[1391126400000,null],[1393545600000,null],[1396224000000,null],[1398816000000,null],[1401408000000,null],[1404086400000,null],[1406764800000,null],[1409270400000,null],[1412035200000,null],[1414713600000,null],[1417132800000,null],[1419984000000,null],[1422576000000,-0.0742560371100389],[1424995200000,0.0282388074650306],[1427760000000,-0.0276540483964776],[1430352000000,-0.0276020183395983],[1432857600000,-0.0241043397383011],[1435622400000,-0.0165135169733199],[1438300800000,-0.116451836050925],[1440979200000,-0.164485461009923],[1443571200000,-0.297036915051846],[1446163200000,-0.25328983042297],[1448841600000,-0.281936905501206],[1451520000000,-0.33621536250715],[1454025600000,-0.337202240954363],[1456704000000,-0.409530132585258],[1459382400000,-0.308858436188641],[1461888000000,-0.296277760269652],[1464652800000,-0.327339036359195],[1467244800000,-0.346657413854586],[1469750400000,-0.262174115164541],[1472601600000,-0.294165858317054],[1475193600000,-0.229101932387413],[1477872000000,-0.295022226657505],[1480464000000,-0.274000941799133],[1483056000000,-0.224730989802793],[1485820800000,-0.160648977002132],[1488240000000,-0.210885118949041],[1490918400000,-0.173602729159369],[1493337600000,-0.185759330109201],[1496188800000,-0.155574283703184],[1498780800000,-0.106882530664283],[1501459200000,-0.0491065219661489],[1504137600000,0.0904545197918287],[1506643200000,0.256121460200931],[1509408000000,0.137709950857138],[1512000000000,0.185868470988268],[1514505600000,0.344293947155871]],"name":"Sortino 24","color":"lightgreen"}],"navigator":{"enabled":false},"scrollbar":{"enabled":false}},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"stock","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+<p>Ah, much better. We can see the movements and how the Sortino has changed through the life of this portfolio, but within a reasonable range of .6 to -0.4.</p>
+<p>Let’s compare to the rolling S&amp;P500 Sortino.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">market_sortino_roll_24_xts &lt;-<span class="st"> </span><span class="kw">rollapply</span>(market_returns_xts, <span class="dv">24</span>, 
+                           <span class="cf">function</span>(x) <span class="kw">SortinoRatio</span>(x, <span class="dt">MAR =</span> MAR))
+  
+
+<span class="kw">highchart</span>(<span class="dt">type =</span> <span class="st">&quot;stock&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_title</span>(<span class="dt">text =</span> <span class="st">&quot;Rolling sharpe&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series</span>(portfolio_sortino_roll_24_xts, <span class="dt">name =</span> <span class="st">&quot;Portfolio&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series</span>(market_sortino_roll_24_xts, <span class="dt">name =</span> <span class="st">&quot;SP500&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_navigator</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hc_scrollbar</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div id="htmlwidget-fd99f3b9fb53296bfef9" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fd99f3b9fb53296bfef9">{"x":{"hc_opts":{"title":{"text":"Rolling sharpe"},"yAxis":{"title":{"text":null}},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"},"bubble":{"minSize":5,"maxSize":25}},"annotationsOptions":{"enabledButtons":false},"tooltip":{"delayForDisplay":10},"series":[{"data":[[1362009600000,null],[1364428800000,null],[1367280000000,null],[1369958400000,null],[1372377600000,null],[1375228800000,null],[1377820800000,null],[1380499200000,null],[1383177600000,null],[1385683200000,null],[1388448000000,null],[1391126400000,null],[1393545600000,null],[1396224000000,null],[1398816000000,null],[1401408000000,null],[1404086400000,null],[1406764800000,null],[1409270400000,null],[1412035200000,null],[1414713600000,null],[1417132800000,null],[1419984000000,null],[1422576000000,-0.0742560371100389],[1424995200000,0.0282388074650306],[1427760000000,-0.0276540483964776],[1430352000000,-0.0276020183395983],[1432857600000,-0.0241043397383011],[1435622400000,-0.0165135169733199],[1438300800000,-0.116451836050925],[1440979200000,-0.164485461009923],[1443571200000,-0.297036915051846],[1446163200000,-0.25328983042297],[1448841600000,-0.281936905501206],[1451520000000,-0.33621536250715],[1454025600000,-0.337202240954363],[1456704000000,-0.409530132585258],[1459382400000,-0.308858436188641],[1461888000000,-0.296277760269652],[1464652800000,-0.327339036359195],[1467244800000,-0.346657413854586],[1469750400000,-0.262174115164541],[1472601600000,-0.294165858317054],[1475193600000,-0.229101932387413],[1477872000000,-0.295022226657505],[1480464000000,-0.274000941799133],[1483056000000,-0.224730989802793],[1485820800000,-0.160648977002132],[1488240000000,-0.210885118949041],[1490918400000,-0.173602729159369],[1493337600000,-0.185759330109201],[1496188800000,-0.155574283703184],[1498780800000,-0.106882530664283],[1501459200000,-0.0491065219661489],[1504137600000,0.0904545197918287],[1506643200000,0.256121460200931],[1509408000000,0.137709950857138],[1512000000000,0.185868470988268],[1514505600000,0.344293947155871]],"name":"Portfolio","color":"cornflowerblue"},{"data":[[1359590400000,null],[1362009600000,null],[1364428800000,null],[1367280000000,null],[1369958400000,null],[1372377600000,null],[1375228800000,null],[1377820800000,null],[1380499200000,null],[1383177600000,null],[1385683200000,null],[1388448000000,null],[1391126400000,null],[1393545600000,null],[1396224000000,null],[1398816000000,null],[1401408000000,null],[1404086400000,null],[1406764800000,null],[1409270400000,null],[1412035200000,null],[1414713600000,null],[1417132800000,null],[1419984000000,null],[1422576000000,null],[1424995200000,null],[1427760000000,null],[1430352000000,null],[1432857600000,null],[1435622400000,null],[1438300800000,null],[1440979200000,null],[1443571200000,null],[1446163200000,null],[1448841600000,null],[1451520000000,null],[1454025600000,null],[1456704000000,null],[1459382400000,null],[1461888000000,null],[1464652800000,null],[1467244800000,null],[1469750400000,null],[1472601600000,null],[1475193600000,null],[1477872000000,null],[1480464000000,null],[1483056000000,null],[1485820800000,null],[1488240000000,null],[1490918400000,null],[1493337600000,null],[1496188800000,null],[1498780800000,null],[1501459200000,null],[1504137600000,null],[1506643200000,null],[1509408000000,null],[1512000000000,null],[1514505600000,null],[1516060800000,null]],"name":"SP500","color":"green"}],"navigator":{"enabled":false},"scrollbar":{"enabled":false}},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"stock","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+<p>I am not going to port these rolling Sortinos to <code>ggplot</code> and the tidyverse, but it would follow the exact same code flow as we use for the Sharpe Ratio. Give it a shot!</p>
+<p>Rolling Sortinos need to be handled with care but there are a few nice payoffs. First, these charts force us and our end users to reflect on how time periods can affect Sortino to extremes. Be skeptical if someone reports a fantastic 6-month Sortino. Second, as an exploratory device, the rolling ratios highligh time periods deserving of more investigation. Third, with Sortino (and Sharpe) Ratios, there’s a temptation to look at the final number for a portfolio’s life and judge it ‘good’ or ‘bad’. These rolling visualizations can help reframe the analysis and look at how the portfolio behaved in different economic and market regimes.</p>
+</div>
+<div id="shiny-sortino-ratio" class="section level3 unnumbered">
+<h3>Shiny Sortino Ratio</h3>
+<p>Let’s wrap this up into a Shiny app and notice how similar it is to the Sharpe Ratio app in structure.</p>
+<p>Here is the link and snapshot:</p>
+<p>www.reproduciblefinance.com/shiny/sortino-ratio/</p>
+<div class="figure"><span id="fig:unnamed-chunk-49"></span>
+<img src="snapshots/sortino-app.png" alt="Sortino Ratio Shiny App" width="100%" />
+<p class="caption">
+FIGURE 3.1: Sortino Ratio Shiny App
+</p>
+</div>
+<p>We just saw how the calculations are different from Sharpe to Shiny, but from a Shiny input perspective, the only difference is that the end user chooses a MAR instead of a risk-free rate.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fluidRow</span>(
+  <span class="kw">column</span>(<span class="dv">5</span>,
+  <span class="kw">numericInput</span>(<span class="st">&quot;mar&quot;</span>, <span class="st">&quot;MAR%&quot;</span>, .<span class="dv">8</span>, <span class="dt">min =</span> <span class="dv">0</span>, <span class="dt">max =</span> <span class="dv">3</span>, <span class="dt">step =</span> .<span class="dv">01</span>)),
+  <span class="kw">column</span>(<span class="dv">5</span>,
+  <span class="kw">numericInput</span>(<span class="st">&quot;window&quot;</span>, <span class="st">&quot;Window&quot;</span>, <span class="dv">6</span>, <span class="dt">min =</span> <span class="dv">2</span>, <span class="dt">max =</span> <span class="dv">24</span>, <span class="dt">step =</span> <span class="dv">2</span>))
+)</code></pre></div>
+<p>Note that we ask for a MAR <em>percent</em>. Thus, when calculating the reactive, we divide by 100.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mar &lt;-<span class="st"> </span><span class="kw">eventReactive</span>(input<span class="op">$</span>go, {input<span class="op">$</span>mar<span class="op">/</span><span class="dv">100</span>})</code></pre></div>
+<p>Why do that? No substantive reason - perhaps it’s more intuitive to the user and it keeps the input box from getting too wide.</p>
+<p>On that same theme, I removed the value boxes so the user doesn’t get to see the overall Sortino Ratio for the portfolio and the market. Why?</p>
+<p>Going back to the idea of experimentation, I would be curious to see if users preferred the value boxes in the Sharpe Ratio app or the cleaner Sortino Ratio. Beyond preference, would they get a different signal? Perhaps end users would be drawn to those value boxes, for better or worse, and ignore the rolling visualizations.</p>
+<p>From there, the app is virtually identical to the Sharpe Ratio app except that I included a density chart, which I think suits a Sortino Ratio.</p>
+<p>The code for that is similar to how we have created other density charts with the addition of a line at the MAR.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">renderPlot</span>({
+  <span class="kw">validate</span>(<span class="kw">need</span>(input<span class="op">$</span>go <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;Please choose your portfolio assets, weights, MAR, rolling window and start date and click submit.&quot;</span>))
+  MAR &lt;-<span class="st"> </span><span class="kw">mar</span>()
+  portfolio_returns_tq_rebalanced_monthly &lt;-<span class="st"> </span><span class="kw">portfolio_returns_tq_rebalanced_monthly</span>()
+  
+  sortino_density_plot &lt;-<span class="st"> </span>portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> returns)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">stat_density</span>(<span class="dt">geom =</span> <span class="st">&quot;line&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) 
+  
+  shaded_area_data &lt;-<span class="st"> </span><span class="kw">ggplot_build</span>(sortino_density_plot)<span class="op">$</span>data[[<span class="dv">1</span>]] <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(x <span class="op">&lt;</span><span class="st"> </span>MAR)
+
+  sortino_density_plot <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_area</span>(<span class="dt">data =</span> shaded_area_data, <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y), <span class="dt">fill=</span><span class="st">&quot;pink&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_segment</span>(<span class="dt">data =</span> shaded_area_data, <span class="kw">aes</span>(<span class="dt">x =</span> MAR, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">xend =</span> MAR, <span class="dt">yend =</span> y), 
+               <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> MAR, <span class="dt">y =</span> <span class="dv">5</span>, <span class="dt">label =</span> <span class="kw">paste</span>(<span class="st">&quot;MAR =&quot;</span>, MAR, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>), 
+           <span class="dt">fontface =</span> <span class="st">&quot;plain&quot;</span>, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">alpha =</span> .<span class="dv">8</span>, <span class="dt">vjust =</span>  <span class="op">-</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">&quot;text&quot;</span>, <span class="dt">x =</span> (MAR <span class="op">-</span><span class="st"> </span>.<span class="dv">02</span>), <span class="dt">y =</span> .<span class="dv">1</span>, <span class="dt">label =</span> <span class="st">&quot;Downside&quot;</span>, 
+           <span class="dt">fontface =</span> <span class="st">&quot;plain&quot;</span>, <span class="dt">alpha =</span> .<span class="dv">8</span>, <span class="dt">vjust =</span>  <span class="op">-</span><span class="dv">1</span>)
+           
+})</code></pre></div>
+<p>That’s all for our Sortino app. The building of this app was greatly aided by our previous work on visualizing returns and building a Sharpe Ratio app. We can move faster as we build on the past.</p>
+<p>Next we will change gears a bit and look at CAPM and beta.</p>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>Markowitz, Harry. Portfolio Selection: Efficient Diversification of Investments, John Wiley &amp; Sons, 1959<a href="sortino-ratio.html#fnref2">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sharpe-ratio.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="montecarlo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-crc/edit/master/portfolio-theory.Rmd",
+"text": "Edit"
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"toc": {
+"collapse": "chapter"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

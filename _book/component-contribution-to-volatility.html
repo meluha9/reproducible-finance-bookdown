@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reproducible Finance with R</title>
+  <meta name="description" content="A reproducible for Chapman &amp; Hall.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Reproducible Finance with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A reproducible for Chapman &amp; Hall." />
+  <meta name="github-repo" content="jkr216/reproducible-finance-ch" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reproducible Finance with R" />
+  
+  <meta name="twitter:description" content="A reproducible for Chapman &amp; Hall." />
+  
+
+<meta name="author" content="Jonathan K. Regenstein, Jr.">
+
+
+<meta name="date" content="2018-01-17">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="rolling-standard-deviation.html">
+<link rel="next" href="rolling-component-contribution-to-volatility.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/proj4js/proj4.js"></script>
+<link href="libs/highcharts/css/motion.css" rel="stylesheet" />
+<script src="libs/highcharts/highstock.js"></script>
+<script src="libs/highcharts/highcharts-3d.js"></script>
+<script src="libs/highcharts/highcharts-more.js"></script>
+<script src="libs/highcharts/modules/annotations.js"></script>
+<script src="libs/highcharts/modules/broken-axis.js"></script>
+<script src="libs/highcharts/modules/data.js"></script>
+<script src="libs/highcharts/modules/drilldown.js"></script>
+<script src="libs/highcharts/modules/exporting.js"></script>
+<script src="libs/highcharts/modules/funnel.js"></script>
+<script src="libs/highcharts/modules/heatmap.js"></script>
+<script src="libs/highcharts/modules/map.js"></script>
+<script src="libs/highcharts/modules/no-data-to-display.js"></script>
+<script src="libs/highcharts/modules/offline-exporting.js"></script>
+<script src="libs/highcharts/modules/solid-gauge.js"></script>
+<script src="libs/highcharts/modules/treemap.js"></script>
+<script src="libs/highcharts/plugins/annotations.js"></script>
+<script src="libs/highcharts/plugins/draggable-legend.js"></script>
+<script src="libs/highcharts/plugins/draggable-points.js"></script>
+<script src="libs/highcharts/plugins/export-csv.js"></script>
+<script src="libs/highcharts/plugins/grouped-categories.js"></script>
+<script src="libs/highcharts/plugins/motion.js"></script>
+<script src="libs/highcharts/plugins/pattern-fill-v2.js"></script>
+<script src="libs/highcharts/plugins/tooltip-delay.js"></script>
+<script src="libs/highcharts/custom/reset.js"></script>
+<script src="libs/highcharts/custom/symbols-extra.js"></script>
+<script src="libs/highcharts/custom/text-symbols.js"></script>
+<link href="libs/fontawesome/font-awesome.min.css" rel="stylesheet" />
+<link href="libs/htmlwdgtgrid/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="libs/highchart-binding/highchart.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> install the packages needed by this book; you fill out c(), e.g. c(‘ggplot2’, ‘dplyr’)</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-read-this-book"><i class="fa fa-check"></i>Why read this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#structure-of-the-book"><i class="fa fa-check"></i>Structure of the book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-author"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information-and-conventions"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html"><i class="fa fa-check"></i>Returns</a><ul>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#importing-asset-prices"><i class="fa fa-check"></i>Importing Asset Prices</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#thoughts-on-converting-daily-prices-to-monthly-log-returns"><i class="fa fa-check"></i>Thoughts on Converting Daily Prices to Monthly Log Returns</a></li>
+<li><a href="returns.html#converting-daily-prices-to-monthly-returns-in-the-xts-world">Converting Daily Prices to Monthly Returns in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyverse"><i class="fa fa-check"></i>Converting Daily Prices to Monthly Returns in the Tidyverse</a></li>
+<li><a href="returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyquant-world">Converting Daily Prices to Monthly Returns in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#a-word-on-workflow-and-recap"><i class="fa fa-check"></i>A Word on workflow and recap</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#visualizing-asset-returns-before-they-get-mashed-into-a-portfolio"><i class="fa fa-check"></i>Visualizing Asset Returns before they get mashed into a portfolio</a></li>
+<li><a href="returns.html#portfolio-returns-in-the-xts-world">Portfolio Returns in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#portfolio-returns-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Returns in the tidyverse</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#portfolio-returns-in-the-tidyquant-world"><i class="fa fa-check"></i>Portfolio Returns in the tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#visualizing-portfolio-returns"><i class="fa fa-check"></i>Visualizing Portfolio Returns</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#our-first-shiny-app-portfolio-returns"><i class="fa fa-check"></i>Our First Shiny App: Portfolio Returns</a></li>
+<li><a href="returns.html#portfolio-growth-in-the-xts-world">Portfolio Growth in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#portfolio-growth-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Growth in the Tidyverse</a></li>
+<li><a href="returns.html#portfolio-growth-in-the-tidyquant-world">Portfolio Growth in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#visualizing-portfolio-growth"><i class="fa fa-check"></i>Visualizing Portfolio Growth</a></li>
+<li class="chapter" data-level="1.0.1" data-path="returns.html"><a href="returns.html#shiny-growth-of-a-dollar"><i class="fa fa-check"></i><b>1.0.1</b> Shiny Growth of a Dollar</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#concluding"><i class="fa fa-check"></i>Concluding</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html"><i class="fa fa-check"></i>Risk</a></li>
+<li class="chapter" data-level="2" data-path="portfolio-standard-deviation.html"><a href="portfolio-standard-deviation.html"><i class="fa fa-check"></i><b>2</b> Portfolio Standard Deviation</a><ul>
+<li><a href="portfolio-standard-deviation.html#standard-deviation-in-the-xts-world">Standard Deviation in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="portfolio-standard-deviation.html"><a href="portfolio-standard-deviation.html#standard-devation-in-the-tidyverse"><i class="fa fa-check"></i>Standard Devation in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="portfolio-standard-deviation.html"><a href="portfolio-standard-deviation.html#standard-deviation-in-the-tidyquant-world"><i class="fa fa-check"></i>Standard Deviation in the Tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="portfolio-standard-deviation.html"><a href="portfolio-standard-deviation.html#visualizing-standard-deviation"><i class="fa fa-check"></i>Visualizing Standard Deviation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html"><i class="fa fa-check"></i><b>3</b> Rolling Standard Deviation</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#rolling-standard-deviation-in-the-xts-world"><i class="fa fa-check"></i><b>3.0.1</b> Rolling Standard Deviation in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="3.0.2" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#rolling-standard-deviation-in-tidyverse"><i class="fa fa-check"></i><b>3.0.2</b> Rolling Standard Deviation in tidyverse</a></li>
+<li class="chapter" data-level="" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#rolling-standard-deviation-with-tidyquant"><i class="fa fa-check"></i>Rolling Standard Deviation with tidyquant</a></li>
+<li><a href="rolling-standard-deviation.html#visualizing-rolling-standard-deviation-in-the-xts-world">Visualizing Rolling Standard Deviation in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#visualizing-rolling-standard-deviation-in-the-tidyverse"><i class="fa fa-check"></i>Visualizing Rolling Standard Deviation in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#shiny-app"><i class="fa fa-check"></i>Shiny App</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="component-contribution-to-volatility.html"><a href="component-contribution-to-volatility.html"><i class="fa fa-check"></i><b>4</b> Component Contribution to Volatility</a><ul>
+<li class="chapter" data-level="" data-path="component-contribution-to-volatility.html"><a href="component-contribution-to-volatility.html#visualizing-component-contribution"><i class="fa fa-check"></i>Visualizing Component Contribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rolling-component-contribution-to-volatility.html"><a href="rolling-component-contribution-to-volatility.html"><i class="fa fa-check"></i><b>5</b> Rolling Component Contribution to Volatility</a><ul>
+<li class="chapter" data-level="" data-path="rolling-component-contribution-to-volatility.html"><a href="rolling-component-contribution-to-volatility.html#visualizing-component-contribution-to-volatility"><i class="fa fa-check"></i>Visualizing Component Contribution to Volatility</a></li>
+<li class="chapter" data-level="" data-path="rolling-component-contribution-to-volatility.html"><a href="rolling-component-contribution-to-volatility.html#shiny-component-contribution"><i class="fa fa-check"></i>Shiny Component Contribution</a></li>
+<li class="chapter" data-level="" data-path="rolling-component-contribution-to-volatility.html"><a href="rolling-component-contribution-to-volatility.html#conclusion-on-standard-deviation"><i class="fa fa-check"></i>Conclusion on Standard Deviation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="portfolio-theory.html"><a href="portfolio-theory.html"><i class="fa fa-check"></i><b>6</b> Portfolio Theory</a></li>
+<li class="chapter" data-level="7" data-path="montecarlo.html"><a href="montecarlo.html"><i class="fa fa-check"></i><b>7</b> montecarlo</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="more-to-say.html"><a href="more-to-say.html"><i class="fa fa-check"></i><b>A</b> More to Say</a></li>
+<li class="chapter" data-level="" data-path="appendix-2.html"><a href="appendix-2.html"><i class="fa fa-check"></i>Appendix 2</a></li>
+<li class="chapter" data-level="B" data-path="generate-a-bibtex-database-automatically-for-some-r-packages.html"><a href="generate-a-bibtex-database-automatically-for-some-r-packages.html"><i class="fa fa-check"></i><b>B</b> generate a BibTeX database automatically for some R packages</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reproducible Finance with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="component-contribution-to-volatility" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Component Contribution to Volatility</h1>
+<p>Let’s break total portfolio volatility into its constituent parts and investigate how each asset contributes to the volatility. Why might we want to do that?</p>
+<p>For our own risk management purposes, we might want to ensure that our risk hasn’t got too concentrated in one asset. Not only might this lead a less diversified portfolio than we thought we had, but it also might indicate that our initial assumptions about a particular asset were wrong, or at least, they have become less right as the asset has changed over time.</p>
+<p>Similarly, if this portfolio is governed by a mandate from, say, an institutional client, that client might have a preference or even a rule that no asset or sector can rise above a certain threshold risk contribution. That institutional client might require a report like this from each of their outsourced managers, so they can sum the constituents.</p>
+<p>As in the previous section on volatility, we need to build the covariance matrix and calculate portfolio standard deviation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">covariance_matrix &lt;-<span class="st"> </span><span class="kw">cov</span>(asset_returns_xts)
+
+sd_portfolio &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">t</span>(w) <span class="op">%*%</span><span class="st"> </span>covariance_matrix <span class="op">%*%</span><span class="st"> </span>w)</code></pre></div>
+<p>Now let’s start to look at the individual components.</p>
+<p>The percentage contribution of asset i is defined as: (marginal contribution of asset i * weight of asset i) / portfolio standard deviation</p>
+<p>Let’s find the marginal contribution first by taking the cross product of the weights vector and the covariance matrix, divided by the portfolio standard deviation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">marginal_contribution &lt;-<span class="st"> </span>w <span class="op">%*%</span><span class="st"> </span>covariance_matrix <span class="op">/</span><span class="st"> </span>sd_portfolio[<span class="dv">1</span>, <span class="dv">1</span>]
+
+marginal_contribution</code></pre></div>
+<pre><code>##          SPY     EFA     IJS     EEM       AGG
+## [1,] 0.02465 0.02939 0.03005 0.03523 0.0009151</code></pre>
+<p>Now multiply the marginal contribution of each asset by the weights vector to get total contribution.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">component_contribution &lt;-<span class="st"> </span>marginal_contribution <span class="op">*</span><span class="st"> </span>w 
+
+component_contribution</code></pre></div>
+<pre><code>##           SPY      EFA      IJS      EEM       AGG
+## [1,] 0.006162 0.007347 0.006011 0.007046 9.151e-05</code></pre>
+<p>We can then sum the asset contributions and make sure it’s equal to total portfolio standard deviation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">components_summed &lt;-<span class="st"> </span><span class="kw">rowSums</span>(component_contribution)
+
+components_summed</code></pre></div>
+<pre><code>## [1] 0.02666</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sd_portfolio</code></pre></div>
+<pre><code>##         [,1]
+## [1,] 0.02666</code></pre>
+<p>The summed components are equal to the total - all looks good.</p>
+<p>To get to percentage contribution of each asset, we divide each asset’s contribution by total portfolio standard deviation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">component_percentages &lt;-<span class="st"> </span>component_contribution <span class="op">/</span><span class="st"> </span>sd_portfolio[<span class="dv">1</span>, <span class="dv">1</span>]
+
+component_percentages</code></pre></div>
+<pre><code>##         SPY    EFA    IJS    EEM      AGG
+## [1,] 0.2312 0.2756 0.2255 0.2643 0.003433</code></pre>
+<p>Let’s port this to a tibble for ease of presentation, and we’ll append <code>by_hand</code> to the object because we did the calculations step-by-step.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">percentage_tibble_by_hand &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">tibble</span>(symbols, w, <span class="kw">as.vector</span>(component_percentages)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">asset =</span> symbols, 
+         <span class="st">&#39;portfolio weight&#39;</span> =<span class="st"> </span>w, 
+         <span class="st">&#39;risk contribution&#39;</span> =<span class="st"> `</span><span class="dt">as.vector(component_percentages)</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">risk contribution</span><span class="st">`</span> =<span class="st"> </span><span class="kw">round</span>(<span class="st">`</span><span class="dt">risk contribution</span><span class="st">`</span>, <span class="dv">4</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)
+
+percentage_tibble_by_hand</code></pre></div>
+<pre><code>## # A tibble: 5 x 3
+##   asset `portfolio weight` `risk contribution`
+##   &lt;chr&gt;              &lt;dbl&gt;               &lt;dbl&gt;
+## 1 SPY                0.250              23.1  
+## 2 EFA                0.250              27.6  
+## 3 IJS                0.200              22.6  
+## 4 EEM                0.200              26.4  
+## 5 AGG                0.100               0.340</code></pre>
+<p>Does anything strike us as out of whack here? Is AGG acting as the volatility dampener we had hoped? It sure looks like it - AGG is contributing less than 1% to the overall volatility.</p>
+<p>As you might have guessed, we used <code>by_hand</code> in the object name because we could have used a pre-built R function to do all this work.</p>
+<p>The <code>StdDev()</code> function from <code>PerformanceAnalytics</code> will run this same component calculation if we pass in an asset returns object, weights vector and then set <code>portfolio_method = &quot;component&quot;</code> (recall that if we set <code>portfolio_method = &quot;single&quot;</code>, the function will return the total portfolio standard deviation, as we saw in a previous section).</p>
+<p>Let’s confirm that the pre-built function returns the same results as our by-hand.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_vol_comp_contr_total_builtin &lt;-<span class="st"> </span><span class="kw">StdDev</span>(asset_returns_xts, <span class="dt">weights =</span> w, 
+                              <span class="dt">portfolio_method =</span> <span class="st">&quot;component&quot;</span>)</code></pre></div>
+<pre><code>## Warning in (0.5 * as.vector(dpm2))/sqrt(pm2): Recycling array of length 1 in vector-array arithmetic is deprecated.
+##   Use c() or as.vector() instead.</code></pre>
+<pre><code>## Warning in contrib/sqrt(pm2): Recycling array of length 1 in vector-array arithmetic is deprecated.
+##   Use c() or as.vector() instead.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portfolio_vol_comp_contr_total_builtin<span class="op">$</span>contribution</code></pre></div>
+<pre><code>##       SPY       EFA       IJS       EEM       AGG 
+## 6.162e-03 7.347e-03 6.011e-03 7.046e-03 9.151e-05</code></pre>
+<p>That function returns a list and one of the elements is <code>$pct_contrib_StdDev</code>, which is the percentage contribution of each asset. Let’s move it to a <code>tibble</code> for ease of presentation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Port to a tibble.  </span>
+percentages_tibble_pre_built &lt;-<span class="st"> </span>
+<span class="st">  </span>portfolio_vol_comp_contr_total_builtin<span class="op">$</span>pct_contrib_StdDev <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">tk_tbl</span>(<span class="dt">preserve_index =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">asset =</span> symbols) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="st">&#39;risk contribution&#39;</span> =<span class="st"> </span>data) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">risk contribution</span><span class="st">`</span> =<span class="st"> </span><span class="kw">round</span>(<span class="st">`</span><span class="dt">risk contribution</span><span class="st">`</span>, <span class="dv">4</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>, 
+         <span class="dt">weights =</span> w <span class="op">*</span><span class="dv">100</span> ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(asset, <span class="kw">everything</span>())</code></pre></div>
+<p>Has our work checked out? Is <code>percentages_tibble_pre_built</code> showing the same result as <code>component_percentages_tibble_by_hand</code>?</p>
+<p>Compare the two objects</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">percentages_tibble_pre_built</code></pre></div>
+<pre><code>## # A tibble: 5 x 3
+##   asset `risk contribution` weights
+##   &lt;chr&gt;               &lt;dbl&gt;   &lt;dbl&gt;
+## 1 SPY                23.1      25.0
+## 2 EFA                27.6      25.0
+## 3 IJS                22.6      20.0
+## 4 EEM                26.4      20.0
+## 5 AGG                 0.340    10.0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">percentage_tibble_by_hand</code></pre></div>
+<pre><code>## # A tibble: 5 x 3
+##   asset `portfolio weight` `risk contribution`
+##   &lt;chr&gt;              &lt;dbl&gt;               &lt;dbl&gt;
+## 1 SPY                0.250              23.1  
+## 2 EFA                0.250              27.6  
+## 3 IJS                0.200              22.6  
+## 4 EEM                0.200              26.4  
+## 5 AGG                0.100               0.340</code></pre>
+<p>Huzzah - our findings seem to be consistent! Let’s do some visualizing.</p>
+<div id="visualizing-component-contribution" class="section level3 unnumbered">
+<h3>Visualizing Component Contribution</h3>
+<p>Let’s head to <code>ggplot</code> for some visualizing. We have not yet built a bar chart and now seems like a good time to start. We take our <code>percentages_tibble_pre_built</code> and want to put the risk contribution of each asset on the y-axis. That means a call to <code>ggplot(aes(x = asset, y = risk_contribution))</code>, after which we add the bar layer with <code>geom_col(fill = 'cornflowerblue', colour = 'pink', width = .6)</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">percentages_tibble_pre_built <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">risk_contribution =</span> <span class="st">`</span><span class="dt">risk contribution</span><span class="st">`</span><span class="op">/</span><span class="dv">100</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> asset, <span class="dt">y =</span> risk_contribution)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">fill =</span> <span class="st">&#39;cornflowerblue&#39;</span>, <span class="dt">colour =</span> <span class="st">&#39;pink&#39;</span>, <span class="dt">width =</span> .<span class="dv">6</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent, <span class="dt">breaks =</span> <span class="kw">pretty_breaks</span>(<span class="dt">n =</span> <span class="dv">20</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Percent Contribution to Volatility&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Asset&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Percent Contribution to Risk&quot;</span>)</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p>How about a chart that compares weights to risk contribution. First we’ll need to gather our tibble to long format by using <code>gather(type, percent, -asset)</code>, then call <code>ggplot(aes(x = asset, y = percent, fill = type))</code> and make sure the two columns are not right on top of each other with <code>geom_col(position='dodge')</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  percentages_tibble_pre_built <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">gather</span>(type, percent, <span class="op">-</span>asset) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(type) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">percent =</span> percent<span class="op">/</span><span class="dv">100</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> asset, <span class="dt">y =</span> percent, <span class="dt">fill =</span> type)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_col</span>(<span class="dt">position=</span><span class="st">&#39;dodge&#39;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> percent) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Percent Contribution to Volatility&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>))</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p>It looks like AGG, a bond fund, has done a good job as a volatility dampener. It has a 10% allocation but contributes almost zero to volatility.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="rolling-standard-deviation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rolling-component-contribution-to-volatility.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-crc/edit/master/risk.Rmd",
+"text": "Edit"
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

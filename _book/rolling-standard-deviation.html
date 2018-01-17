@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reproducible Finance with R</title>
+  <meta name="description" content="A reproducible for Chapman &amp; Hall.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Reproducible Finance with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A reproducible for Chapman &amp; Hall." />
+  <meta name="github-repo" content="jkr216/reproducible-finance-ch" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reproducible Finance with R" />
+  
+  <meta name="twitter:description" content="A reproducible for Chapman &amp; Hall." />
+  
+
+<meta name="author" content="Jonathan K. Regenstein, Jr.">
+
+
+<meta name="date" content="2018-01-17">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="portfolio-standard-deviation.html">
+<link rel="next" href="component-contribution-to-volatility.html">
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/proj4js/proj4.js"></script>
+<link href="libs/highcharts/css/motion.css" rel="stylesheet" />
+<script src="libs/highcharts/highstock.js"></script>
+<script src="libs/highcharts/highcharts-3d.js"></script>
+<script src="libs/highcharts/highcharts-more.js"></script>
+<script src="libs/highcharts/modules/annotations.js"></script>
+<script src="libs/highcharts/modules/broken-axis.js"></script>
+<script src="libs/highcharts/modules/data.js"></script>
+<script src="libs/highcharts/modules/drilldown.js"></script>
+<script src="libs/highcharts/modules/exporting.js"></script>
+<script src="libs/highcharts/modules/funnel.js"></script>
+<script src="libs/highcharts/modules/heatmap.js"></script>
+<script src="libs/highcharts/modules/map.js"></script>
+<script src="libs/highcharts/modules/no-data-to-display.js"></script>
+<script src="libs/highcharts/modules/offline-exporting.js"></script>
+<script src="libs/highcharts/modules/solid-gauge.js"></script>
+<script src="libs/highcharts/modules/treemap.js"></script>
+<script src="libs/highcharts/plugins/annotations.js"></script>
+<script src="libs/highcharts/plugins/draggable-legend.js"></script>
+<script src="libs/highcharts/plugins/draggable-points.js"></script>
+<script src="libs/highcharts/plugins/export-csv.js"></script>
+<script src="libs/highcharts/plugins/grouped-categories.js"></script>
+<script src="libs/highcharts/plugins/motion.js"></script>
+<script src="libs/highcharts/plugins/pattern-fill-v2.js"></script>
+<script src="libs/highcharts/plugins/tooltip-delay.js"></script>
+<script src="libs/highcharts/custom/reset.js"></script>
+<script src="libs/highcharts/custom/symbols-extra.js"></script>
+<script src="libs/highcharts/custom/text-symbols.js"></script>
+<link href="libs/fontawesome/font-awesome.min.css" rel="stylesheet" />
+<link href="libs/htmlwdgtgrid/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="libs/highchart-binding/highchart.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> install the packages needed by this book; you fill out c(), e.g. c(‘ggplot2’, ‘dplyr’)</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-read-this-book"><i class="fa fa-check"></i>Why read this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#structure-of-the-book"><i class="fa fa-check"></i>Structure of the book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-author"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information-and-conventions"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html"><i class="fa fa-check"></i>Returns</a><ul>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#importing-asset-prices"><i class="fa fa-check"></i>Importing Asset Prices</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#thoughts-on-converting-daily-prices-to-monthly-log-returns"><i class="fa fa-check"></i>Thoughts on Converting Daily Prices to Monthly Log Returns</a></li>
+<li><a href="returns.html#converting-daily-prices-to-monthly-returns-in-the-xts-world">Converting Daily Prices to Monthly Returns in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyverse"><i class="fa fa-check"></i>Converting Daily Prices to Monthly Returns in the Tidyverse</a></li>
+<li><a href="returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyquant-world">Converting Daily Prices to Monthly Returns in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#a-word-on-workflow-and-recap"><i class="fa fa-check"></i>A Word on workflow and recap</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#visualizing-asset-returns-before-they-get-mashed-into-a-portfolio"><i class="fa fa-check"></i>Visualizing Asset Returns before they get mashed into a portfolio</a></li>
+<li><a href="returns.html#portfolio-returns-in-the-xts-world">Portfolio Returns in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#portfolio-returns-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Returns in the tidyverse</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#portfolio-returns-in-the-tidyquant-world"><i class="fa fa-check"></i>Portfolio Returns in the tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#visualizing-portfolio-returns"><i class="fa fa-check"></i>Visualizing Portfolio Returns</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#our-first-shiny-app-portfolio-returns"><i class="fa fa-check"></i>Our First Shiny App: Portfolio Returns</a></li>
+<li><a href="returns.html#portfolio-growth-in-the-xts-world">Portfolio Growth in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#portfolio-growth-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Growth in the Tidyverse</a></li>
+<li><a href="returns.html#portfolio-growth-in-the-tidyquant-world">Portfolio Growth in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#visualizing-portfolio-growth"><i class="fa fa-check"></i>Visualizing Portfolio Growth</a></li>
+<li class="chapter" data-level="1.0.1" data-path="returns.html"><a href="returns.html#shiny-growth-of-a-dollar"><i class="fa fa-check"></i><b>1.0.1</b> Shiny Growth of a Dollar</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#concluding"><i class="fa fa-check"></i>Concluding</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html"><i class="fa fa-check"></i>Risk</a></li>
+<li class="chapter" data-level="2" data-path="portfolio-standard-deviation.html"><a href="portfolio-standard-deviation.html"><i class="fa fa-check"></i><b>2</b> Portfolio Standard Deviation</a><ul>
+<li><a href="portfolio-standard-deviation.html#standard-deviation-in-the-xts-world">Standard Deviation in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="portfolio-standard-deviation.html"><a href="portfolio-standard-deviation.html#standard-devation-in-the-tidyverse"><i class="fa fa-check"></i>Standard Devation in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="portfolio-standard-deviation.html"><a href="portfolio-standard-deviation.html#standard-deviation-in-the-tidyquant-world"><i class="fa fa-check"></i>Standard Deviation in the Tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="portfolio-standard-deviation.html"><a href="portfolio-standard-deviation.html#visualizing-standard-deviation"><i class="fa fa-check"></i>Visualizing Standard Deviation</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html"><i class="fa fa-check"></i><b>3</b> Rolling Standard Deviation</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#rolling-standard-deviation-in-the-xts-world"><i class="fa fa-check"></i><b>3.0.1</b> Rolling Standard Deviation in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="3.0.2" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#rolling-standard-deviation-in-tidyverse"><i class="fa fa-check"></i><b>3.0.2</b> Rolling Standard Deviation in tidyverse</a></li>
+<li class="chapter" data-level="" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#rolling-standard-deviation-with-tidyquant"><i class="fa fa-check"></i>Rolling Standard Deviation with tidyquant</a></li>
+<li><a href="rolling-standard-deviation.html#visualizing-rolling-standard-deviation-in-the-xts-world">Visualizing Rolling Standard Deviation in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#visualizing-rolling-standard-deviation-in-the-tidyverse"><i class="fa fa-check"></i>Visualizing Rolling Standard Deviation in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="rolling-standard-deviation.html"><a href="rolling-standard-deviation.html#shiny-app"><i class="fa fa-check"></i>Shiny App</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="component-contribution-to-volatility.html"><a href="component-contribution-to-volatility.html"><i class="fa fa-check"></i><b>4</b> Component Contribution to Volatility</a><ul>
+<li class="chapter" data-level="" data-path="component-contribution-to-volatility.html"><a href="component-contribution-to-volatility.html#visualizing-component-contribution"><i class="fa fa-check"></i>Visualizing Component Contribution</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rolling-component-contribution-to-volatility.html"><a href="rolling-component-contribution-to-volatility.html"><i class="fa fa-check"></i><b>5</b> Rolling Component Contribution to Volatility</a><ul>
+<li class="chapter" data-level="" data-path="rolling-component-contribution-to-volatility.html"><a href="rolling-component-contribution-to-volatility.html#visualizing-component-contribution-to-volatility"><i class="fa fa-check"></i>Visualizing Component Contribution to Volatility</a></li>
+<li class="chapter" data-level="" data-path="rolling-component-contribution-to-volatility.html"><a href="rolling-component-contribution-to-volatility.html#shiny-component-contribution"><i class="fa fa-check"></i>Shiny Component Contribution</a></li>
+<li class="chapter" data-level="" data-path="rolling-component-contribution-to-volatility.html"><a href="rolling-component-contribution-to-volatility.html#conclusion-on-standard-deviation"><i class="fa fa-check"></i>Conclusion on Standard Deviation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="portfolio-theory.html"><a href="portfolio-theory.html"><i class="fa fa-check"></i><b>6</b> Portfolio Theory</a></li>
+<li class="chapter" data-level="7" data-path="montecarlo.html"><a href="montecarlo.html"><i class="fa fa-check"></i><b>7</b> montecarlo</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="more-to-say.html"><a href="more-to-say.html"><i class="fa fa-check"></i><b>A</b> More to Say</a></li>
+<li class="chapter" data-level="" data-path="appendix-2.html"><a href="appendix-2.html"><i class="fa fa-check"></i>Appendix 2</a></li>
+<li class="chapter" data-level="B" data-path="generate-a-bibtex-database-automatically-for-some-r-packages.html"><a href="generate-a-bibtex-database-automatically-for-some-r-packages.html"><i class="fa fa-check"></i><b>B</b> generate a BibTeX database automatically for some R packages</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reproducible Finance with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="rolling-standard-deviation" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Rolling Standard Deviation</h1>
+<p>We have already calculated the volatility for the entire life of the portfolio but that’s not quite adequate to understand the volatility for this collection of assets.</p>
+<p>We might miss a 3-month or 6-month period where the volatility spiked or plummeted or did both. And the longer our portfolio life, the more likely we are to miss something important. If we had 10 or 20 years of data and we calculated the standard deviation for the entire history, we could, or most certainly would, fail to notice a period in which volatility was very high, and hence we would fail to ponder the probability that it could occur again.</p>
+<p>Imagine a portfolio which had a standard deviation of returns for each 6-month period of 3% and it never changed. Now imagine a portfolio whose volatility fluctuated every few 6-month periods from 0% to 6% . We might find a 3% standard deviation of monthly returns over a 10-year sample for both of these, but those two portfolios are not exhibiting the same volatility. The rolling volatility of each would show us the differences and then we could hypothesize about the past causes and future probabilities for those differences. We might also want to think about dynamically rebalancing our portfolio to better manage volatility if we are seeing large spikes in the rolling windows.</p>
+<div id="rolling-standard-deviation-in-the-xts-world" class="section level3">
+<h3><span class="header-section-number">3.0.1</span> Rolling Standard Deviation in the <code>xts</code> world</h3>
+<p>The <code>xts</code> world is all about time series and as such, calculating rolling standard deviation is straightforward. We invoke <code>rollapply()</code>, pass it our returns object <code>portfolio_returns_xts_rebalanced_monthly</code> and the <code>sd()</code> function, and also choose a rolling window width with <code>width = window</code>.</p>
+<p>The first thing we do is assign a value to the variable <code>window</code>. I append an <code>na.omit()</code> because first 5 months will be NAs - there is not rolling 6 month anything in months 1 - 5.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">window &lt;-<span class="st"> </span><span class="dv">6</span>
+
+port_rolling_sd_xts &lt;-<span class="st"> </span><span class="kw">rollapply</span>(portfolio_returns_xts_rebalanced_monthly,
+                                 <span class="dt">FUN =</span> sd, 
+                                 <span class="dt">width =</span> window) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">na.omit</span>()
+
+<span class="kw">head</span>(port_rolling_sd_xts)</code></pre></div>
+<pre><code>##            returns
+## 2013-07-31 0.02274
+## 2013-08-30 0.02666
+## 2013-09-30 0.03358
+## 2013-10-31 0.03496
+## 2013-11-29 0.03381
+## 2013-12-31 0.02814</code></pre>
+</div>
+<div id="rolling-standard-deviation-in-tidyverse" class="section level3">
+<h3><span class="header-section-number">3.0.2</span> Rolling Standard Deviation in tidyverse</h3>
+<p>In the tidyverse, rolling calculations aren’t as simple. Try the code chunk below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">port_rolling_sd_tidy_does_not_work &lt;-<span class="st"> </span>
+<span class="st">  </span>portfolio_returns_dplyr_byhand <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rolling_sd =</span> <span class="kw">rollapply</span>(returns, <span class="dt">FUN =</span> sd, <span class="dt">width =</span> <span class="dv">6</span>, <span class="dt">fill =</span> <span class="ot">NA</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(date, rolling_sd) 
+
+<span class="kw">head</span>(port_rolling_sd_tidy_does_not_work)</code></pre></div>
+<p>The <code>width</code> argument isn’t being picked up correctly.</p>
+<p>There is an alternative method we can use in the <code>RccpRoll</code> package, which has a built-in rolling standard deviation function <code>roll_sd()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RcppRoll)
+port_rolling_sd_tidy_rccproll &lt;-<span class="st"> </span>
+<span class="st">  </span>portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rolling_sd =</span> <span class="kw">roll_sd</span>(returns, window, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">align =</span> <span class="st">&quot;right&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(date, rolling_sd) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">na.omit</span>()
+
+<span class="kw">head</span>(port_rolling_sd_tidy_rccproll)</code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##   date       rolling_sd
+##   &lt;date&gt;          &lt;dbl&gt;
+## 1 2013-07-31     0.0227
+## 2 2013-08-31     0.0267
+## 3 2013-09-30     0.0336
+## 4 2013-10-31     0.0350
+## 5 2013-11-30     0.0338
+## 6 2013-12-31     0.0281</code></pre>
+<p>That works fine, but it’s not generalizable since the <code>RccpRoll</code> package does not have built-in functions for most statistics we might want to calculate (like Kurtosis and Skewness).</p>
+<p>Now is a good time to introduce a use case for the <code>tibbletime</code> package. <code>tibbletime</code>, as the name implies, has lots of nice functions for working with time series within tibbles.</p>
+<p>We can combine the tidyverse with a piece of the tidyquant family and use the <code>tibbletime</code> package. This flow works a bit differently from the previous. Here, we first define a rolling standard deviation function using <code>rollify()</code> from <code>tibbletime</code>. We want to roll the <code>sd()</code> function with a rolling width equal to our <code>window</code> variable so we invoke <code>sd_roll_6 &lt;- rollify(sd, window = window)</code>. Then we can use <code>mutate()</code> to pass it into the <code>dplyr</code> flow.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tibbletime)
+
+sd_roll_<span class="dv">6</span> &lt;-<span class="st"> </span><span class="kw">rollify</span>(sd, <span class="dt">window =</span> window)
+  
+port_rolling_sd_tidy_tibbletime &lt;-<span class="st"> </span>
+<span class="st">  </span>portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as_tbl_time</span>(<span class="dt">index =</span> date) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sd =</span> <span class="kw">sd_roll_6</span>(returns)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">na.omit</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sd_rccp_roll =</span> port_rolling_sd_tidy_rccproll<span class="op">$</span>rolling_sd) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>returns)
+
+<span class="kw">head</span>(port_rolling_sd_tidy_tibbletime)</code></pre></div>
+<pre><code>## # A time tibble: 6 x 3
+## # Index: date
+##   date           sd sd_rccp_roll
+##   &lt;date&gt;      &lt;dbl&gt;        &lt;dbl&gt;
+## 1 2013-07-31 0.0227       0.0227
+## 2 2013-08-31 0.0267       0.0267
+## 3 2013-09-30 0.0336       0.0336
+## 4 2013-10-31 0.0350       0.0350
+## 5 2013-11-30 0.0338       0.0338
+## 6 2013-12-31 0.0281       0.0281</code></pre>
+<p>That’s a nifty combination of the tidyverse and <code>tibbletime</code>. And it’s generalizable to other functions beyond standard deviation.</p>
+</div>
+<div id="rolling-standard-deviation-with-tidyquant" class="section level3 unnumbered">
+<h3>Rolling Standard Deviation with tidyquant</h3>
+<p>The <code>tidyquant</code> package has a nice way to apply the rolling function to data frames. We use <code>tq_mutate</code> and supply <code>mutate_fun = rollapply</code> as our mutation function argument, then <code>FUN = sd</code> as the nested function beneath it. It’s a similar structure to the tidyverse.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">port_rolling_sd_tq &lt;-<span class="st"> </span>
+<span class="st">  </span>portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">tq_mutate</span>(<span class="dt">mutate_fun =</span> rollapply,
+            <span class="dt">width =</span> window,
+            <span class="dt">FUN =</span> sd,
+            <span class="dt">col_rename =</span> (<span class="st">&quot;rolling_sd&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(date, rolling_sd) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">na.omit</span>()</code></pre></div>
+<p>Take a quick peek to confirm consistent results.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(port_rolling_sd_xts)</code></pre></div>
+<pre><code>##            returns
+## 2013-07-31 0.02274
+## 2013-08-30 0.02666
+## 2013-09-30 0.03358
+## 2013-10-31 0.03496
+## 2013-11-29 0.03381
+## 2013-12-31 0.02814</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(port_rolling_sd_tidy_rccproll)</code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##   date       rolling_sd
+##   &lt;date&gt;          &lt;dbl&gt;
+## 1 2013-07-31     0.0227
+## 2 2013-08-31     0.0267
+## 3 2013-09-30     0.0336
+## 4 2013-10-31     0.0350
+## 5 2013-11-30     0.0338
+## 6 2013-12-31     0.0281</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(port_rolling_sd_tidy_tibbletime)</code></pre></div>
+<pre><code>## # A time tibble: 6 x 3
+## # Index: date
+##   date           sd sd_rccp_roll
+##   &lt;date&gt;      &lt;dbl&gt;        &lt;dbl&gt;
+## 1 2013-07-31 0.0227       0.0227
+## 2 2013-08-31 0.0267       0.0267
+## 3 2013-09-30 0.0336       0.0336
+## 4 2013-10-31 0.0350       0.0350
+## 5 2013-11-30 0.0338       0.0338
+## 6 2013-12-31 0.0281       0.0281</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(port_rolling_sd_tq)</code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##   date       rolling_sd
+##   &lt;date&gt;          &lt;dbl&gt;
+## 1 2013-07-31     0.0227
+## 2 2013-08-31     0.0267
+## 3 2013-09-30     0.0336
+## 4 2013-10-31     0.0350
+## 5 2013-11-30     0.0338
+## 6 2013-12-31     0.0281</code></pre>
+<p>We now have an <code>xts</code> object called <code>port_rolling_sd_xts</code>, a tibble object called <code>port_rolling_sd_tidy</code>, and a tibble called <code>port_rolling_sd_tq</code>. They contain the 6-month rolling standard deviations of portfolio returns. Let’s visualize!</p>
+</div>
+<div id="visualizing-rolling-standard-deviation-in-the-xts-world" class="section level3 unnumbered">
+<h3>Visualizing Rolling Standard Deviation in the <code>xts</code> world</h3>
+<p>At the outset of this section, we opined that rolling volatilty might add some insight that is obscured by the total volatility. Visualizing the rolling standard deviation should help to illuminate this.</p>
+<p>Let’s start with the <code>xts</code> object and <code>highcharter</code>.</p>
+<p>First, we will convert to our data to rounded percentages for ease of charting.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">port_rolling_sd_xts_hc &lt;-<span class="st"> </span><span class="kw">round</span>(port_rolling_sd_xts, <span class="dv">4</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span></code></pre></div>
+<p>Then it’s our familiar invociation of the <code>higcharter</code> flow.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">highchart</span>(<span class="dt">type =</span> <span class="st">&quot;stock&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">hc_title</span>(<span class="dt">text =</span> <span class="st">&quot;Volatility Contribution&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">hc_add_series</span>(port_rolling_sd_xts_hc) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">hc_add_theme</span>(<span class="kw">hc_theme_flat</span>()) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">hc_yAxis</span>(
+      <span class="dt">labels =</span> <span class="kw">list</span>(<span class="dt">format =</span> <span class="st">&quot;{value}%&quot;</span>), 
+             <span class="dt">opposite =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">hc_navigator</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">hc_scrollbar</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div id="htmlwidget-c759643656d378dbfb5e" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c759643656d378dbfb5e">{"x":{"hc_opts":{"title":{"text":"Volatility Contribution"},"yAxis":{"title":{"text":null},"labels":{"format":"{value}%"},"opposite":false},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"},"bubble":{"minSize":5,"maxSize":25}},"annotationsOptions":{"enabledButtons":false},"tooltip":{"delayForDisplay":10},"series":[{"data":[[1375228800000,2.27],[1377820800000,2.67],[1380499200000,3.36],[1383177600000,3.5],[1385683200000,3.38],[1388448000000,2.81],[1391126400000,3.75],[1393545600000,3.56],[1396224000000,3.11],[1398816000000,2.89],[1401408000000,2.91],[1404086400000,2.95],[1406764800000,1.98],[1409270400000,1.56],[1412035200000,2.64],[1414713600000,2.79],[1417132800000,2.71],[1419984000000,2.62],[1422576000000,2.61],[1424995200000,3.2],[1427760000000,2.51],[1430352000000,2.48],[1432857600000,2.51],[1435622400000,2.6],[1438300800000,2.48],[1440979200000,2.79],[1443571200000,2.85],[1446163200000,4.14],[1448841600000,4.15],[1451520000000,4.21],[1454025600000,4.44],[1456704000000,3.86],[1459382400000,4.94],[1461888000000,4.24],[1464652800000,4.24],[1467244800000,4],[1469750400000,3.11],[1472601600000,2.96],[1475193600000,1.45],[1477872000000,1.95],[1480464000000,1.94],[1483056000000,1.95],[1485820800000,1.56],[1488240000000,1.6],[1490918400000,1.6],[1493337600000,0.35],[1496188800000,0.38],[1498780800000,0.47],[1501459200000,0.52],[1504137600000,0.78],[1506643200000,0.96],[1509408000000,0.97],[1512000000000,0.96],[1514505600000,0.93]]}],"navigator":{"enabled":false},"scrollbar":{"enabled":false}},"theme":{"colors":["#f1c40f","#2ecc71","#9b59b6","#e74c3c","#34495e","#3498db","#1abc9c","#f39c12","#d35400"],"chart":{"backgroundColor":"#ECF0F1"},"xAxis":{"gridLineDashStyle":"Dash","gridLineWidth":1,"gridLineColor":"#BDC3C7","lineColor":"#BDC3C7","minorGridLineColor":"#BDC3C7","tickColor":"#BDC3C7","tickWidth":1},"yAxis":{"gridLineDashStyle":"Dash","gridLineColor":"#BDC3C7","lineColor":"#BDC3C7","minorGridLineColor":"#BDC3C7","tickColor":"#BDC3C7","tickWidth":1},"legendBackgroundColor":"rgba(0, 0, 0, 0.5)","background2":"#505053","dataLabelsColor":"#B0B0B3","textColor":"#34495e","contrastTextColor":"#F0F0F3","maskColor":"rgba(255,255,255,0.3)"},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"stock","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+<p>Maybe we should add a flag to highlight an important event event like the maximum and minimum portfolio rolling volatility.</p>
+<p>We’ll set a flag with the date<br />
+<code>as.Date(index(port_rolling_sd_xts_hc[which.max(port_rolling_sd_xts_hc)]),format = &quot;%Y-%m-%d&quot;)</code> which looks like a convoluted mess but is adding a date for whenever the rolling portfolio standard deviation hit its maximum.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">port_max_date &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">index</span>(port_rolling_sd_xts_hc[<span class="kw">which.max</span>(port_rolling_sd_xts_hc)]),
+                         <span class="dt">format =</span> <span class="st">&quot;%Y-%m-%d&quot;</span>)</code></pre></div>
+<p>We can set another for the minimum and then add to the chart.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">port_min_date &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">index</span>(port_rolling_sd_xts_hc[<span class="kw">which.min</span>(port_rolling_sd_xts_hc)]),
+                         <span class="dt">format =</span> <span class="st">&quot;%Y-%m-%d&quot;</span>)
+
+
+<span class="kw">highchart</span>(<span class="dt">type =</span> <span class="st">&quot;stock&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_title</span>(<span class="dt">text =</span> <span class="st">&quot;Portfolio Rolling Volatility&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_yAxis</span>(<span class="dt">title =</span> <span class="kw">list</span>(<span class="dt">text =</span> <span class="st">&quot;Volatility&quot;</span>),
+           <span class="dt">labels =</span> <span class="kw">list</span>(<span class="dt">format =</span> <span class="st">&quot;{value}%&quot;</span>),
+           <span class="dt">opposite =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series</span>(port_rolling_sd_xts_hc, 
+                <span class="dt">name =</span> <span class="st">&quot;Portf Volatility&quot;</span>, 
+                <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>, 
+                <span class="dt">id =</span> <span class="st">&quot;Port&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">   </span><span class="kw">hc_add_series_flags</span>(port_max_date,
+                      <span class="dt">title =</span> <span class="kw">c</span>(<span class="st">&quot;Max Rolling Vol&quot;</span>), 
+                      <span class="dt">text =</span> <span class="kw">c</span>(<span class="st">&quot;maximum rolling volatility.&quot;</span>),
+                      <span class="dt">id =</span> <span class="st">&quot;Port&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series_flags</span>(port_min_date,
+                      <span class="dt">title =</span> <span class="kw">c</span>(<span class="st">&quot;Min Rolling Vol&quot;</span>), 
+                      <span class="dt">text =</span> <span class="kw">c</span>(<span class="st">&quot;min rolling volatility.&quot;</span>),
+                      <span class="dt">id =</span> <span class="st">&quot;Port&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hc_navigator</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">hc_scrollbar</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<div id="htmlwidget-a7fa61a3d9818f6c4f96" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a7fa61a3d9818f6c4f96">{"x":{"hc_opts":{"title":{"text":"Portfolio Rolling Volatility"},"yAxis":{"title":{"text":"Volatility"},"labels":{"format":"{value}%"},"opposite":false},"credits":{"enabled":false},"exporting":{"enabled":false},"plotOptions":{"series":{"turboThreshold":0},"treemap":{"layoutAlgorithm":"squarified"},"bubble":{"minSize":5,"maxSize":25}},"annotationsOptions":{"enabledButtons":false},"tooltip":{"delayForDisplay":10},"series":[{"data":[[1375228800000,2.27],[1377820800000,2.67],[1380499200000,3.36],[1383177600000,3.5],[1385683200000,3.38],[1388448000000,2.81],[1391126400000,3.75],[1393545600000,3.56],[1396224000000,3.11],[1398816000000,2.89],[1401408000000,2.91],[1404086400000,2.95],[1406764800000,1.98],[1409270400000,1.56],[1412035200000,2.64],[1414713600000,2.79],[1417132800000,2.71],[1419984000000,2.62],[1422576000000,2.61],[1424995200000,3.2],[1427760000000,2.51],[1430352000000,2.48],[1432857600000,2.51],[1435622400000,2.6],[1438300800000,2.48],[1440979200000,2.79],[1443571200000,2.85],[1446163200000,4.14],[1448841600000,4.15],[1451520000000,4.21],[1454025600000,4.44],[1456704000000,3.86],[1459382400000,4.94],[1461888000000,4.24],[1464652800000,4.24],[1467244800000,4],[1469750400000,3.11],[1472601600000,2.96],[1475193600000,1.45],[1477872000000,1.95],[1480464000000,1.94],[1483056000000,1.95],[1485820800000,1.56],[1488240000000,1.6],[1490918400000,1.6],[1493337600000,0.35],[1496188800000,0.38],[1498780800000,0.47],[1501459200000,0.52],[1504137600000,0.78],[1506643200000,0.96],[1509408000000,0.97],[1512000000000,0.96],[1514505600000,0.93]],"name":"Portf Volatility","color":"cornflowerblue","id":"Port"},{"data":[{"x":1459382400000,"title":"Max Rolling Vol","text":"maximum rolling volatility."}],"onSeries":"Port","type":"flags"},{"data":[{"x":1493337600000,"title":"Min Rolling Vol","text":"min rolling volatility."}],"onSeries":"Port","type":"flags"}],"navigator":{"enabled":false},"scrollbar":{"enabled":false}},"theme":{"chart":{"backgroundColor":"transparent"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":" ","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"stock","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="visualizing-rolling-standard-deviation-in-the-tidyverse" class="section level3 unnumbered">
+<h3>Visualizing Rolling Standard Deviation in the Tidyverse</h3>
+<p>Let’s start with our tidy data frame <code>port_rolling_sd_tidy</code> and pass it to <code>ggplot()</code>. It’s a time series line chart so <code>aes(x=date)</code> and then <code>geom_line(aes(y = rolling_sd), color = &quot;cornflowerblue&quot;)</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">port_rolling_sd_tidy_rccproll <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> date)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> rolling_sd), <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_date</span>(<span class="dt">breaks =</span> <span class="kw">pretty_breaks</span>(<span class="dt">n =</span> <span class="dv">8</span>))</code></pre></div>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>Note that we didn’t do any work to change our decimal to percentage format. When we called <code>scale_y_continuous(labels = scales::percent)</code> it did that work for us by adding the % sign and multiplying by 100.</p>
+<p>Do these visualizations add to our understanding of this portfolio? Well, we can see a spike in rolling volatility in early 2016 followed by a consistently falling vol through to mid 2017. That makes sense - remember back to our scatterplot when zero - zero! - monthly returns were more than one standard deviation away from the mean.</p>
+</div>
+<div id="shiny-app" class="section level3 unnumbered">
+<h3>Shiny App</h3>
+<p>Now let’s wrap all of that work into a Shiny app that allows a user to choose a 5-asset portfolio and chart rollling volatility of different widths.</p>
+<p>The app is availalbe online here:</p>
+<p>www.reproduciblefinance.com/shiny/portfolio-volatility-shiny-app/</p>
+<p>And here is a snapshot:</p>
+<div class="figure"><span id="fig:unnamed-chunk-26"></span>
+<img src="snapshots/simple-vol-shiny.png" alt="Portfolio Volatility Shiny App" width="100%" />
+<p class="caption">
+FIGURE 3.1: Portfolio Volatility Shiny App
+</p>
+</div>
+<p>Our input sidebar is almost identical to the previous apps on portfolio returns and dollar growth.</p>
+<p>One difference is we let the user choose a rolling window with a <code>numerInput()</code>. The code chunk below is part of our sidebar. Notice I set <code>min = 3, max = 36</code> because I don’t want the user to choose a rolling window of less than 3 or more than 36. Feel free to change in your own app.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fluidRow</span>(
+  <span class="kw">column</span>(<span class="dv">5</span>,
+  <span class="kw">numericInput</span>(<span class="st">&quot;window&quot;</span>, <span class="st">&quot;Window&quot;</span>, <span class="dv">12</span>, <span class="dt">min =</span> <span class="dv">3</span>, <span class="dt">max =</span> <span class="dv">36</span>, <span class="dt">step =</span> <span class="dv">1</span>))
+)</code></pre></div>
+<p>Next we calculate rolling volatility with the same work flow as above. However, I am just going to calculate rolling volatility using the tidyquant method. When we chart with <code>highcharter</code>, we will convert to an <code>xts</code> instead of calculating via <code>xts</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">port_rolling_sd_tidy &lt;-<span class="st"> </span><span class="kw">eventReactive</span>(input<span class="op">$</span>go, {
+  
+  prices &lt;-<span class="st"> </span><span class="kw">prices</span>()
+  
+  w &lt;-<span class="st"> </span><span class="kw">c</span>(input<span class="op">$</span>w1<span class="op">/</span><span class="dv">100</span>, input<span class="op">$</span>w2<span class="op">/</span><span class="dv">100</span>, input<span class="op">$</span>w3<span class="op">/</span><span class="dv">100</span>, input<span class="op">$</span>w4<span class="op">/</span><span class="dv">100</span>, input<span class="op">$</span>w5<span class="op">/</span><span class="dv">100</span>)
+  
+  portfolio_returns_tq_rebalanced_monthly &lt;-<span class="st"> </span>
+<span class="st">    </span>prices <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">to.monthly</span>(<span class="dt">indexAt =</span> <span class="st">&quot;last&quot;</span>, <span class="dt">OHLC =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">tk_tbl</span>(<span class="dt">preserve_index =</span> <span class="ot">TRUE</span>, <span class="dt">rename_index =</span> <span class="st">&quot;date&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">slice</span>(<span class="op">-</span><span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">gather</span>(asset, returns, <span class="op">-</span>date) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">group_by</span>(asset) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">returns =</span> (<span class="kw">log</span>(returns) <span class="op">-</span><span class="st"> </span><span class="kw">log</span>(<span class="kw">lag</span>(returns)))) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">tq_portfolio</span>(<span class="dt">assets_col  =</span> asset, 
+               <span class="dt">returns_col =</span> returns,
+               <span class="dt">weights     =</span> w,
+               <span class="dt">col_rename  =</span> <span class="st">&quot;returns&quot;</span>,
+               <span class="dt">rebalance_on =</span> <span class="st">&quot;months&quot;</span>)
+  
+  window &lt;-<span class="st"> </span>input<span class="op">$</span>window
+  
+  port_rolling_sd_tidy &lt;-<span class="st"> </span>
+<span class="st">  </span>portfolio_returns_tq_rebalanced_monthly <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">tq_mutate</span>(<span class="dt">mutate_fun =</span> rollapply,
+            <span class="dt">width =</span> window,
+            <span class="dt">FUN =</span> sd,
+            <span class="dt">col_rename =</span> (<span class="st">&quot;rolling_sd&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(date, rolling_sd) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">na.omit</span>()
+    
+})</code></pre></div>
+<p>We now have the object <code>port_rolling_sd_tidy</code> available for downstream visualizations. We will start in with highcharter and that requires changing to an <code>xts</code> object first. We do that with the <code>tk_xts()</code> function from <code>timetk</code> and the full call is <code>port_rolling_sd_xts_hc &lt;- port_rolling_sd_tidy() %&gt;% tk_xts(date_col = date) %&gt;% round(., 4) * 100</code>.</p>
+<p>We can pass the <code>xts</code> object <code>port_rolling_sd_xts_hc</code> to <code>highcharter</code>. Note that the object <code>port_rolling_sd_xts_hc</code> is not available outside of this code chunk.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">renderHighchart</span>({
+  
+  port_rolling_sd_xts_hc &lt;-<span class="st"> </span>
+<span class="st">    </span><span class="kw">port_rolling_sd_tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">tk_xts</span>(<span class="dt">date_col =</span> date) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">round</span>(., <span class="dv">4</span>) <span class="op">*</span><span class="st"> </span><span class="dv">100</span>
+
+  
+  <span class="kw">highchart</span>(<span class="dt">type =</span> <span class="st">&quot;stock&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">hc_title</span>(<span class="dt">text =</span> <span class="st">&quot;Portfolio Rolling Volatility&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">hc_yAxis</span>(<span class="dt">title =</span> <span class="kw">list</span>(<span class="dt">text =</span> <span class="st">&quot;Volatility&quot;</span>),
+           <span class="dt">labels =</span> <span class="kw">list</span>(<span class="dt">format =</span> <span class="st">&quot;{value}%&quot;</span>),
+           <span class="dt">opposite =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">hc_add_series</span>(port_rolling_sd_xts_hc, 
+                  <span class="dt">name =</span> <span class="st">&quot;Portfolio Vol&quot;</span>, 
+                  <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>,
+                  <span class="dt">id =</span> <span class="st">&quot;Port&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">hc_add_theme</span>(<span class="kw">hc_theme_flat</span>()) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">hc_navigator</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">hc_scrollbar</span>(<span class="dt">enabled =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>Let’s also add a flag for the min and max rolling volatility. We create the flags with the following:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  port_max_date &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">index</span>(port_rolling_sd_xts_hc[<span class="kw">which.max</span>(port_rolling_sd_xts_hc)]),
+                         <span class="dt">format =</span> <span class="st">&quot;%Y-%m-%d&quot;</span>)
+  port_min_date &lt;-<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">index</span>(port_rolling_sd_xts_hc[<span class="kw">which.min</span>(port_rolling_sd_xts_hc)]),
+                         <span class="dt">format =</span> <span class="st">&quot;%Y-%m-%d&quot;</span>)</code></pre></div>
+<p>Then add to the chart with the two <code>hc_add_series_flags()</code> function calls below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">   <span class="kw">hc_add_series_flags</span>(port_max_date,
+                      <span class="dt">title =</span> <span class="kw">c</span>(<span class="st">&quot;Max Rolling Vol&quot;</span>), 
+                      <span class="dt">text =</span> <span class="kw">c</span>(<span class="st">&quot;maximum rolling volatility.&quot;</span>),
+                      <span class="dt">id =</span> <span class="st">&quot;Port&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">hc_add_series_flags</span>(port_min_date,
+                      <span class="dt">title =</span> <span class="kw">c</span>(<span class="st">&quot;Min Rolling Vol&quot;</span>), 
+                      <span class="dt">text =</span> <span class="kw">c</span>(<span class="st">&quot;min rolling volatility.&quot;</span>),
+                      <span class="dt">id =</span> <span class="st">&quot;Port&quot;</span>)</code></pre></div>
+<p>Now on to <code>ggplot()</code>. We don’t need to alter the original <code>port_rolling_sd_tidy</code> reactive and can pass it straight into a piped <code>dplyr/ggplot</code> flow.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">renderPlot</span>({
+  <span class="kw">port_rolling_sd_tidy</span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> date)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> rolling_sd), <span class="dt">color =</span> <span class="st">&quot;cornflowerblue&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>percent) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;Portfolio Rolling Vol&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;volatility&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_x_date</span>(<span class="dt">breaks =</span> <span class="kw">pretty_breaks</span>(<span class="dt">n =</span> <span class="dv">8</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>))
+})</code></pre></div>
+<p>That’s all for this Shiny app on rolling portfolio volatility. Next we dissect volatility.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="portfolio-standard-deviation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="component-contribution-to-volatility.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-crc/edit/master/risk.Rmd",
+"text": "Edit"
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

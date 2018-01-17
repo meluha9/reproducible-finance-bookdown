@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reproducible Finance with R</title>
+  <meta name="description" content="A reproducible for Chapman &amp; Hall.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Reproducible Finance with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A reproducible for Chapman &amp; Hall." />
+  <meta name="github-repo" content="jkr216/reproducible-finance-ch" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reproducible Finance with R" />
+  
+  <meta name="twitter:description" content="A reproducible for Chapman &amp; Hall." />
+  
+
+<meta name="author" content="Jonathan K. Regenstein, Jr.">
+
+
+<meta name="date" content="2018-01-17">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="risk.html">
+<link rel="next" href="sharpe-ratio.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-0.9/htmlwidgets.js"></script>
+<script src="libs/proj4js-2.3.15/proj4.js"></script>
+<link href="libs/highcharts-5.0.6/css/motion.css" rel="stylesheet" />
+<script src="libs/highcharts-5.0.6/highstock.js"></script>
+<script src="libs/highcharts-5.0.6/highcharts-3d.js"></script>
+<script src="libs/highcharts-5.0.6/highcharts-more.js"></script>
+<script src="libs/highcharts-5.0.6/modules/annotations.js"></script>
+<script src="libs/highcharts-5.0.6/modules/broken-axis.js"></script>
+<script src="libs/highcharts-5.0.6/modules/data.js"></script>
+<script src="libs/highcharts-5.0.6/modules/drilldown.js"></script>
+<script src="libs/highcharts-5.0.6/modules/exporting.js"></script>
+<script src="libs/highcharts-5.0.6/modules/funnel.js"></script>
+<script src="libs/highcharts-5.0.6/modules/heatmap.js"></script>
+<script src="libs/highcharts-5.0.6/modules/map.js"></script>
+<script src="libs/highcharts-5.0.6/modules/no-data-to-display.js"></script>
+<script src="libs/highcharts-5.0.6/modules/offline-exporting.js"></script>
+<script src="libs/highcharts-5.0.6/modules/solid-gauge.js"></script>
+<script src="libs/highcharts-5.0.6/modules/treemap.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/annotations.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/draggable-legend.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/draggable-points.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/export-csv.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/grouped-categories.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/motion.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/pattern-fill-v2.js"></script>
+<script src="libs/highcharts-5.0.6/plugins/tooltip-delay.js"></script>
+<script src="libs/highcharts-5.0.6/custom/reset.js"></script>
+<script src="libs/highcharts-5.0.6/custom/symbols-extra.js"></script>
+<script src="libs/highcharts-5.0.6/custom/text-symbols.js"></script>
+<link href="libs/fontawesome-4.5.0/font-awesome.min.css" rel="stylesheet" />
+<link href="libs/htmlwdgtgrid-1/htmlwdgtgrid.css" rel="stylesheet" />
+<script src="libs/highchart-binding-0.5.0/highchart.js"></script>
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> install the packages needed by this book; you fill out c(), e.g. c(‘ggplot2’, ‘dplyr’)</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#why-read-this-book"><i class="fa fa-check"></i>Why read this book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#structure-of-the-book"><i class="fa fa-check"></i>Structure of the book</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#about-the-author"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#software-information-and-conventions"><i class="fa fa-check"></i>Software information and conventions</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#acknowledgments"><i class="fa fa-check"></i>Acknowledgments</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html"><i class="fa fa-check"></i>Returns</a><ul>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#importing-asset-prices"><i class="fa fa-check"></i>Importing Asset Prices</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#thoughts-on-converting-daily-prices-to-monthly-log-returns"><i class="fa fa-check"></i>Thoughts on Converting Daily Prices to Monthly Log Returns</a></li>
+<li><a href="returns.html#converting-daily-prices-to-monthly-returns-in-the-xts-world">Converting Daily Prices to Monthly Returns in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyverse"><i class="fa fa-check"></i>Converting Daily Prices to Monthly Returns in the Tidyverse</a></li>
+<li><a href="returns.html#converting-daily-prices-to-monthly-returns-in-the-tidyquant-world">Converting Daily Prices to Monthly Returns in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#a-word-on-workflow-and-recap"><i class="fa fa-check"></i>A Word on workflow and recap</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#visualizing-asset-returns-before-they-get-mashed-into-a-portfolio"><i class="fa fa-check"></i>Visualizing Asset Returns before they get mashed into a portfolio</a></li>
+<li><a href="returns.html#portfolio-returns-in-the-xts-world">Portfolio Returns in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#portfolio-returns-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Returns in the tidyverse</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#portfolio-returns-in-the-tidyquant-world"><i class="fa fa-check"></i>Portfolio Returns in the tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#visualizing-portfolio-returns"><i class="fa fa-check"></i>Visualizing Portfolio Returns</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#our-first-shiny-app-portfolio-returns"><i class="fa fa-check"></i>Our First Shiny App: Portfolio Returns</a></li>
+<li><a href="returns.html#portfolio-growth-in-the-xts-world">Portfolio Growth in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#portfolio-growth-in-the-tidyverse"><i class="fa fa-check"></i>Portfolio Growth in the Tidyverse</a></li>
+<li><a href="returns.html#portfolio-growth-in-the-tidyquant-world">Portfolio Growth in the <code>tidyquant</code> World</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#visualizing-portfolio-growth"><i class="fa fa-check"></i>Visualizing Portfolio Growth</a></li>
+<li class="chapter" data-level="1.0.1" data-path="returns.html"><a href="returns.html#shiny-growth-of-a-dollar"><i class="fa fa-check"></i><b>1.0.1</b> Shiny Growth of a Dollar</a></li>
+<li class="chapter" data-level="" data-path="returns.html"><a href="returns.html#concluding"><i class="fa fa-check"></i>Concluding</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html"><i class="fa fa-check"></i>Risk</a><ul>
+<li><a href="risk.html#standard-deviation-in-the-xts-world">Standard Deviation in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#standard-devation-in-the-tidyverse"><i class="fa fa-check"></i>Standard Devation in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#standard-deviation-in-the-tidyquant-world"><i class="fa fa-check"></i>Standard Deviation in the Tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-standard-deviation"><i class="fa fa-check"></i>Visualizing Standard Deviation</a></li>
+<li class="chapter" data-level="1.0.2" data-path="risk.html"><a href="risk.html#rolling-standard-deviation-in-the-xts-world"><i class="fa fa-check"></i><b>1.0.2</b> Rolling Standard Deviation in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="1.0.3" data-path="risk.html"><a href="risk.html#rolling-standard-deviation-in-tidyverse"><i class="fa fa-check"></i><b>1.0.3</b> Rolling Standard Deviation in tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#rolling-standard-deviation-with-tidyquant"><i class="fa fa-check"></i>Rolling Standard Deviation with tidyquant</a></li>
+<li><a href="risk.html#visualizing-rolling-standard-deviation-in-the-xts-world">Visualizing Rolling Standard Deviation in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-rolling-standard-deviation-in-the-tidyverse"><i class="fa fa-check"></i>Visualizing Rolling Standard Deviation in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#shiny-app"><i class="fa fa-check"></i>Shiny App</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-component-contribution"><i class="fa fa-check"></i>Visualizing Component Contribution</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-component-contribution-to-volatility"><i class="fa fa-check"></i>Visualizing Component Contribution to Volatility</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#shiny-component-contribution"><i class="fa fa-check"></i>Shiny Component Contribution</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#conclusion-on-standard-deviation"><i class="fa fa-check"></i>Conclusion on Standard Deviation</a></li>
+<li class="chapter" data-level="1.0.4" data-path="risk.html"><a href="risk.html#skewness-in-the-xts-world"><i class="fa fa-check"></i><b>1.0.4</b> Skewness in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#skewness-in-the-tidyverse"><i class="fa fa-check"></i>Skewness in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-skewness"><i class="fa fa-check"></i>Visualizing Skewness</a></li>
+<li><a href="risk.html#rolling-skewness-in-the-xts-world">Rolling Skewness in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#rolling-skewness-in-the-tidyverse"><i class="fa fa-check"></i>Rolling Skewness in the tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#rolling-skewness-in-the-tidyquant-world"><i class="fa fa-check"></i>Rolling Skewness in the Tidyquant World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-rolling-skewness"><i class="fa fa-check"></i>Visualizing Rolling Skewness</a></li>
+<li><a href="risk.html#kurtosis-in-the-xts-world">Kurtosis in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#kurtosis-in-the-tidyverse"><i class="fa fa-check"></i>Kurtosis in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-kurtosis"><i class="fa fa-check"></i>Visualizing Kurtosis</a></li>
+<li><a href="risk.html#rolling-kurtosis-in-the-xts-world">Rolling Kurtosis in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#rolling-kurtosis-in-the-tidyquant-world"><i class="fa fa-check"></i>Rolling Kurtosis in the Tidyquant world</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#visualizing-rolling-kurtosis"><i class="fa fa-check"></i>Visualizing Rolling Kurtosis</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#shiny-skew-and-kurtosis"><i class="fa fa-check"></i>Shiny Skew and Kurtosis</a></li>
+<li class="chapter" data-level="" data-path="risk.html"><a href="risk.html#conclusion"><i class="fa fa-check"></i>Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="portfolio-theory-or-riskreturn-relationships.html"><a href="portfolio-theory-or-riskreturn-relationships.html"><i class="fa fa-check"></i>Portfolio Theory or Risk/Return Relationships</a></li>
+<li class="chapter" data-level="2" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html"><i class="fa fa-check"></i><b>2</b> Sharpe Ratio</a><ul>
+<li><a href="sharpe-ratio.html#sharpe-ratio-in-the-xts-world">Sharpe Ratio in the <code>xts</code> world</a></li>
+<li class="chapter" data-level="" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html#sharpe-ration-in-the-tidyverse"><i class="fa fa-check"></i>Sharpe Ration in the Tidyverse</a></li>
+<li class="chapter" data-level="" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html#shape-ratio-with-tidyquant"><i class="fa fa-check"></i>Shape Ratio with Tidyquant</a></li>
+<li class="chapter" data-level="" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html#visualizing-sharpe-ratios"><i class="fa fa-check"></i>Visualizing Sharpe Ratios</a></li>
+<li><a href="sharpe-ratio.html#rolling-sharpe-ratio-in-the-xts-world">Rolling Sharpe Ratio in the <code>xts</code> World</a></li>
+<li class="chapter" data-level="" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html#rolling-sharpe-ratio-with-tidyverse-tibbletime"><i class="fa fa-check"></i>Rolling Sharpe Ratio with Tidyverse + Tibbletime</a></li>
+<li class="chapter" data-level="" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html#visualizing-the-rolling-sharpe-ratio"><i class="fa fa-check"></i>Visualizing the Rolling Sharpe Ratio</a></li>
+<li class="chapter" data-level="" data-path="sharpe-ratio.html"><a href="sharpe-ratio.html#shiny-for-sharpe-ratio"><i class="fa fa-check"></i>Shiny for Sharpe Ratio</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="montecarlo.html"><a href="montecarlo.html"><i class="fa fa-check"></i><b>3</b> montecarlo</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="more-to-say.html"><a href="more-to-say.html"><i class="fa fa-check"></i><b>A</b> More to Say</a></li>
+<li class="chapter" data-level="" data-path="appendix-2.html"><a href="appendix-2.html"><i class="fa fa-check"></i>Appendix 2</a></li>
+<li class="chapter" data-level="B" data-path="generate-a-bibtex-database-automatically-for-some-r-packages.html"><a href="generate-a-bibtex-database-automatically-for-some-r-packages.html"><i class="fa fa-check"></i><b>B</b> generate a BibTeX database automatically for some R packages</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Reproducible Finance with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="portfolio-theory-or-riskreturn-relationships" class="section level1 unnumbered">
+<h1>Portfolio Theory or Risk/Return Relationships</h1>
+<p>In this section we will four three chapters to the relationship between risk and return, or what I think of as a simplified introduction to Modern Portfolio Theory. As with volatility/risk, we will not delve deep into the theory of these concepts but instead will focus on readable, reproducible workflows using different R objects and packages.</p>
+<p>If you wish to delve further into these topics, have a look at BKM and Eric Zivot’s new book. Or, go back to the source and fire up Harry Markowitz’s 1959 monograph, William Sharpe’s paper title “” , Sortino’s original paper &quot; and William Sharpe’s “”.</p>
+<p>Up until now, we have been looking at returns in isolation and risk in isolation, without regard to how the two are related. This section will focus on their relationship, how to measure it, how to think about, how to visualize it.</p>
+<p>First, we will discuss the Sharpe Ratio and the Sortion Ratio, two measures of the return/risk ratio of a portfolio.</p>
+<p>Then, we will look at the Capital Asset Pricing Model and specifically how to calculate the market beta for our assets and portfolio. This will be an introduction to simple linear regression as well.</p>
+<p>We will conclude with an exploration of the Fama French factor model and an introduction to multiple linear regressoin.</p>
+<p>The world of portfolio theory is vast and far reaching and we are focusing on four small corners of that world, but Sharpe and Sortino are important ratio and CAPM-FF are iconic. We are focusing on the foundational but hopefully it lays the ground work for more complex work in your future.</p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="risk.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sharpe-ratio.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-crc/edit/master/portfolio-theory.Rmd",
+"text": "Edit"
+},
+"download": ["bookdown.pdf", "bookdown.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
