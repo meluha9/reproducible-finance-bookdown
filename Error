@@ -1,0 +1,40 @@
+
+ Portfolio <- 
++ tibble( tickers = c("AAPL", "AMZN", "SPY", "TLT", "GLD"),
++ sector =c("Technology", "Discretionary", "Index", "10Year", "GOLD"))
+
+
+ Portfolio %>%
++   pull(tickers) %>% 
++   riingo_prices(., 
++                 start_date = "2017-12-29",
++                 end_date = "2018-12-31") %>%
++ left_join(Portfolio, by = "tickers") %>%
++ select(sector, date, adjClose) %>%
++ group_by(tickers) %>%
++ mutate(daily_return = log(adjClose) - log(lag(adjClose))) %>% 
++ na.omit() %>%  
++ slice(1)
+
+
+
+Error: `by` can't contain join column `tickers` which is missing from LHS
+Call `rlang::last_error()` to see a backtrace
+In addition: Warning messages:
+1: In file(out, "wt") :
+  cannot open file 'C:\Users\CHINTA~1\AppData\Local\Temp\RtmpEFsDk7\Rhttpd2a402080782f': No such file or directory
+2: 'glue::collapse' is deprecated.
+Use 'glue_collapse' instead.
+See help("Deprecated") and help("glue-deprecated"). 
+3: 'glue::collapse' is deprecated.
+Use 'glue_collapse' instead.
+See help("Deprecated") and help("glue-deprecated"). 
+4: 'glue::collapse' is deprecated.
+Use 'glue_collapse' instead.
+See help("Deprecated") and help("glue-deprecated"). 
+5: 'glue::collapse' is deprecated.
+Use 'glue_collapse' instead.
+See help("Deprecated") and help("glue-deprecated"). 
+6: 'glue::collapse' is deprecated.
+Use 'glue_collapse' instead.
+See help("Deprecated") and help("glue-deprecated"). 
